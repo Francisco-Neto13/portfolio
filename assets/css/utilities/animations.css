@@ -1,0 +1,25 @@
+/* Move o degradê do H1 horizontalmente */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 50% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Faz o box-shadow do H2 pulsar suavemente */
+@keyframes breathingGlow {
+    0% { text-shadow: 0 0 0px #9b5cff; }
+    50% { text-shadow: 0 0 2px #cfc8dd; }
+    100% { text-shadow: 0 0 0px #9b5cff; }
+}
+
+/* Animação de Entrada (Slide Up + Fade) */
+@keyframes fadeSlide {
+    0% {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

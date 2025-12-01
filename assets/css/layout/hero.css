@@ -1,0 +1,81 @@
+/* HERO LAYOUT */
+.hero {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 80px;
+    padding-top: 40px;
+}
+
+/*  HERO – LEFT CONTENT */
+.hero-left {
+    max-width: 550px;
+}
+
+/* Nome */
+.hero-left h1 {
+    font-size: 3rem;
+    font-weight: 700;
+
+    /* Degrade */
+    background: linear-gradient(90deg, #9B5CFF 0%, #cfc8dd 50%, #9b5cff 100%);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    /* ANIMAÇÕES COMBINADAS */
+    animation: gradientMove 5s ease infinite, fadeSlide 1.4s ease 0.2s forwards; 
+    opacity: 0; 
+    margin-bottom: 10px;
+}
+
+/* Subtítulo */
+.hero-left h2 {
+    font-size: 1.8rem;
+    color: #c38fff;
+    margin-bottom: 20px;
+    
+    /* ANIMAÇÕES COMBINADAS */
+    animation: breathingGlow 4s ease-in-out infinite, fadeSlide 1.4s ease 0.5s forwards; 
+    opacity: 0;
+}
+
+/* Parágrafo */
+.hero-left p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: #cfc8dd;
+
+    /* ANIMAÇÃO DE ENTRADA */
+    animation: fadeSlide 1.4s ease 0.8s forwards;
+    opacity: 0;
+}
+
+
+/* HERO – RIGHT CONTENT */
+
+/* Imagem de Perfil  */
+.hero-right {
+    width: 320px;
+    height: 320px;
+    background: #271c44;
+    border-radius: 50%;
+    border: 2px solid #dcdcdc;
+
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* ANIMAÇÃO DE ENTRADA  */
+    animation: fadeSlide 1.4s ease 1.1s forwards;
+    opacity: 0;
+}
+
+.hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
