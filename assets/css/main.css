@@ -1,14 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;900&display=swap');
+
 /* 1. BASE (Configurações Globais) */
 @import url('base/reset.css'); 
-
 
 /* 2. UTILITIES (Keyframes e Animações) */
 @import url('utilities/animations.css');
 
-
 /* 3. LAYOUT (Estrutura da Página) */
 @import url('layout/hero.css');
-
+@import url('layout/footer.css');
+@import url('layout/header.css');
 
 /* 4. COMPONENTS (Elementos Reutilizáveis) */
-@import url('components/buttons.css');

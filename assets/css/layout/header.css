@@ -1,0 +1,59 @@
+/* HEADER FIXO */
+.main-header {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; 
+    padding: 15px 0;
+    
+    background: rgba(10, 5, 25, 0.5);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(155, 92, 255, 0.25);
+
+    opacity: 0;
+    animation: fadeSlide 1.4s ease forwards;
+    animation-delay: 0s;
+}
+
+/* CONTEÚDO INTERNO DO HEADER */
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* LOGO */
+.logo-header {
+    height: 50px;  
+    width: auto;
+    display: block;
+    transition: opacity 0.3s;
+}
+
+.logo-header:hover {
+    opacity: 0.85;
+}
+
+/* MENU */
+.nav-menu ul {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.nav-menu a {
+    text-decoration: none;
+    color: #cfc8dd;
+    font-size: 1rem;
+    padding: 5px 0;
+    transition: color 0.3s, border-bottom 0.3s;
+}
+
+/* ESTILO DO LINK ATIVO / HOVER */
+.nav-menu a:hover,
+.nav-menu a.active {
+    color: #ffffff;
+    font-weight: 500;
+    border-bottom: 2px solid #9b5cff;
+}

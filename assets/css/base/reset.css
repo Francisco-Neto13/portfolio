@@ -6,12 +6,13 @@
 }
 
 body {
-    background: #0b0b12; 
+    background: transparent;
     color: #e6e6f0;      
-    font-family: 'Inter', sans-serif;
+    font-family: 'Poppins', sans-serif;
     height: 100vh;
     display: flex;
     flex-direction: column;
+    padding-top: 70px;
 }
 
 /* CONTAINER */
