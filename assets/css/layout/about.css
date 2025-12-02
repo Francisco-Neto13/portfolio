@@ -1,0 +1,23 @@
+.about {
+    padding: 80px 0;
+    min-height: 60vh; /* Mantém a altura mínima que você definiu */
+    
+    /* 🟢 COMPENSAÇÃO CRÍTICA PARA O SCROLL FIXO 🟢 */
+    scroll-margin-top: 85px; 
+}
+
+/* O título H2 usa a classe .section-title que já existe em projects.css */
+
+/* Estilo para o parágrafo de descrição */
+.about-description {
+    max-width: 700px; 
+    color: #cfc8dd; 
+    font-size: 1.1rem; 
+    line-height: 1.6;
+    margin-top: 20px;
+    
+    /* Animação para o texto de entrada */
+    opacity: 0;
+    animation: fadeSlide 1.4s ease forwards;
+    animation-delay: 2s; /* Atrasamos um pouco mais para aparecer depois do título */
+}

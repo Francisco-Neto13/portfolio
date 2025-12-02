@@ -1,18 +1,28 @@
-/* GLOBAL RESET */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    vertical-align: baseline; 
+}
+
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+
+input, button, textarea, select {
+    font: inherit;
 }
 
 body {
     background: transparent;
     color: #e6e6f0;      
     font-family: 'Poppins', sans-serif;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
     padding-top: 70px;
+}
+
+html {
+    scroll-behavior: smooth; 
 }
 
 /* CONTAINER */

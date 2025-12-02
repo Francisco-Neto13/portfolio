@@ -10,5 +10,8 @@
 @import url('layout/hero.css');
 @import url('layout/footer.css');
 @import url('layout/header.css');
+@import url('layout/projects.css');
 
 /* 4. COMPONENTS (Elementos Reutilizáveis) */
+@import url('components/project-card.css');
+@import url('components/hero-stats.css');

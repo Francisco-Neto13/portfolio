@@ -15,14 +15,13 @@
 <header class="main-header">
     <div class="container header-content">
 
-        <a href="#" class="nav-logo">
+        <a href="#inicio" class="nav-logo">
             <img src="assets/images/logo.png" alt="Logo - Voltar ao Início" class="logo-header">
         </a>
 
         <nav class="nav-menu">
             <ul>
-                <li><a href="#" class="active">Início</a></li>
-                <li><a href="#sobre">Sobre</a></li>
+                <li><a href="#inicio" class="active">Início</a></li>
                 <li><a href="#projetos">Projetos</a></li>
             </ul>
         </nav>
@@ -30,30 +29,159 @@
     </div>
 </header>
 
+<video autoplay loop muted playsinline id="background-video">
+    <source src="assets/images/fundo.mp4" type="video/mp4">
+    Seu navegador não suporta a tag do vídeo.
+</video>
 
-    <video autoplay loop muted playsinline id="background-video">
-        <source src="assets/images/fundo.mp4" type="video/mp4">
-        Seu navegador não suporta a tag do vídeo.
-    </video>
+<section class="hero container" id="inicio"> 
+    
+    <div class="hero-content-wrapper">
+        
+        <div class="hero-content-main">
+            <div class="hero-left">
+                <h1>Francisco Neto</h1>
+                <h2>Desenvolvedor • Estudante de Ciência da Computação</h2>
 
-    <!-- HERO  -->
-    <section class="hero container">
-        <div class="hero-left">
-            <h1>Francisco Neto</h1>
-            <h2>Desenvolvedor • Estudante de Ciência da Computação</h2>
+                <p>
+                    Apaixonado por tecnologia, interfaces e automações.
+                    Trabalho com JavaScript e soluções práticas, sempre buscando evoluir
+                    e criar projetos modernos e eficientes.
+                </p>
+            </div>
 
-            <p>
-                Apaixonado por tecnologia, interfaces e automações.
-                Trabalho com JavaScript e soluções práticas, sempre buscando evoluir
-                e criar projetos modernos e eficientes.
-            </p>
+            <div class="hero-right">
+                <img src="assets/images/eu.jpg" alt="Foto de Perfil de Francisco Neto">
+            </div>
+        </div>
+        
+        <div class="hero-stats">
+            <h3>Minhas Contribuições no Ano</h3>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-value">250+</span>
+                    <span class="stat-label">Commits no GitHub</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">12</span>
+                    <span class="stat-label">Projetos Ativos</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-value">1.5k</span>
+                    <span class="stat-label">Linhas de Código</span>
+                </div>
+            </div>
+            
         </div>
 
-        <div class="hero-right">
-            <img src="assets/images/eu.jpg" alt="">
-        </div>
-    </section>
+    </div> 
+</section>
 
+
+<section id="projetos" class="projects container">
+    <h2 class="section-title">Projetos</h2>
+    
+    <div class="projects-grid">
+        
+        <div class="project-card">
+            <div class="project-image-container">
+                <img src="assets/images/projeto1.jpg" alt="Miniatura do Projeto 1" class="project-img">
+            </div>
+            
+            <div class="project-details">
+                <h3>Cats & Dungeons</h3>
+                <p class="project-description">
+                    .
+                </p>
+                
+                <div class="project-tech-stack">
+                    <span class="tech-badge">JAVA</span>
+                    <span class="tech-badge">IA</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="#" target="_blank" class="link-btn primary-btn">Ver Demo</a>
+                    <a href="#" target="_blank" class="link-btn secondary-btn">GitHub</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="project-card">
+            <div class="project-image-container">
+                <img src="assets/images/projeto2.png" alt="Miniatura do Projeto 2" class="project-img">
+            </div>
+            
+            <div class="project-details">
+                <h3>Reconhecimento de Gestos | Teachable Machine</h3>
+                <p class="project-description">
+                    .
+                </p>
+                
+                <div class="project-tech-stack">
+                    <span class="tech-badge">JS</span>
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">CSS</span>
+                    <span class="tech-badge">IA</span>
+                    <span class="tech-badge">API</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="#" target="_blank" class="link-btn primary-btn">Ver Demo</a>
+                    <a href="#" target="_blank" class="link-btn secondary-btn">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-image-container">
+                <img src="assets/images/projeto3.png" alt="Miniatura do Projeto 3" class="project-img">
+            </div>
+            
+            <div class="project-details">
+                <h3>Bot Discord | Guardians Of Wynn (GsW)</h3>
+                <p class="project-description">
+                    .
+                </p>
+                
+                <div class="project-tech-stack">
+                    <span class="tech-badge">HTML</span>
+                    <span class="tech-badge">NODE.JS</span>
+                    <span class="tech-badge">API</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="#" target="_blank" class="link-btn primary-btn">Ver Demo</a>
+                    <a href="#" target="_blank" class="link-btn secondary-btn">GitHub</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="project-card">
+            <div class="project-image-container">
+                <img src="assets/images/project-placeholder-4.jpg" alt="Miniatura do Projeto 4" class="project-img">
+            </div>
+            
+            <div class="project-details">
+                <h3>Nome do Projeto 4</h3>
+                <p class="project-description">
+                    .
+                </p>
+                
+                <div class="project-tech-stack">
+                    <span class="tech-badge">Node.js</span>
+                    <span class="tech-badge">MongoDB</span>
+                </div>
+                
+                <div class="project-links">
+                    <a href="#" target="_blank" class="link-btn primary-btn">Ver Demo</a>
+                    <a href="#" target="_blank" class="link-btn secondary-btn">GitHub</a>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</section>
 
 <footer class="main-footer">
     <div class="footer-content container">
@@ -66,19 +194,22 @@
 
         <div class="social-links">
             <a href="https://github.com/Francisco-Neto13" target="_blank">
-                <img src="assets/images/github.png" alt="">
+                <img src="assets/images/github.png" alt="Link para o GitHub">
             </a>
-            <a href="franciscoaneto13@gmail.com">
-                <img src="assets/images/instagram.png" alt="">
+            <a href="https://instagram.com" target="_blank">
+                <img src="assets/images/instagram.png" alt="Link para o Instagram">
             </a>
             <a href="https://www.linkedin.com/" target="_blank">
-                <img src="assets/images/linkedin.png" alt="">
+                <img src="assets/images/linkedin.png" alt="Link para o LinkedIn">
             </a>
         </div>
 
     </div>
 </footer>
 
-    <script src="assets/js/main.js"></script>
-</body>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js"></script>
 
+<script src="assets/js/main.js"></script>
+
+</body>
+</html>
