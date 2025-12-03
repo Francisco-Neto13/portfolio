@@ -98,7 +98,7 @@ function initializePortfolio() {
 
 async function loadGithubStats() {
     try {
-        const response = await fetch('http://localhost:3000/api/github-stats'); 
+        const response = await fetch('https://portfolio-three-gold-45.vercel.app/api/github-stats'); 
         
         if (!response.ok) {
             console.error('API Serverless falhou com status:', response.status);
