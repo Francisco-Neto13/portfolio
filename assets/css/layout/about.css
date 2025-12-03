@@ -1,26 +1,13 @@
-/* ----------------------------------------------------------------
-   about.css: ESTILOS DA SEÇÃO SOBRE MIM
-   ---------------------------------------------------------------- */
-
 .about-section {
     padding: 60px 0;
 }
 
-/* ----------------------------------------------------------------
-   1. ESTILOS DE TÍTULOS E ESTRUTURA
-   ---------------------------------------------------------------- */
-
 .about-subtitle {
-    /* Baseado em .skills-subtitle */
     font-size: 1.8rem;
     color: #bca7ff; 
     margin-bottom: 20px;
     margin-top: 3rem; 
 }
-
-/* ----------------------------------------------------------------
-   2. APRESENTAÇÃO PESSOAL (TIMELINE)
-   ---------------------------------------------------------------- */
 
 .timeline-box {
     background: rgba(10, 5, 25, 0.4); 
@@ -53,11 +40,6 @@
     background: #bca7ff;
     border-radius: 50%;
 }
-
-
-/* ----------------------------------------------------------------
-   3. EXPERIÊNCIA E TRAJETÓRIA (GRID DE CARDS)
-   ---------------------------------------------------------------- */
 
 .experience-grid {
     display: grid;
@@ -175,7 +157,6 @@
     padding: 20px;
 }
 
-/* Imagens no topo (como Hollow Knight e Batman Arkham) */
 .hobby-images-top {
     display: flex;
     justify-content: space-around;
@@ -187,16 +168,15 @@
 .small-game-image-top {
     width: 65px; 
     height: 65px; 
-    object-fit: cover;   /* padronizado para todas as imagens */
+    object-fit: cover;   
     border-radius: 5px;
     margin-bottom: 0; 
 }
 
-/* Imagens principais dos cards */
 .hobby-card img {
     width: 65px; 
     height: 65px;
-    object-fit: cover;   /* corrigido para manter padrão igual às miniaturas */
+    object-fit: cover;   
     border-radius: 5px;
     margin-bottom: 15px;
 }
@@ -212,9 +192,9 @@
     color: #cfc8dd;
     line-height: 1.6; 
     margin-bottom: 10px;
-    text-align: left;     /* mais natural para leitura na web */
-    text-indent: 15px;    /* recuo inicial estilo Word */
+    text-align: left;     
+    text-indent: 15px;    
     -webkit-hyphens: auto; 
     -ms-hyphens: auto; 
-    hyphens: auto;        /* quebra automática de palavras longas */
+    hyphens: auto;        
 }
