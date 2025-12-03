@@ -1,23 +1,38 @@
-.about {
-    padding: 80px 0;
-    min-height: 60vh; /* Mantém a altura mínima que você definiu */
-    
-    /* 🟢 COMPENSAÇÃO CRÍTICA PARA O SCROLL FIXO 🟢 */
-    scroll-margin-top: 85px; 
+.about-section {
+    padding: 60px 0;
 }
 
-/* O título H2 usa a classe .section-title que já existe em projects.css */
+/*  ESTILOS DAS SKILLS  */
+.skills-container {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px;
+}
 
-/* Estilo para o parágrafo de descrição */
-.about-description {
-    max-width: 700px; 
-    color: #cfc8dd; 
-    font-size: 1.1rem; 
-    line-height: 1.6;
-    margin-top: 20px;
-    
-    /* Animação para o texto de entrada */
-    opacity: 0;
-    animation: fadeSlide 1.4s ease forwards;
-    animation-delay: 2s; /* Atrasamos um pouco mais para aparecer depois do título */
+.skills-subtitle {
+    font-size: 1.8rem;
+    color: #bca7ff; 
+    margin-bottom: 20px;
+}
+
+.skill-category {
+    background: rgba(10, 5, 25, 0.4); 
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(155, 92, 255, 0.15); 
+}
+
+.skill-category h4 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(155, 92, 255, 0.2);
+}
+
+.tech-stack-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px; 
 }

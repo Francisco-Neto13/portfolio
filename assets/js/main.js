@@ -1,36 +1,99 @@
-var scroll = new SmoothScroll('a[href*="#"]', {
-    speed: 800, 
-    offset: 85, 
-    easing: 'easeInOutCubic' 
-});
-
-
-const navLinks = document.querySelectorAll('.nav-menu a');
-const sections = document.querySelectorAll('section');    
-
-function updateActiveClass() {
-    let current = ''; 
-
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-
-        if (pageYOffset >= sectionTop - 85) { 
-            current = section.getAttribute('id');
-        }
-    });
-
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        
-        if (link.getAttribute('href').substring(1) === current) {
-            link.classList.add('active');
-        }
-    });
+function loadPartial(id, filePath) {
+    const element = document.getElementById(id);
+    if (element) {
+        return fetch(filePath)
+            .then(response => response.text())
+            .then(html => {
+                element.innerHTML = html;
+            })
+            .catch(error => console.error(`Erro ao carregar ${filePath}:`, error));
+    }
+    return Promise.resolve(); 
 }
 
-window.addEventListener('scroll', updateActiveClass);
+async function loadPartials() {
+    console.log('Iniciando carregamento de parciais...');
+    
+    const partialsToLoad = [
+        { id: 'main-header', path: 'partials/header.html' },
+        { id: 'main-footer', path: 'partials/footer.html' },
+        { id: 'section-hero', path: 'partials/hero.html' },
+        { id: 'section-projects', path: 'partials/projects.html' },
+        { id: 'section-about', path: 'partials/about.html' }
+    ];
 
-window.addEventListener('load', updateActiveClass);
+    const promises = partialsToLoad.map(p => loadPartial(p.id, p.path));
+
+    await Promise.all(promises);
+    
+    console.log('Todos os parciais carregados. Inicializando o portfólio...');
+    
+    initializePortfolio();
+}
+
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+function throttle(func, limit) {
+    let inThrottle;
+    return function() {
+        const args = arguments;
+        const context = this;
+        if (!inThrottle) {
+            func.apply(context, args);
+            inThrottle = true;
+            setTimeout(() => inThrottle = false, limit);
+        }
+    }
+}
+
+function initializePortfolio() {
+    new SmoothScroll('a[href*="#"]', {
+        speed: 800, 
+        offset: 85, 
+        easing: 'easeInOutCubic' 
+    });
+    
+    const navLinks = document.querySelectorAll('.nav-menu a');
+    const sections = document.querySelectorAll('section');    
+
+    function updateActiveClass() {
+        let current = ''; 
+
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+
+            if (pageYOffset >= sectionTop - 85) { 
+                current = section.getAttribute('id');
+            }
+        });
+
+        navLinks.forEach(link => {
+            link.classList.remove('active');
+            
+            if (link.getAttribute('href').substring(1) === current) {
+                link.classList.add('active');
+            }
+        });
+    }
+
+    window.addEventListener('scroll', throttle(updateActiveClass, 100));
+    window.addEventListener('load', updateActiveClass);
+    
+    updateActiveClass(); 
+    
+    loadGithubStats();
+}
 
 
 async function loadGithubStats() {
@@ -63,4 +126,5 @@ async function loadGithubStats() {
     }
 }
 
-loadGithubStats();
+
+document.addEventListener('DOMContentLoaded', loadPartials);

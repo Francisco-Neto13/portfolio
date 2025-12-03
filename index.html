@@ -6,240 +6,30 @@
     <title>Francisco | Portfólio</title>
 
     <link rel="icon" type="image/png" href="assets/images/logo.png">
-
     <link rel="stylesheet" href="assets/css/main.css">
-</head>
+    </head>
 
 <body>
-
-<header class="main-header">
-    <div class="container header-content">
-
-        <a href="#inicio" class="nav-logo">
-            <img src="assets/images/logo.png" alt="Logo - Voltar ao Início" class="logo-header">
-        </a>
-
-        <nav class="nav-menu">
-            <ul>
-                <li><a href="#inicio" class="active">Início</a></li>
-                <li><a href="#projetos">Projetos</a></li>
-            </ul>
-        </nav>
-
-    </div>
-</header>
-
-<video autoplay loop muted playsinline id="background-video">
-    <source src="assets/images/fundo.mp4" type="video/mp4">
-    Seu navegador não suporta a tag do vídeo.
-</video>
-
-<section class="hero container" id="inicio"> 
     
-    <div class="hero-content-wrapper">
-        
-        <div class="hero-content-main">
-            <div class="hero-left">
-                <h1>Francisco Neto</h1>
-                <h2>Desenvolvedor • Estudante de Ciência da Computação</h2>
+        <div id="main-header"></div>
 
-                <p>
-                    Apaixonado por tecnologia, interfaces e automações.
-                    Trabalho com JavaScript e soluções práticas, sempre buscando evoluir
-                    e criar projetos modernos e eficientes.
-                </p>
-            </div>
+    <main>
+        <video autoplay loop muted playsinline id="background-video">
+            <source src="assets/images/fundo.mp4" type="video/mp4">
+            Seu navegador não suporta a tag de vídeo.
+        </video>
 
-            <div class="hero-right">
-                <img src="assets/images/eu.jpg" alt="Foto de Perfil de Francisco Neto">
-            </div>
-        </div>
-        
-    <div class="hero-stats">
-        <h3>Últimos 12 meses GitHub</h3>
-        
-        <div class="stats-grid">
-            <div class="stat-item">
-                <span class="stat-value" id="contributions-count">...</span>
-                <span class="stat-label">Contribuições</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="projects-count">...</span>
-                <span class="stat-label">Projetos</span>
-            </div>
-            <div class="stat-item">
-                <span class="stat-value" id="lines-count">...</span>
-                <span class="stat-label">Alterações de Código</span>
-            </div>
-        </div>
-    </div>
+        <div id="section-hero"></div>
 
-</section>
+        <div id="section-projects"></div>
 
+        <div id="section-about"></div>
+    </main>
 
-<section id="projetos" class="projects container">
-    <h2 class="section-title">Projetos</h2>
+        <div id="main-footer"></div>
     
-    <div class="projects-grid">
-        
-        <div class="project-card">
-            <div class="project-image-container">
-                <img src="assets/images/projeto1.jpg" alt="Miniatura do Cats & Dungeons" class="project-img">
-            </div>
 
-            <div class="project-details">
-                <h3>Cats & Dungeons</h3>
-
-                <p class="project-description">
-                    Cats & Dungeons é um jogo roguelike desenvolvido em Java, com exploração procedural, combate estratégico
-                    e progressão baseada em ondas. Utiliza pathfinding A*, colisão AABB, física vetorial e inventário
-                    estruturado em arrays. Estruturas especiais, puzzles e chefes surgem em fases avançadas, trazendo
-                    variedade e desafios crescentes conforme o jogador evolui.
-                </p>
-
-                <div class="project-tech-stack">
-                    <span class="tech-badge">JAVA</span>
-                    <span class="tech-badge">TinySound</span>
-                    <span class="tech-badge">JSON</span>
-                    <span class="tech-badge">A* Pathfinding</span>
-                    <span class="tech-badge">Física 2D</span>
-                    <span class="tech-badge">AABB Collision</span>
-                    <span class="tech-badge">Arrays</span>
-                    <span class="tech-badge">Game Loop</span>
-                    <span class="tech-badge">Roguelike</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="https://github.com/Francisco-Neto13/Cats-and-Dungeons" target="_blank" class="link-btn primary-btn">GitHub</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-card">
-            <div class="project-image-container">
-                <img src="assets/images/projeto2.png" alt="Miniatura Reconhecimento de Gestos - Teachable Machine" class="project-img">
-            </div>
-
-            <div class="project-details">
-                <h3>Reconhecimento de Gestos • Teachable Machine</h3>
-
-                <p class="project-description">
-                    Projeto que integra um modelo do Teachable Machine com uma aplicação web, capturando gestos via webcam e
-                    exibindo previsões em tempo real. Inclui uma área de testes para avaliar estabilidade das predições e um
-                    mini-jogo educativo onde o usuário imita animais; imagens são carregadas dinamicamente via API protegida.
-                </p>
-
-                <div class="project-tech-stack">
-                    <span class="tech-badge">Teachable Machine</span>
-                    <span class="tech-badge">TensorFlow.js</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">HTML</span>
-                    <span class="tech-badge">CSS</span>
-                    <span class="tech-badge">Pexels API</span>
-                    <span class="tech-badge">WebRTC</span>
-                    <span class="tech-badge">Vercel</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="https://jogo-teachable-machine-animais-6y6v.vercel.app/" target="_blank" class="link-btn primary-btn">Ver Demo</a>
-                    <a href="https://github.com/Francisco-Neto13/jogo-teachable-machine-animais" target="_blank" class="link-btn secondary-btn">GitHub</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-card">
-            <div class="project-image-container">
-                <img src="assets/images/projeto3.png" alt="Miniatura Guardian of Wynn" class="project-img">
-            </div>
-
-            <div class="project-details">
-                <h3>Guardian of Wynn • Discord Bot</h3>
-
-                <p class="project-description">
-                    Bot avançado para Discord, focado em moderação, automação e monitoramento da guilda do Wynncraft. 
-                    Possui backend robusto com requisições constantes à API para acompanhar atividades e aplicar sistema de pontos. 
-                    Inclui logs avançados de mensagens apagadas/editadas, eventos e sorteios. 
-                    Executa rotinas agendadas para tarefas automáticas. 
-                    Utiliza slash commands organizados em módulos e gerenciamento de embeds complexos. 
-                </p>
-
-                <div class="project-tech-stack">
-                    <span class="tech-badge">Node.js</span>
-                    <span class="tech-badge">JavaScript</span>
-                    <span class="tech-badge">Discord.js</span>
-                    <span class="tech-badge">Slash Commands</span>
-                    <span class="tech-badge">JSON</span>
-                    <span class="tech-badge">Event System</span>
-                    <span class="tech-badge">API Integration</span>
-                    <span class="tech-badge">Logs & Transcripts</span>
-                </div>
-
-                <div class="project-links">
-                    <a href="https://github.com/GuardianOfWynn/Guardian-Of-Wynn" target="_blank" class="link-btn primary-btn">GitHub (Privado Momentaneamente)</a>
-                </div>
-            </div>
-        </div>
-
-
-        <div class="project-card">
-            <div class="project-image-container">
-                <img src="assets/images/projeto4.jpg" alt="Miniatura do Projeto 4" class="project-img">
-            </div>
-            
-            <div class="project-details">
-                <h3>Classificação de Câncer de Mama</h3>
-                <p class="project-description">
-                    Implementação completa de uma pipeline de Machine Learning para prever tumores benignos (0) e malignos (1) no dataset Breast Cancer Wisconsin. 
-                    O projeto foca principalmente em modularidade, reprodutibilidade e análise aprofundada de modelos clássicos, comparando seu desempenho através de métricas robustas como F1-Score e ROC-AUC. 
-                    Inclui análise detalhada de erros (FP vs FN) e importância de features.
-                </p>
-                
-                <div class="project-tech-stack">
-                    <span class="tech-badge">Python</span>
-                    <span class="tech-badge">Scikit-learn</span>
-                    <span class="tech-badge">Pandas</span>
-                    <span class="tech-badge">Seaborn</span>
-                    <span class="tech-badge">Classificação Binária</span>
-                    <span class="tech-badge">Joblib</span>
-                    <span class="tech-badge">Análise de Erros</span>
-                </div>
-                
-                <div class="project-links">
-                    <a href="https://github.com/Francisco-Neto13/cancer-diagnosis-ml" target="_blank" class="link-btn primary-btn">GitHub</a>
-                </div>
-            </div>
-        </div>
-        
-    </div>
-</section>
-
-<footer class="main-footer">
-    <div class="footer-content container">
-
-        <p class="footer-copy">Desenvolvido e codificado por Francisco</p>
-
-        <div class="footer-center">
-            © 2025 • Francisco Neto
-        </div>
-
-        <div class="social-links">
-            <a href="https://github.com/Francisco-Neto13" target="_blank">
-                <img src="assets/images/github.png" alt="Link para o GitHub">
-            </a>
-            <a href="https://www.instagram.com/cisscoo_" target="_blank">
-                <img src="assets/images/instagram.png" alt="Link para o Instagram">
-            </a>
-            <a href="https://www.linkedin.com/" target="_blank">
-                <img src="assets/images/linkedin.png" alt="Link para o LinkedIn">
-            </a>
-        </div>
-
-    </div>
-</footer>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js"></script>
-
-<script src="assets/js/main.js"></script>
-
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/smooth-scroll/16.1.3/smooth-scroll.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </body>
 </html>
