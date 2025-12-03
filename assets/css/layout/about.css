@@ -1,19 +1,133 @@
+/* ----------------------------------------------------------------
+   about.css: ESTILOS DA SEÇÃO SOBRE MIM
+   ---------------------------------------------------------------- */
+
 .about-section {
     padding: 60px 0;
 }
 
-/*  ESTILOS DAS SKILLS  */
-.skills-container {
-    margin-top: 30px;
+/* ----------------------------------------------------------------
+   1. ESTILOS DE TÍTULOS E ESTRUTURA
+   ---------------------------------------------------------------- */
+
+.about-subtitle {
+    /* Baseado em .skills-subtitle */
+    font-size: 1.8rem;
+    color: #bca7ff; 
+    margin-bottom: 20px;
+    margin-top: 3rem; 
+}
+
+/* ----------------------------------------------------------------
+   2. APRESENTAÇÃO PESSOAL (TIMELINE)
+   ---------------------------------------------------------------- */
+
+.timeline-box {
+    background: rgba(10, 5, 25, 0.4); 
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(155, 92, 255, 0.15); 
+    margin-bottom: 40px;
+}
+
+.timeline-box ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.timeline-box li {
+    position: relative;
+    padding-left: 20px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+    color: #cfc8dd; 
+}
+
+.timeline-box li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 8px;
+    height: 8px;
+    background: #bca7ff;
+    border-radius: 50%;
+}
+
+
+/* ----------------------------------------------------------------
+   3. EXPERIÊNCIA E TRAJETÓRIA (GRID DE CARDS)
+   ---------------------------------------------------------------- */
+
+.experience-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
     gap: 30px;
+    margin-bottom: 40px;
+}
+
+.experience-card {
+    background: rgba(10, 5, 25, 0.4); 
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(155, 92, 255, 0.15); 
+}
+
+.experience-card h4 {
+    font-size: 1.2rem;
+    color: #fff;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(155, 92, 255, 0.2);
+}
+
+.experience-card .course-title {
+    font-size: 1.1rem;
+    color: #bca7ff; 
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-weight: 600;
+}
+
+.experience-card .course-institution {
+    font-size: 0.9rem;
+    color: #cfc8dd;
+    margin-bottom: 15px;
+}
+
+.curriculum-list {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 5px;
+}
+
+.curriculum-list li {
+    font-size: 0.9rem;
+    color: #cfc8dd;
+    margin-bottom: 5px;
+    position: relative;
+    padding-left: 15px;
+}
+
+.curriculum-list li::before {
+    content: '—'; 
+    color: #bca7ff; 
+    font-weight: bold;
+    position: absolute;
+    left: 0;
 }
 
 .skills-subtitle {
     font-size: 1.8rem;
     color: #bca7ff; 
     margin-bottom: 20px;
+}
+
+.skills-container {
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+    gap: 30px;
 }
 
 .skill-category {
@@ -35,4 +149,72 @@
     display: flex;
     flex-wrap: wrap;
     gap: 8px; 
+}
+
+.tech-badge {
+    background: rgba(155, 92, 255, 0.1); 
+    color: #bca7ff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+
+
+.hobby-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
+    gap: 25px;
+    text-align: center; 
+}
+
+.hobby-card {
+    background: rgba(10, 5, 25, 0.4);
+    border: 1px solid rgba(155, 92, 255, 0.15);
+    border-radius: 10px;
+    padding: 20px;
+}
+
+/* Imagens no topo (como Hollow Knight e Batman Arkham) */
+.hobby-images-top {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 5px;
+    margin-bottom: 15px;
+}
+
+.small-game-image-top {
+    width: 65px; 
+    height: 65px; 
+    object-fit: cover;   /* padronizado para todas as imagens */
+    border-radius: 5px;
+    margin-bottom: 0; 
+}
+
+/* Imagens principais dos cards */
+.hobby-card img {
+    width: 65px; 
+    height: 65px;
+    object-fit: cover;   /* corrigido para manter padrão igual às miniaturas */
+    border-radius: 5px;
+    margin-bottom: 15px;
+}
+
+.hobby-card h4 {
+    color: #ffffff;
+    font-size: 1rem;
+    margin-bottom: 5px;
+}
+
+.hobby-card p {
+    font-size: 0.85rem;
+    color: #cfc8dd;
+    line-height: 1.6; 
+    margin-bottom: 10px;
+    text-align: left;     /* mais natural para leitura na web */
+    text-indent: 15px;    /* recuo inicial estilo Word */
+    -webkit-hyphens: auto; 
+    -ms-hyphens: auto; 
+    hyphens: auto;        /* quebra automática de palavras longas */
 }
