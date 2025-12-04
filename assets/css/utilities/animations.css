@@ -1,18 +1,24 @@
-/* Move o degradê do H1 horizontalmente */
-@keyframes gradientMove {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 50% 50%; }
-    100% { background-position: 0% 50%; }
+/*  Degradê animado com GPU */
+@keyframes gradientMoveGPU {
+    0% { transform: translateX(0%); }
+    100% { transform: translateX(-50%); }
 }
 
-/* Faz o box-shadow do H2 pulsar suavemente */
+
+/* Glow suave no H2 (*/
 @keyframes breathingGlow {
-    0% { text-shadow: 0 0 0px #9b5cff; }
-    50% { text-shadow: 0 0 2px #cfc8dd; }
-    100% { text-shadow: 0 0 0px #9b5cff; }
+    0% {
+        text-shadow: 0 0 0px #9b5cff;
+    }
+    50% {
+        text-shadow: 0 0 2px #cfc8dd;
+    }
+    100% {
+        text-shadow: 0 0 0px #9b5cff;
+    }
 }
 
-/* Animação de Entrada (Slide Up + Fade) */
+/* Animação de entrada  */
 @keyframes fadeSlide {
     0% {
         opacity: 0;

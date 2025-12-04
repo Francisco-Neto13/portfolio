@@ -1,11 +1,19 @@
 .hero {
     min-height: 100vh;
     display: flex;
-    justify-content: center; 
-    align-items: center; 
+    justify-content: center;
+    align-items: center;
     padding: 0 5%;
-    
     scroll-margin-top: 85px;
+
+}
+
+body {
+    background-color: #0d0d1a;
+    /* background-image: url("/assets/images/background.png"); Caso eu queira usar algum dia */
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; 
 }
 
 /* Wrapper Principal  */
@@ -34,19 +42,18 @@
 .hero-left h1 {
     font-size: 3rem;
     font-weight: 700;
+    margin-bottom: 10px;
 
-    /* Degrade */
     background: linear-gradient(90deg, #9B5CFF 0%, #cfc8dd 50%, #9b5cff 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    /* ANIMAÇÕES COMBINADAS */
-    animation: gradientMove 5s ease infinite, fadeSlide 1.4s ease 0.2s forwards; 
-    opacity: 0; 
-    margin-bottom: 10px;
+    animation: fadeSlide 1.4s ease 0.2s forwards;
+    opacity: 0;
 }
+
 
 /* Subtítulo */
 .hero-left h2 {
@@ -96,33 +103,4 @@
     width: 100%;
     height: 100%;
     object-fit: cover;
-}
-
-/* BACKGROUND  */
-
-#background-video {
-    position: fixed;
-    top: 0;
-    left: 0;
-
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-
-    z-index: -100;
-
-    filter: brightness(0.45);
-    pointer-events: none; 
-}
-
-
-.video-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(20, 0, 40, 0.45); 
-    z-index: -50;
-    pointer-events: none;
 }

@@ -1,6 +1,6 @@
 .hero-stats {
-    background: rgba(10, 5, 25, 0.4); 
-    backdrop-filter: blur(4px);
+    backdrop-filter: none;
+    background: rgba(10, 5, 25, 0.55); 
     border-radius: 12px;
     padding: 25px 30px;
     border: 1px solid rgba(155, 92, 255, 0.15); 
