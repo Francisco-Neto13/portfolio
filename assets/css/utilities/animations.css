@@ -1,11 +1,8 @@
-/*  Degradê animado com GPU */
 @keyframes gradientMoveGPU {
     0% { transform: translateX(0%); }
     100% { transform: translateX(-50%); }
 }
 
-
-/* Glow suave no H2 (*/
 @keyframes breathingGlow {
     0% {
         text-shadow: 0 0 0px #9b5cff;
@@ -18,7 +15,6 @@
     }
 }
 
-/* Animação de entrada  */
 @keyframes fadeSlide {
     0% {
         opacity: 0;

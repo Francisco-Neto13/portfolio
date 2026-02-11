@@ -2,12 +2,9 @@
     width: 100%;
     padding: 25px 0;
     margin-top: 40px;
-
     background: rgba(10, 5, 25, 0.35);
     backdrop-filter: blur(6px);
-
     border-top: 1px solid rgba(155, 92, 255, 0.25);
-
     opacity: 0;
     animation: fadeSlide 1.4s ease forwards;
     animation-delay: 1.4s;
@@ -17,7 +14,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
     font-size: 0.85rem;
     color: #cfc8dd;
 }
@@ -31,7 +30,6 @@
     opacity: 0.8;
 }
 
-/* SOCIAL ICONS */
 .social-links {
     display: flex;
     gap: 15px;
@@ -47,4 +45,25 @@
 .social-links a:hover img {
     opacity: 1;
     transform: translateY(-3px) scale(1.1);
+}
+
+@media (max-width: 768px) {
+    .footer-content {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+    .footer-copy {
+        order: 2;
+    }
+
+    .footer-center {
+        order: 1;
+    }
+
+    .social-links {
+        order: 3;
+        margin-top: 5px;
+    }
 }

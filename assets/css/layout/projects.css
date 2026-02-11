@@ -10,7 +10,6 @@
     text-align: center;
     color: #fff; 
     margin-bottom: 50px;
-    
     opacity: 0;
     animation: fadeSlide 1.4s ease forwards;
     animation-delay: 1.6s; 
@@ -18,6 +17,28 @@
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); 
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); 
+    gap: 40px;
+}
+
+@media (max-width: 1024px) {
+    .projects-grid {
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+        gap: 30px;
+    }
+}
+
+@media (max-width: 768px) {
+    .projects {
+        padding: 60px 20px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
 }

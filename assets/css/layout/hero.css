@@ -5,18 +5,15 @@
     align-items: center;
     padding: 0 5%;
     scroll-margin-top: 85px;
-
 }
 
 body {
     background-color: #0d0d1a;
-    /* background-image: url("/assets/images/background.png"); Caso eu queira usar algum dia */
     background-size: cover;
     background-position: center;
     background-attachment: fixed; 
 }
 
-/* Wrapper Principal  */
 .hero-content-wrapper {
     display: flex;
     flex-direction: column; 
@@ -25,7 +22,6 @@ body {
     max-width: 1100px; 
 }
 
-/* Wrapper de Conteúdo Principal */
 .hero-content-main {
     display: flex;
     justify-content: space-between; 
@@ -33,74 +29,117 @@ body {
     gap: 80px;
 }
 
-/* HERO – LEFT CONTENT */
 .hero-left {
     max-width: 550px;
 }
 
-/* Nome */
 .hero-left h1 {
     font-size: 3rem;
     font-weight: 700;
     margin-bottom: 10px;
-
     background: linear-gradient(90deg, #9B5CFF 0%, #cfc8dd 50%, #9b5cff 100%);
     background-size: 300% 300%;
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
-
     animation: fadeSlide 1.4s ease 0.2s forwards;
     opacity: 0;
 }
 
-
-/* Subtítulo */
 .hero-left h2 {
     font-size: 1.8rem;
     color: #c38fff;
     margin-bottom: 20px;
-    
-    /* ANIMAÇÕES COMBINADAS */
     animation: breathingGlow 4s ease-in-out infinite, fadeSlide 1.4s ease 0.5s forwards; 
     opacity: 0;
 }
 
-/* Parágrafo */
 .hero-left p {
     font-size: 1.1rem;
     line-height: 1.6;
     color: #cfc8dd;
-
-    /* ANIMAÇÃO DE ENTRADA */
     animation: fadeSlide 1.4s ease 0.8s forwards;
     opacity: 0;
 }
-
-
-/* HERO – RIGHT CONTENT */
 
 .hero-right {
     width: 320px;
     height: 320px;
     background: #271c44;
-    border-radius: 50%; /* FORMATO CIRCULAR */
+    border-radius: 50%;
     border: 2px solid #dcdcdc;
-
     overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-
     flex-shrink: 0; 
-
     animation: fadeSlide 1.4s ease 1.1s forwards;
     opacity: 0;
 }
-
 
 .hero-right img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+@media (max-width: 968px) {
+    .hero-content-main {
+        gap: 40px;
+    }
+    
+    .hero-left h1 {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        padding-top: 100px;
+        padding-bottom: 50px;
+        height: auto;
+        min-height: 100vh;
+    }
+
+    .hero-content-main {
+        flex-direction: column-reverse;
+        text-align: center;
+        gap: 30px;
+    }
+
+    .hero-left {
+        max-width: 100%;
+    }
+
+    .hero-left h1 {
+        font-size: 2.2rem;
+    }
+
+    .hero-left h2 {
+        font-size: 1.4rem;
+    }
+
+    .hero-right {
+        width: 200px;
+        height: 200px;
+    }
+
+    .hero-content-wrapper {
+        gap: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-left h1 {
+        font-size: 1.8rem;
+    }
+
+    .hero-left p {
+        font-size: 1rem;
+    }
+    
+    .hero-right {
+        width: 160px;
+        height: 160px;
+    }
 }

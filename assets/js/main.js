@@ -44,20 +44,27 @@ function throttle(func, limit) {
     }
 }
 
-function throttle(func, limit) {
-    let inThrottle;
-    return function() {
-        const args = arguments;
-        const context = this;
-        if (!inThrottle) {
-            func.apply(context, args);
-            inThrottle = true;
-            setTimeout(() => inThrottle = false, limit);
-        }
-    }
-}
-
 function initializePortfolio() {
+    const menuIcon = document.querySelector('.mobile-menu-icon');
+    const navMenu = document.querySelector('.nav-menu');
+
+    if (menuIcon && navMenu) {
+        menuIcon.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+            });
+        });
+    }
+
+    const yearSpan = document.getElementById('year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+
     new SmoothScroll('a[href*="#"]', {
         speed: 800, 
         offset: 85, 
@@ -72,7 +79,6 @@ function initializePortfolio() {
 
         sections.forEach(section => {
             const sectionTop = section.offsetTop;
-
             if (pageYOffset >= sectionTop - 85) { 
                 current = section.getAttribute('id');
             }
@@ -80,7 +86,6 @@ function initializePortfolio() {
 
         navLinks.forEach(link => {
             link.classList.remove('active');
-            
             if (link.getAttribute('href').substring(1) === current) {
                 link.classList.add('active');
             }
@@ -91,10 +96,8 @@ function initializePortfolio() {
     window.addEventListener('load', updateActiveClass);
     
     updateActiveClass(); 
-    
     loadGithubStats();
 }
-
 
 async function loadGithubStats() {
     try {
@@ -108,7 +111,6 @@ async function loadGithubStats() {
         const data = await response.json();
 
         document.getElementById("contributions-count").textContent = data.contributions ? data.contributions.toLocaleString('pt-BR') : '---';
-        
         document.getElementById("projects-count").textContent = data.repos ? data.repos : '---';
         
         if (data.lines && data.lines > 0) {
@@ -125,6 +127,5 @@ async function loadGithubStats() {
         document.getElementById("lines-count").textContent = '---';
     }
 }
-
 
 document.addEventListener('DOMContentLoaded', loadPartials);

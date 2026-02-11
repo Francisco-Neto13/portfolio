@@ -142,7 +142,6 @@
     white-space: nowrap;
 }
 
-
 .hobby-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); 
@@ -192,9 +191,28 @@
     color: #cfc8dd;
     line-height: 1.6; 
     margin-bottom: 10px;
-    text-align: left;     
+    text-align: left;    
     text-indent: 15px;    
     -webkit-hyphens: auto; 
     -ms-hyphens: auto; 
     hyphens: auto;        
+}
+
+@media (max-width: 768px) {
+    .about-subtitle, .skills-subtitle {
+        font-size: 1.5rem;
+        text-align: center;
+    }
+
+    .experience-grid, .skills-container, .hobby-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .timeline-box {
+        padding: 15px;
+    }
+
+    .tech-stack-group {
+        justify-content: center;
+    }
 }
