@@ -1,17 +1,33 @@
 .about-section {
-    padding: 60px 0;
+    padding: 80px 0;
 }
 
-.about-subtitle {
+.about-section h2, 
+.about-subtitle, 
+.skills-subtitle {
+    text-align: center;
+    width: 100%;
+    display: block;
+    color: #fff;
+    font-weight: 600;
+}
+
+.about-section h2 {
+    font-size: 2.5rem;
+    margin: 0 auto 80px auto;
+}
+
+.about-subtitle, 
+.skills-subtitle {
     font-size: 1.8rem;
     color: #bca7ff; 
-    margin-bottom: 20px;
-    margin-top: 3rem; 
+    margin-top: 5rem;    
+    margin-bottom: 60px; 
 }
 
 .timeline-box {
     background: rgba(10, 5, 25, 0.4); 
-    padding: 20px;
+    padding: 30px; 
     border-radius: 10px;
     border: 1px solid rgba(155, 92, 255, 0.15); 
     margin-bottom: 40px;
@@ -24,9 +40,9 @@
 
 .timeline-box li {
     position: relative;
-    padding-left: 20px;
-    margin-bottom: 15px;
-    line-height: 1.6;
+    padding-left: 25px;
+    margin-bottom: 18px;
+    line-height: 1.7;
     color: #cfc8dd; 
 }
 
@@ -34,7 +50,7 @@
     content: '';
     position: absolute;
     left: 0;
-    top: 8px;
+    top: 9px;
     width: 8px;
     height: 8px;
     background: #bca7ff;
@@ -50,13 +66,14 @@
 
 .experience-card {
     background: rgba(10, 5, 25, 0.4); 
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     border: 1px solid rgba(155, 92, 255, 0.15); 
+    text-align: left; 
 }
 
 .experience-card h4 {
-    font-size: 1.2rem;
+    font-size: 1.25rem;
     color: #fff;
     margin-bottom: 15px;
     padding-bottom: 10px;
@@ -67,7 +84,7 @@
     font-size: 1.1rem;
     color: #bca7ff; 
     margin-top: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     font-weight: 600;
 }
 
@@ -75,20 +92,22 @@
     font-size: 0.9rem;
     color: #cfc8dd;
     margin-bottom: 15px;
+    font-style: italic;
 }
 
 .curriculum-list {
     list-style: none;
     padding-left: 0;
-    margin-top: 5px;
+    margin-top: 10px;
 }
 
 .curriculum-list li {
     font-size: 0.9rem;
     color: #cfc8dd;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
     position: relative;
-    padding-left: 15px;
+    padding-left: 20px;
+    line-height: 1.5;
 }
 
 .curriculum-list li::before {
@@ -97,12 +116,6 @@
     font-weight: bold;
     position: absolute;
     left: 0;
-}
-
-.skills-subtitle {
-    font-size: 1.8rem;
-    color: #bca7ff; 
-    margin-bottom: 20px;
 }
 
 .skills-container {
@@ -114,7 +127,7 @@
 
 .skill-category {
     background: rgba(10, 5, 25, 0.4); 
-    padding: 20px;
+    padding: 25px;
     border-radius: 10px;
     border: 1px solid rgba(155, 92, 255, 0.15); 
 }
@@ -122,7 +135,7 @@
 .skill-category h4 {
     font-size: 1.2rem;
     color: #fff;
-    margin-bottom: 15px;
+    margin-bottom: 18px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(155, 92, 255, 0.2);
 }
@@ -130,16 +143,18 @@
 .tech-stack-group {
     display: flex;
     flex-wrap: wrap;
-    gap: 8px; 
+    gap: 10px; 
 }
 
 .tech-badge {
     background: rgba(155, 92, 255, 0.1); 
     color: #bca7ff;
-    padding: 5px 10px;
+    padding: 6px 12px;
     border-radius: 5px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
+    font-weight: 500;
     white-space: nowrap;
+    border: 1px solid rgba(155, 92, 255, 0.1);
 }
 
 .hobby-grid {
@@ -153,55 +168,49 @@
     background: rgba(10, 5, 25, 0.4);
     border: 1px solid rgba(155, 92, 255, 0.15);
     border-radius: 10px;
-    padding: 20px;
+    padding: 25px;
 }
 
 .hobby-images-top {
     display: flex;
-    justify-content: space-around;
+    justify-content: center;
     align-items: center;
-    gap: 5px;
-    margin-bottom: 15px;
+    gap: 10px;
+    margin-bottom: 20px;
 }
 
 .small-game-image-top {
     width: 65px; 
     height: 65px; 
     object-fit: cover;   
-    border-radius: 5px;
-    margin-bottom: 0; 
-}
-
-.hobby-card img {
-    width: 65px; 
-    height: 65px;
-    object-fit: cover;   
-    border-radius: 5px;
-    margin-bottom: 15px;
+    border-radius: 8px;
 }
 
 .hobby-card h4 {
     color: #ffffff;
-    font-size: 1rem;
-    margin-bottom: 5px;
+    font-size: 1.1rem;
+    margin-bottom: 10px;
 }
 
 .hobby-card p {
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     color: #cfc8dd;
     line-height: 1.6; 
     margin-bottom: 10px;
     text-align: left;    
     text-indent: 15px;    
-    -webkit-hyphens: auto; 
-    -ms-hyphens: auto; 
-    hyphens: auto;        
 }
 
 @media (max-width: 768px) {
+    .about-section h2 {
+        font-size: 2rem;
+        margin-bottom: 40px;
+    }
+
     .about-subtitle, .skills-subtitle {
         font-size: 1.5rem;
-        text-align: center;
+        margin-top: 3rem;
+        margin-bottom: 30px;
     }
 
     .experience-grid, .skills-container, .hobby-grid {
@@ -209,7 +218,7 @@
     }
 
     .timeline-box {
-        padding: 15px;
+        padding: 20px;
     }
 
     .tech-stack-group {
