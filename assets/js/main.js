@@ -23,11 +23,9 @@ async function loadPartials() {
     ];
 
     const promises = partialsToLoad.map(p => loadPartial(p.id, p.path));
-
     await Promise.all(promises);
     
     console.log('Todos os parciais carregados. Inicializando o portfólio...');
-    
     initializePortfolio();
 }
 
@@ -101,31 +99,27 @@ function initializePortfolio() {
 
 async function loadGithubStats() {
     try {
-        const response = await fetch('https://portfolio-three-gold-45.vercel.app/api/github-stats'); 
+        const response = await fetch('/api/github-stats');
         
         if (!response.ok) {
-            console.error('API Serverless falhou com status:', response.status);
+            console.error('API falhou com status:', response.status);
             throw new Error('Erro ao buscar estatísticas da API.');
         }
 
         const data = await response.json();
 
-        document.getElementById("contributions-count").textContent = data.contributions ? data.contributions.toLocaleString('pt-BR') : '---';
-        document.getElementById("projects-count").textContent = data.repos ? data.repos : '---';
-        
-        if (data.lines && data.lines > 0) {
-             const linesK = (data.lines / 1000).toFixed(1) + "k";
-             document.getElementById("lines-count").textContent = linesK;
-        } else {
-             document.getElementById("lines-count").textContent = '0k';
-        }
+        document.getElementById("contributions-count").textContent =
+            data.contributions ? data.contributions.toLocaleString('pt-BR') : '---';
+
+        document.getElementById("projects-count").textContent =
+            data.repos ? data.repos : '---';
 
     } catch (err) {
         console.error('Falha ao carregar estatísticas:', err);
         document.getElementById("contributions-count").textContent = '---';
         document.getElementById("projects-count").textContent = '---';
-        document.getElementById("lines-count").textContent = '---';
     }
 }
+
 
 document.addEventListener('DOMContentLoaded', loadPartials);

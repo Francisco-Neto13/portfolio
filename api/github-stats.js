@@ -1,4 +1,16 @@
 export default async function handler(req, res) {
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,OPTIONS,PATCH,DELETE,POST,PUT');
+    res.setHeader(
+        'Access-Control-Allow-Headers',
+        'X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version'
+    );
+
+    if (req.method === 'OPTIONS') {
+        return res.status(200).end();
+    }
+
     try {
         const token = process.env.GITHUB_TOKEN;
         const username = "Francisco-Neto13";
@@ -11,26 +23,6 @@ export default async function handler(req, res) {
         const lastYear = new Date();
         lastYear.setFullYear(now.getFullYear() - 1);
 
-        const fromDate = lastYear.toISOString();
-        const toDate = now.toISOString();
-
-        const gqlQuery = `
-            query($username: String!, $from: DateTime!, $to: DateTime!) {
-                user(login: $username) {
-                    contributionsCollection(from: $from, to: $to) {
-                        totalCommitContributions
-                        restrictedContributionsCount
-                        contributionCalendar {
-                            totalContributions
-                        }
-                    }
-                    repositories(privacy: PUBLIC) {
-                        totalCount
-                    }
-                }
-            }
-        `;
-
         const gqlRes = await fetch("https://api.github.com/graphql", {
             method: "POST",
             headers: {
@@ -38,72 +30,49 @@ export default async function handler(req, res) {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({
-                query: gqlQuery,
-                variables: { username, from: fromDate, to: toDate }
+                query: `
+                    query($username: String!, $from: DateTime!, $to: DateTime!) {
+                        user(login: $username) {
+                            contributionsCollection(from: $from, to: $to) {
+                                totalCommitContributions
+                                restrictedContributionsCount
+                                contributionCalendar {
+                                    totalContributions
+                                }
+                            }
+                            repositories(privacy: PUBLIC, first: 100, ownerAffiliations: OWNER) {
+                                totalCount
+                            }
+                        }
+                    }
+                `,
+                variables: {
+                    username,
+                    from: lastYear.toISOString(),
+                    to: now.toISOString()
+                }
             })
         });
 
-        const gqlJson = await gqlRes.json();
+        const text = await gqlRes.text();
+        if (!text) return res.status(500).json({ error: "Resposta vazia do GitHub" });
 
-        if (!gqlJson.data) {
-            return res.status(500).json({ error: "Erro no GraphQL", details: gqlJson });
+        const json = JSON.parse(text);
+
+        if (!json.data || json.errors) {
+            return res.status(500).json({ error: "Erro GraphQL", details: json });
         }
 
-        const col = gqlJson.data.user.contributionsCollection;
+        const col = json.data.user.contributionsCollection;
 
-        const calendarContributions = col.contributionCalendar.totalContributions;
-
-        const totalCommits = col.totalCommitContributions + col.restrictedContributionsCount;
-
-        const publicRepos = gqlJson.data.user.repositories.totalCount;
-
-        let totalLines = 0;
-
-        const repoRes = await fetch("https://api.github.com/user/repos?per_page=100", {
-            headers: {
-                Authorization: "Bearer " + token,
-                Accept: "application/vnd.github+json"
-            }
+        return res.status(200).json({
+            contributions: col.contributionCalendar.totalContributions,
+            commits: col.totalCommitContributions + col.restrictedContributionsCount,
+            repos: json.data.user.repositories.totalCount
         });
 
-        const repos = await repoRes.json();
-
-        for (const repo of repos) {
-            const statsURL = `https://api.github.com/repos/${repo.owner.login}/${repo.name}/stats/code_frequency`;
-
-            const statsRes = await fetch(statsURL, {
-                headers: {
-                    Authorization: "Bearer " + token,
-                    Accept: "application/vnd.github+json"
-                }
-            });
-
-            if (statsRes.status === 202) continue; 
-
-            if (statsRes.ok) {
-                const stats = await statsRes.json();
-                if (Array.isArray(stats)) {
-                    stats.forEach(week => {
-                        totalLines += Math.abs(week[1]) + Math.abs(week[2]);
-                    });
-                }
-            }
-        }
-
-return res.status(200).json({
-    contributions: calendarContributions, 
-    repos: publicRepos,
-    lines: totalLines,
-    debug: {
-        commits_raw: col.totalCommitContributions,
-        commits_private: col.restrictedContributionsCount,
-        contributions_calendar: calendarContributions
-    }
-});
-
-
     } catch (err) {
-        console.error("ERRO INESPERADO:", err);
+        console.error(err);
         return res.status(500).json({ error: "Erro interno do servidor." });
     }
 }
