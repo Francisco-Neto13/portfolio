@@ -22,29 +22,29 @@
 }
 
 .footer-copy {
+    flex: 1;
+    text-align: left;
     color: #bca7ff;
     font-weight: 500;
 }
 
 .footer-center {
+    flex: 1;
+    text-align: center;
     opacity: 0.8;
 }
 
 .social-links {
+    flex: 1;
     display: flex;
+    justify-content: flex-end;
     gap: 15px;
 }
-
 .social-links a img {
     width: 22px;
     height: 22px;
     opacity: 0.75;
     transition: transform .35s ease, opacity .35s ease;
-}
-
-.social-links a:hover img {
-    opacity: 1;
-    transform: translateY(-3px) scale(1.1);
 }
 
 @media (max-width: 768px) {
@@ -53,17 +53,17 @@
         gap: 15px;
         text-align: center;
     }
-
     .footer-copy {
         order: 2;
+        text-align: center;
     }
-
     .footer-center {
         order: 1;
+        text-align: center;
     }
-
     .social-links {
         order: 3;
+        justify-content: center;
         margin-top: 5px;
     }
 }
