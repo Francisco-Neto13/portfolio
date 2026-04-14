@@ -60,3 +60,20 @@ img {
   }
 }
 
+@media (max-width: 767px) {
+  .marquee-row {
+    animation-duration: 40s;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee-row,
+  .marquee-row--reverse {
+    animation: none;
+  }
+}
+

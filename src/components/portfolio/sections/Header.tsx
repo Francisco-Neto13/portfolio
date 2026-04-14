@@ -34,7 +34,7 @@ export function Header({
           : "border-transparent bg-[#0a0519]/20 backdrop-blur-sm"
       }`}
     >
-      <div className="mx-auto flex h-full w-full max-w-[1300px] items-center justify-between px-5 lg:px-10">
+      <div className="mx-auto flex h-full w-full max-w-[1300px] items-center justify-between px-4 sm:px-6 lg:px-10">
         <a
           href="#inicio"
           className="transition-opacity hover:opacity-85"
@@ -45,29 +45,35 @@ export function Header({
         >
           <Image
             src="/assets/images/logo.webp"
-            alt="Logo - Voltar ao início"
+            alt="Logo - Voltar ao inicio"
             width={52}
             height={52}
-            className="h-[52px] w-[52px] object-contain md:h-12 md:w-12"
+            className="h-11 w-11 object-contain sm:h-12 sm:w-12"
             priority
           />
         </a>
 
-        <button className="flex flex-col gap-1.5 p-2 md:hidden" aria-label="Abrir menu" onClick={onToggleMobileMenu}>
+        <button
+          className="flex flex-col gap-1.5 p-2 md:hidden"
+          aria-label="Abrir menu"
+          aria-expanded={mobileMenuOpen}
+          aria-controls="mobile-menu"
+          onClick={onToggleMobileMenu}
+        >
           <span className="h-0.5 w-7 rounded-full bg-white" />
           <span className="h-0.5 w-7 rounded-full bg-white" />
           <span className="h-0.5 w-7 rounded-full bg-white" />
         </button>
 
         <nav className="hidden md:block">
-          <ul className="flex items-center gap-8 lg:gap-10">
+          <ul className="flex items-center gap-6 lg:gap-10">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
                 <li key={item.href}>
                   <a
                     href={item.href}
-                    className={`border-b-2 pb-1 text-base transition-colors ${
+                    className={`border-b-2 pb-1 text-sm transition-colors lg:text-base ${
                       isActive
                         ? "border-violet-400 text-white"
                         : "border-transparent text-zinc-300 hover:border-violet-400 hover:text-white"
@@ -87,7 +93,10 @@ export function Header({
       </div>
 
       {mobileMenuOpen ? (
-        <nav className="fixed inset-x-0 top-20 z-40 h-[calc(100vh-80px)] bg-[#0a0519]/95 px-8 py-14 backdrop-blur-2xl md:hidden">
+        <nav
+          id="mobile-menu"
+          className="fixed inset-x-0 top-20 z-40 h-[calc(100svh-80px)] bg-[#0a0519]/95 px-6 py-10 backdrop-blur-2xl md:hidden"
+        >
           <ul className="flex h-full flex-col items-center justify-center gap-10">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
@@ -116,4 +125,3 @@ export function Header({
     </header>
   );
 }
-

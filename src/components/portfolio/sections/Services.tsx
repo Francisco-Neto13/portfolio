@@ -77,29 +77,33 @@ export function Services() {
         onViewportEnter={reveal.onViewportEnter}
         onViewportLeave={reveal.onViewportLeave}
         viewport={{ amount: 0.2 }}
-        className="relative mx-auto w-full max-w-[1300px] px-5 py-20 lg:px-10"
+        className="relative mx-auto w-full max-w-[1300px] px-4 py-14 sm:px-6 md:py-20 lg:px-10"
       >
         <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Serviços</p>
-          <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl">Meus Serviços</h2>
-          <p className="max-w-[650px] text-base leading-relaxed text-zinc-300">
-            Soluções que unem design, código e eficiência para construir produtos modernos, estáveis e prontos para
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Servicos</p>
+          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Meus Servicos</h2>
+          <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
+            Solucoes que unem design, codigo e eficiencia para construir produtos modernos, estaveis e prontos para
             evoluir.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
           {services.map((service) => (
             <article
               key={service.title}
-              className="group flex min-h-[320px] flex-col items-center rounded-2xl border border-violet-300/20 bg-[#100b24]/72 px-6 py-8 text-center transition hover:-translate-y-1 hover:border-violet-300/45 hover:bg-[#130d2a]"
+              className="group flex min-h-[250px] flex-col items-center rounded-2xl border border-violet-300/20 bg-[#100b24]/72 px-5 py-6 text-center transition hover:-translate-y-1 hover:border-violet-300/45 hover:bg-[#130d2a] sm:min-h-[280px] sm:px-6 sm:py-8"
             >
-              <span className="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-xl border border-violet-300/30 bg-violet-400/10 text-violet-200 transition group-hover:text-violet-100">
+              <span className="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-violet-300/30 bg-violet-400/10 text-violet-200 transition group-hover:text-violet-100 sm:h-12 sm:w-12">
                 <ServiceGlyph icon={service.icon} />
               </span>
 
-              <h3 className="mt-5 min-h-[76px] text-[1.55rem] font-extrabold leading-tight text-white">{service.title}</h3>
-              <p className="mx-auto mt-4 max-w-[340px] text-base leading-relaxed text-zinc-300">{service.description}</p>
+              <h3 className="mt-4 min-h-[58px] text-[1.2rem] font-extrabold leading-tight text-white sm:mt-5 sm:min-h-[68px] sm:text-[1.35rem]">
+                {service.title}
+              </h3>
+              <p className="mx-auto mt-3 max-w-[340px] text-sm leading-relaxed text-zinc-300 sm:mt-4 sm:text-base">
+                {service.description}
+              </p>
             </article>
           ))}
         </div>

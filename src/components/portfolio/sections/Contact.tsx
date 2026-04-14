@@ -52,32 +52,34 @@ export function Contact() {
         onViewportEnter={reveal.onViewportEnter}
         onViewportLeave={reveal.onViewportLeave}
         viewport={{ amount: 0.2 }}
-        className="relative mx-auto flex min-h-[74vh] w-full max-w-[1400px] items-start px-5 pb-24 pt-24 lg:px-10"
+        className="relative mx-auto flex min-h-[82svh] w-full max-w-[1400px] items-start px-4 pb-16 pt-16 sm:px-6 md:min-h-[72svh] md:pb-24 md:pt-24 lg:px-10"
       >
         <div className="mx-auto w-full max-w-[1220px]">
           <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Contato</p>
-            <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl">Fale Comigo</h2>
-            <p className="max-w-[650px] text-base leading-relaxed text-zinc-300">
-Estou disponível para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e
+            <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Fale comigo</h2>
+            <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
+              Estou disponivel para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e
               me chama.
             </p>
           </div>
 
-<div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {contactLinks.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
                 target={item.href.startsWith("http") ? "_blank" : undefined}
                 rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                className="group flex min-h-[108px] flex-col items-start justify-between gap-3 rounded-2xl border border-violet-300/20 bg-[#100b24]/75 px-5 py-5 transition hover:-translate-y-0.5 hover:border-violet-300/45 hover:bg-[#120d28]"
+                className="group flex min-h-[112px] flex-col items-start justify-between gap-3 rounded-2xl border border-violet-300/20 bg-[#100b24]/75 px-4 py-4 transition hover:-translate-y-0.5 hover:border-violet-300/45 hover:bg-[#120d28] sm:px-5 sm:py-5"
               >
                 <div className="flex items-center gap-3">
                   <ContactIcon label={item.label} />
-                  <span className="text-sm font-semibold uppercase tracking-[0.12em] text-zinc-100">{item.label}</span>
+                  <span className="text-xs font-semibold uppercase tracking-[0.12em] text-zinc-100 sm:text-sm">
+                    {item.label}
+                  </span>
                 </div>
-                <span className="text-xs text-zinc-300 transition group-hover:text-violet-200 sm:text-sm">
+                <span className="break-all text-xs text-zinc-300 transition group-hover:text-violet-200 sm:text-sm">
                   {item.href.replace(/^https?:\/\//, "").replace(/^mailto:/, "")}
                 </span>
               </a>

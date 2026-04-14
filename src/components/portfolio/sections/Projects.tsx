@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { projects } from "@/components/portfolio/lib/data";
 import { motion } from "framer-motion";
 import Image from "next/image";
@@ -20,7 +20,10 @@ function getRelativeOffset(index: number, activeIndex: number, total: number) {
 export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isInViewport, setIsInViewport] = useState(false);
+  const [viewportWidth, setViewportWidth] = useState(1280);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const touchStartXRef = useRef<number | null>(null);
+  const touchStartYRef = useRef<number | null>(null);
   const activeProject = projects[activeIndex];
   const reveal = useDirectionalReveal(-30, 0.7);
   const githubReveal = useDirectionalReveal(-18, 0.55);
@@ -34,13 +37,19 @@ export function Projects() {
   }, []);
 
   useEffect(() => {
+    const handleResize = () => setViewportWidth(window.innerWidth);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const section = sectionRef.current;
     if (!section) return;
 
-    const observer = new IntersectionObserver(
-      ([entry]) => setIsInViewport(entry.isIntersecting),
-      { threshold: 0.35 }
-    );
+    const observer = new IntersectionObserver(([entry]) => setIsInViewport(entry.isIntersecting), {
+      threshold: 0.35
+    });
 
     observer.observe(section);
     return () => observer.disconnect();
@@ -74,6 +83,61 @@ export function Projects() {
     return () => window.removeEventListener("keydown", handleKeyboard);
   }, [isInViewport, nextProject, prevProject]);
 
+  const slideDistance = useMemo(() => {
+    if (viewportWidth < 480) return 112;
+    if (viewportWidth < 640) return 136;
+    if (viewportWidth < 768) return 154;
+    if (viewportWidth < 1024) return 176;
+    return 210;
+  }, [viewportWidth]);
+
+  const sliderHeight = useMemo(() => {
+    if (viewportWidth < 480) return "h-[240px]";
+    if (viewportWidth < 640) return "h-[280px]";
+    if (viewportWidth < 768) return "h-[315px]";
+    if (viewportWidth < 1024) return "h-[345px]";
+    return "h-[370px]";
+  }, [viewportWidth]);
+
+  const calendarSettings = useMemo(() => {
+    if (viewportWidth < 480) return { blockSize: 8, blockMargin: 3, fontSize: 10 };
+    if (viewportWidth < 640) return { blockSize: 10, blockMargin: 3, fontSize: 11 };
+    if (viewportWidth < 900) return { blockSize: 12, blockMargin: 4, fontSize: 12 };
+    return { blockSize: 14, blockMargin: 5, fontSize: 14 };
+  }, [viewportWidth]);
+
+  const handleSliderTouchStart = (event: React.TouchEvent<HTMLDivElement>) => {
+    const touch = event.touches[0];
+    touchStartXRef.current = touch.clientX;
+    touchStartYRef.current = touch.clientY;
+  };
+
+  const handleSliderTouchEnd = (event: React.TouchEvent<HTMLDivElement>) => {
+    const startX = touchStartXRef.current;
+    const startY = touchStartYRef.current;
+
+    touchStartXRef.current = null;
+    touchStartYRef.current = null;
+
+    if (startX === null || startY === null) return;
+
+    const touch = event.changedTouches[0];
+    const deltaX = touch.clientX - startX;
+    const deltaY = touch.clientY - startY;
+    const absX = Math.abs(deltaX);
+    const absY = Math.abs(deltaY);
+
+    // Only trigger when horizontal intent is clear.
+    if (absX < 44 || absX <= absY * 1.2) return;
+
+    if (deltaX < 0) {
+      nextProject();
+      return;
+    }
+
+    prevProject();
+  };
+
   return (
     <section
       ref={sectionRef}
@@ -86,21 +150,21 @@ export function Projects() {
         onViewportEnter={reveal.onViewportEnter}
         onViewportLeave={reveal.onViewportLeave}
         viewport={{ amount: 0.15 }}
-        className="relative mx-auto w-full max-w-[1300px] px-5 py-16 lg:px-10"
+        className="relative mx-auto w-full max-w-[1300px] px-4 py-14 sm:px-6 md:py-16 lg:px-10"
       >
         <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
-<p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Seleção de trabalhos</p>
-          <h2 className="text-4xl font-bold leading-tight text-white md:text-5xl">Projetos em destaque</h2>
-          <p className="max-w-[650px] text-base leading-relaxed text-zinc-300">
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Selecao de trabalhos</p>
+          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Projetos em destaque</h2>
+          <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
             Navegue projeto por projeto em um cover flow 3D: o item ativo fica em destaque no centro e os outros
             permanecem ao fundo.
           </p>
         </div>
 
-        <div className="grid items-start gap-6 lg:grid-cols-[minmax(0,1.45fr)_minmax(330px,0.8fr)]">
+        <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(330px,0.8fr)]">
           <div>
-            <div className="mb-5 flex items-center justify-between gap-4">
-              <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">Use as setas do teclado ou os botões</p>
+            <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">Use setas do teclado ou os botoes</p>
 
               <div className="flex items-center gap-2">
                 <button
@@ -122,7 +186,11 @@ export function Projects() {
               </div>
             </div>
 
-            <div className="relative h-[280px] [perspective:1900px] sm:h-[320px] md:h-[360px]">
+            <div
+              className={`relative ${sliderHeight} touch-pan-y [perspective:1900px]`}
+              onTouchStart={handleSliderTouchStart}
+              onTouchEnd={handleSliderTouchEnd}
+            >
               {projects.map((project, index) => {
                 const offset = getRelativeOffset(index, activeIndex, projects.length);
                 const absOffset = Math.abs(offset);
@@ -132,7 +200,7 @@ export function Projects() {
                   return null;
                 }
 
-                const x = offset * 210;
+                const x = offset * slideDistance;
                 const rotateY = offset * -18;
                 const scale = isActive ? 1 : 0.84;
                 const opacity = isActive ? 1 : 0.34;
@@ -153,7 +221,7 @@ export function Projects() {
                       zIndex: 40 - absOffset,
                       filter: blur
                     }}
-                    className="absolute left-1/2 top-0 h-full w-[92%] max-w-[600px] -translate-x-1/2 overflow-hidden rounded-2xl border border-violet-300/25 bg-[#0f0a23]/85 shadow-[0_20px_45px_rgba(8,4,18,0.55)]"
+                    className="absolute left-1/2 top-0 h-full w-[90%] max-w-[600px] -translate-x-1/2 overflow-hidden rounded-2xl border border-violet-300/25 bg-[#0f0a23]/85 shadow-[0_20px_45px_rgba(8,4,18,0.55)] sm:w-[92%]"
                     onClick={() => setActiveIndex(index)}
                     aria-hidden={!isActive}
                   >
@@ -161,7 +229,7 @@ export function Projects() {
                       <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                      <span className="ml-3 text-xs text-zinc-300/90">{project.title}</span>
+                      <span className="ml-3 line-clamp-1 text-xs text-zinc-300/90">{project.title}</span>
                     </div>
 
                     <div className="relative h-[calc(100%-42px)] overflow-hidden">
@@ -169,13 +237,13 @@ export function Projects() {
                         src={project.image}
                         alt={project.imageAlt}
                         fill
-                        sizes="(max-width: 768px) 92vw, (max-width: 1200px) 600px, 600px"
+                        sizes="(max-width: 768px) 90vw, (max-width: 1200px) 620px, 600px"
                         quality={72}
                         className="object-cover"
                       />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0519]/78 via-[#0a0519]/30 to-transparent" />
-                      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4">
-                        <p className="text-lg font-semibold text-violet-100 md:text-xl">{project.title}</p>
+                      <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3 sm:p-4">
+                        <p className="text-base font-semibold text-violet-100 sm:text-lg md:text-xl">{project.title}</p>
                       </div>
                     </div>
                   </motion.article>
@@ -203,9 +271,9 @@ export function Projects() {
             initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="w-full rounded-2xl border border-violet-300/20 bg-[#0f0a23]/72 p-5 md:p-6 lg:sticky lg:top-24"
+            className="w-full rounded-2xl border border-violet-300/20 bg-[#0f0a23]/72 p-5 sm:p-6 xl:sticky xl:top-24"
           >
-            <h3 className="text-2xl font-semibold text-violet-100">{activeProject.title}</h3>
+            <h3 className="text-xl font-semibold text-violet-100 sm:text-2xl">{activeProject.title}</h3>
             <p className="mt-3 text-sm leading-relaxed text-zinc-300 md:text-[15px]">{activeProject.description}</p>
 
             <div className="mt-4 flex flex-wrap gap-2">
@@ -238,18 +306,18 @@ export function Projects() {
           onViewportEnter={githubReveal.onViewportEnter}
           onViewportLeave={githubReveal.onViewportLeave}
           viewport={{ amount: 0.2 }}
-          className="mt-14"
+          className="mt-12 md:mt-14"
         >
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-violet-300">GitHub</p>
 
-          <div className="rounded-2xl border border-violet-300/20 bg-[#100b24]/72 p-4 md:p-6">
+          <div className="rounded-2xl border border-violet-300/20 bg-[#100b24]/72 p-3 sm:p-4 md:p-6">
             <div className="w-full overflow-x-auto">
               <div className="mx-auto min-w-max [&_.react-activity-calendar]:mx-auto">
                 <GitHubCalendar
                   username="Francisco-Neto13"
-                  blockSize={14}
-                  blockMargin={5}
-                  fontSize={14}
+                  blockSize={calendarSettings.blockSize}
+                  blockMargin={calendarSettings.blockMargin}
+                  fontSize={calendarSettings.fontSize}
                   colorScheme="dark"
                   theme={{
                     dark: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"],
@@ -264,4 +332,3 @@ export function Projects() {
     </section>
   );
 }
-

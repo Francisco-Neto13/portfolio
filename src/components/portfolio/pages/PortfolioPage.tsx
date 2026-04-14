@@ -16,19 +16,37 @@ export function PortfolioPage() {
 
   const year = useMemo(() => new Date().getFullYear(), []);
 
-useEffect(() => {
+  useEffect(() => {
+    document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileMenuOpen]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setMobileMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
     const sections = ["inicio", "trajetoria", "projetos", "servicos", "contato"];
 
     const handleScroll = () => {
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
+      const headerOffset = window.innerWidth < 768 ? 110 : 140;
 
       const contatoSection = document.getElementById("contato");
       if (contatoSection) {
         const sectionTop = contatoSection.offsetTop;
-        const sectionBottom = sectionTop + contatoSection.offsetHeight;
-        
-        if (scrollY + windowHeight * 0.3 >= sectionTop) {
+
+        if (scrollY + windowHeight * 0.38 >= sectionTop) {
           setActiveSection("contato");
           return;
         }
@@ -41,7 +59,10 @@ useEffect(() => {
         const nextSection = document.getElementById(sections[i + 1]);
         const nextSectionTop = nextSection ? nextSection.offsetTop : Infinity;
 
-        if (scrollY + 150 >= section.offsetTop && scrollY + 150 < nextSectionTop) {
+        if (
+          scrollY + headerOffset >= section.offsetTop &&
+          scrollY + headerOffset < nextSectionTop
+        ) {
           setActiveSection(sections[i]);
           return;
         }
@@ -73,7 +94,7 @@ useEffect(() => {
         onNavigate={handleNavigate}
       />
 
-      <main className="pt-[70px] md:pt-[85px]">
+      <main className="pt-20">
         <Hero />
         <ProfessionalIntro />
         <Projects />
