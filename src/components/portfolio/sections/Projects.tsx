@@ -5,6 +5,7 @@ import { projects } from "@/components/portfolio/lib/data";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
+import { GitHubCalendar } from "react-github-calendar";
 
 function getRelativeOffset(index: number, activeIndex: number, total: number) {
   let offset = index - activeIndex;
@@ -243,13 +244,17 @@ export function Projects() {
 
           <div className="rounded-2xl border border-violet-300/20 bg-[#100b24]/72 p-4 md:p-6">
             <div className="w-full overflow-x-auto">
-              <div className="mx-auto min-w-max">
-                <img
-                  src="https://ghchart.rshah.org/9b5cff/Francisco-Neto13"
-                  alt="Mapa de contribuicoes do GitHub de Francisco Neto"
-                  loading="lazy"
-                  decoding="async"
-                  className="h-auto max-w-none"
+              <div className="mx-auto min-w-max [&_.react-activity-calendar]:mx-auto">
+                <GitHubCalendar
+                  username="Francisco-Neto13"
+                  blockSize={14}
+                  blockMargin={5}
+                  fontSize={14}
+                  colorScheme="dark"
+                  theme={{
+                    dark: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"],
+                    light: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"]
+                  }}
                 />
               </div>
             </div>
