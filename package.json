@@ -3,22 +3,27 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "clean:next": "node -e \"const fs=require('fs');fs.rmSync('.next',{recursive:true,force:true});console.log('Cleaned .next cache');\"",
+    "dev": "next dev --webpack",
+    "dev:turbo": "next dev --turbopack",
+    "dev:fresh": "npm run clean:next && next dev --webpack",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.0.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "framer-motion": "^11.18.2",
+    "next": "16.1.6",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-github-calendar": "^5.0.6"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.1.13",
-    "@types/node": "^22.10.1",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "tailwindcss": "^4.1.13",
     "typescript": "^5.7.2"
   }

@@ -1,23 +1,17 @@
-@import "tailwindcss";
+﻿@import "tailwindcss";
 
 :root {
-  --bg: #0d0d1a;
-  --surface: rgba(10, 5, 25, 0.55);
-  --surface-soft: rgba(10, 5, 25, 0.4);
-  --text-main: #e6e6f0;
-  --text-soft: #cfc8dd;
+  --bg: #090614;
+  --text-main: #eceaf3;
+  --text-soft: #c9c3db;
   --accent: #9b5cff;
-  --accent-soft: #bca7ff;
 }
 
 @theme inline {
   --color-portfolio-bg: var(--bg);
-  --color-portfolio-surface: var(--surface);
-  --color-portfolio-surface-soft: var(--surface-soft);
   --color-portfolio-text-main: var(--text-main);
   --color-portfolio-text-soft: var(--text-soft);
   --color-portfolio-accent: var(--accent);
-  --color-portfolio-accent-soft: var(--accent-soft);
 }
 
 * {
@@ -32,9 +26,9 @@ body {
   margin: 0;
   min-height: 100vh;
   overflow-x: hidden;
-  background: var(--bg);
   color: var(--text-main);
   font-family: var(--font-poppins), ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: #090614;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -45,33 +39,24 @@ img {
   height: auto;
 }
 
-@keyframes fadeSlide {
-  0% {
-    opacity: 0;
-    transform: translateY(12px);
+.marquee-row {
+  display: flex;
+  width: max-content;
+  gap: 0.75rem;
+  animation: marquee-scroll 34s linear infinite;
+}
+
+.marquee-row--reverse {
+  animation-direction: reverse;
+  animation-duration: 38s;
+}
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
   }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
+  to {
+    transform: translateX(-50%);
   }
 }
 
-@keyframes breathingGlow {
-  0% {
-    text-shadow: 0 0 0 #9b5cff;
-  }
-  50% {
-    text-shadow: 0 0 2px #cfc8dd;
-  }
-  100% {
-    text-shadow: 0 0 0 #9b5cff;
-  }
-}
-
-.animate-fade-slide {
-  animation: fadeSlide 0.9s ease forwards;
-}
-
-.animate-breathing-glow {
-  animation: breathingGlow 4s ease-in-out infinite;
-}
