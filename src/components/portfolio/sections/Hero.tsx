@@ -1,79 +1,87 @@
-type HeroProps = {
-  contributions: string;
-  projects: string;
-};
+import { motion } from "framer-motion";
+import Image from "next/image";
+import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
+import { marqueeSkills, profile } from "@/components/portfolio/lib/data";
 
-export function Hero({ contributions, projects }: HeroProps) {
+export function Hero() {
+  const reveal = useDirectionalReveal(-20, 0.7);
+
   return (
-    <section
+    <motion.section
       id="inicio"
-      className="mx-auto flex min-h-screen w-full max-w-[1100px] items-center px-5 scroll-mt-[85px] max-md:h-auto max-md:min-h-screen max-md:px-5 max-md:py-[100px]"
+      initial={reveal.hiddenState}
+      animate={reveal.controls}
+      onViewportEnter={reveal.onViewportEnter}
+      onViewportLeave={reveal.onViewportLeave}
+      viewport={{ amount: 0.2 }}
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-[calc(100vh-70px)] w-screen scroll-mt-[85px] overflow-hidden bg-[#09041a] md:h-[calc(100vh-85px)]"
     >
-      <div className="flex w-full flex-col gap-[50px] max-md:gap-10">
-        <div className="flex items-center justify-between gap-[80px] max-[968px]:gap-10 max-md:flex-col-reverse max-md:gap-[30px] max-md:text-center">
-          <div className="max-w-[550px] max-md:max-w-full">
-            <h1
-              data-text="Francisco Neto"
-              className="mb-[10px] bg-gradient-to-r from-[#9b5cff] via-[#cfc8dd] to-[#9b5cff] bg-[length:300%_300%] bg-clip-text text-[3rem] font-bold text-transparent opacity-0 max-[968px]:text-[2.5rem] max-md:text-[2.2rem] max-[480px]:text-[1.8rem] animate-fade-slide"
-              style={{ animationDelay: "0.2s" }}
-            >
-              Francisco Neto
-            </h1>
-
-            <h2
-              className="mb-5 text-[1.8rem] text-[#c38fff] opacity-0 max-md:text-[1.4rem]"
-              style={{
-                animation: "breathingGlow 4s ease-in-out infinite, fadeSlide 1.4s ease 0.5s forwards"
-              }}
-            >
-              Desenvolvedor Web • Interfaces modernas e performance
-            </h2>
-
-            <p
-              className="text-[1.1rem] leading-[1.6] text-[#cfc8dd] opacity-0 max-[480px]:text-[1rem]"
-              style={{ animation: "fadeSlide 1.4s ease 0.8s forwards" }}
-            >
-              Especializado no desenvolvimento de aplicações web modernas utilizando React, Next.js e TypeScript, com
-              foco em performance, escalabilidade e experiência do usuário. Construo soluções completas que unem
-              design, lógica e eficiência.
-            </p>
+      <div className="relative mx-auto grid h-full w-full max-w-[1460px] grid-cols-1 items-end gap-x-2 px-5 pb-8 pt-3 md:grid-cols-[0.92fr_1.08fr] md:px-10 md:pb-10 md:pt-4 lg:px-14">
+        <div className="order-2 flex h-full flex-col justify-center pb-2 md:order-1 md:justify-start md:pb-0 md:pl-8 md:pt-16 lg:pl-15 lg:pt-25">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-300/25 bg-violet-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-200">
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
+            </span>
+            Disponível para novos projetos
           </div>
 
-          <div
-            className="flex h-[320px] w-[320px] shrink-0 items-center justify-center overflow-hidden rounded-full border-2 border-[#dcdcdc] bg-[#271c44] opacity-0 max-md:h-[200px] max-md:w-[200px] max-[480px]:h-[160px] max-[480px]:w-[160px]"
-            style={{ animation: "fadeSlide 1.4s ease 1.1s forwards" }}
-          >
-            <img
-              src="/assets/images/eu.webp"
-              alt="Foto de Perfil de Francisco Neto"
-              className="h-full w-full object-cover"
+          <h1 className="mt-4 max-w-[680px] text-[2rem] font-black uppercase leading-[0.92] tracking-tight text-zinc-100 sm:text-[2.6rem] md:text-[3rem] lg:text-[3.8rem] xl:text-[4.2rem]">
+            Desenvolvedor
+            <span className="block text-violet-400">Frontend</span>
+          </h1>
+
+          <p className="mt-4 max-w-[560px] text-base leading-relaxed text-zinc-300 md:text-[1.05rem]">
+            Interfaces modernas eperformáticas, com foco em código limpo, responsividade e experiência real de uso.
+          </p>
+
+          <div className="mt-6 flex flex-wrap gap-2.5">
+            <a
+              href="#projetos"
+              className="inline-flex items-center rounded-lg border border-violet-300/45 bg-violet-500/90 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-white transition hover:bg-violet-400"
+            >
+              Ver projetos
+            </a>
+            <a
+              href="#contato"
+              className="inline-flex items-center rounded-lg border border-violet-300/30 bg-[#120c28] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-100 transition hover:border-violet-300/55 hover:text-violet-200"
+            >
+              Falar comigo
+            </a>
+          </div>
+
+          <p className="mt-6 text-sm font-medium text-zinc-300/80">{profile.name}</p>
+
+          <div className="mt-5 hidden w-full max-w-[560px] md:block">
+            <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+              <div className="marquee-row">
+                {[...marqueeSkills, ...marqueeSkills].map((skill, index) => (
+                  <span
+                    key={`${skill.name}-${index}`}
+                    className="inline-flex items-center gap-3 rounded-xl border border-violet-300/20 bg-[#100b24]/70 px-4 py-3"
+                  >
+                    <i className={`${skill.iconClass} text-xl`} aria-hidden="true" />
+                    <span className="text-sm font-medium text-zinc-100">{skill.name}</span>
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative order-1 flex h-full items-end justify-center md:order-2 md:justify-end">
+          <div className="relative h-[65vh] w-full max-w-[780px] md:h-[92vh] md:max-w-[860px] lg:h-[100vh] lg:max-w-[960px]">
+            <Image
+              src="/assets/images/eu.png"
+              alt={profile.name}
+              fill
+              priority
+              className="object-contain object-bottom md:scale-[1.06] lg:scale-[1.1] -translate-y-[15%]"
+              sizes="(max-width: 768px) 92vw, (max-width: 1200px) 52vw, 48vw"
             />
           </div>
         </div>
-
-        <div
-          className="rounded-xl border border-[rgba(155,92,255,0.15)] bg-[rgba(10,5,25,0.55)] px-[30px] py-[25px] text-center opacity-0 max-md:px-5 max-md:py-5"
-          style={{ animation: "fadeSlide 1.4s ease 1.5s forwards" }}
-        >
-          <h3 className="mb-5 text-[1.2rem] text-[#cfc8dd]">Últimos 12 meses GitHub</h3>
-
-          <div className="flex flex-wrap justify-around gap-5 max-md:flex-col max-md:gap-[25px]">
-            <div className="flex min-w-[150px] flex-col items-center max-md:min-w-0">
-              <span id="contributions-count" className="text-[2.2rem] font-bold leading-[1.2] text-[#9b5cff] max-md:text-[1.8rem]">
-                {contributions}
-              </span>
-              <span className="text-[0.9rem] font-normal text-[#cfc8dd]">Contribuições</span>
-            </div>
-
-            <div className="flex min-w-[150px] flex-col items-center max-md:min-w-0">
-              <span id="projects-count" className="text-[2.2rem] font-bold leading-[1.2] text-[#9b5cff] max-md:text-[1.8rem]">
-                {projects}
-              </span>
-              <span className="text-[0.9rem] font-normal text-[#cfc8dd]">Projetos</span>
-            </div>
-          </div>
-        </div>
       </div>
-    </section>
+    </motion.section>
   );
 }
