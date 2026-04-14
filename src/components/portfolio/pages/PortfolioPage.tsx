@@ -1,12 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { About } from "@/components/portfolio/About";
-import { Footer } from "@/components/portfolio/Footer";
-import { Header } from "@/components/portfolio/Header";
-import { Hero } from "@/components/portfolio/Hero";
-import { Projects } from "@/components/portfolio/Projects";
-import { navItems } from "@/components/portfolio/data";
+import { About } from "@/components/portfolio/sections/About";
+import { Footer } from "@/components/portfolio/sections/Footer";
+import { Header } from "@/components/portfolio/sections/Header";
+import { Hero } from "@/components/portfolio/sections/Hero";
+import { Projects } from "@/components/portfolio/sections/Projects";
+import { navItems } from "@/components/portfolio/lib/data";
 
 type GithubStatsResponse = {
   contributions?: number;
@@ -47,7 +47,7 @@ export function PortfolioPage() {
     const loadGithubStats = async () => {
       try {
         const response = await fetch("/api/github-stats");
-        if (!response.ok) throw new Error("Erro ao buscar estatisticas");
+        if (!response.ok) throw new Error("Erro ao buscar estatísticas");
 
         const data: GithubStatsResponse = await response.json();
         setContributions(
@@ -81,7 +81,7 @@ export function PortfolioPage() {
         onNavigate={handleNavigate}
       />
 
-      <main>
+      <main className="pt-[70px] md:pt-[85px]">
         <Hero contributions={contributions} projects={projects} />
         <Projects />
         <About />

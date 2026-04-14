@@ -131,10 +131,22 @@ export const experiences: Experience[] = [
 ];
 
 export const skillCategories: SkillCategory[] = [
-  { heading: "Linguagens", items: ["JavaScript (ES6+)", "TypeScript (estudando)", "Python", "Java (básico)", "SQL (básico)"] },
-  { heading: "Frontend", items: ["HTML5 & CSS3", "React (estudando)", "Next.js (estudando)", "Tailwind CSS (estudando)", "Flexbox & Grid"] },
-  { heading: "Backend & APIs", items: ["Node.js", "APIs REST", "Prisma ORM (estudando)", "Discord.js", "Zod & Validation (estudando)"] },
-  { heading: "Bancos de Dados & Infra", items: ["MySQL (estudando)", "PostgreSQL (estudando)", "MongoDB (estudando)", "Docker (estudando)"] },
+  {
+    heading: "Linguagens",
+    items: ["JavaScript (ES6+)", "TypeScript (estudando)", "Python", "Java (básico)", "SQL (básico)"]
+  },
+  {
+    heading: "Frontend",
+    items: ["HTML5 & CSS3", "React (estudando)", "Next.js (estudando)", "Tailwind CSS (estudando)", "Flexbox & Grid"]
+  },
+  {
+    heading: "Backend & APIs",
+    items: ["Node.js", "APIs REST", "Prisma ORM (estudando)", "Discord.js", "Zod & Validation (estudando)"]
+  },
+  {
+    heading: "Bancos de Dados & Infra",
+    items: ["MySQL (estudando)", "PostgreSQL (estudando)", "MongoDB (estudando)", "Docker (estudando)"]
+  },
   { heading: "Ferramentas & Design", items: ["Git & GitHub", "VS Code", "Figma", "Photoshop"] }
 ];
 
