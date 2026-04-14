@@ -20,7 +20,8 @@ export type TimelineEntry = {
 
 export type MarqueeSkill = {
   name: string;
-  iconClass: string;
+  symbol: string;
+  toneClass: string;
 };
 
 export type ContactLink = {
@@ -122,18 +123,18 @@ export const timeline: TimelineEntry[] = [
 ];
 
 export const marqueeSkills: MarqueeSkill[] = [
-  { name: "HTML5", iconClass: "devicon-html5-plain colored" },
-  { name: "CSS3", iconClass: "devicon-css3-plain colored" },
-  { name: "JavaScript", iconClass: "devicon-javascript-plain colored" },
-  { name: "TypeScript", iconClass: "devicon-typescript-plain colored" },
-  { name: "React", iconClass: "devicon-react-original colored" },
-  { name: "Next.js", iconClass: "devicon-nextjs-plain" },
-  { name: "Tailwind", iconClass: "devicon-tailwindcss-plain colored" },
-  { name: "Node.js", iconClass: "devicon-nodejs-plain colored" },
-  { name: "Prisma", iconClass: "devicon-prisma-original" },
-  { name: "PostgreSQL", iconClass: "devicon-postgresql-plain colored" },
-  { name: "Git", iconClass: "devicon-git-plain colored" },
-  { name: "Figma", iconClass: "devicon-figma-plain colored" }
+  { name: "HTML5", symbol: "H5", toneClass: "bg-orange-500/20 text-orange-200" },
+  { name: "CSS3", symbol: "C3", toneClass: "bg-sky-500/20 text-sky-200" },
+  { name: "JavaScript", symbol: "JS", toneClass: "bg-yellow-500/20 text-yellow-200" },
+  { name: "TypeScript", symbol: "TS", toneClass: "bg-blue-500/20 text-blue-200" },
+  { name: "React", symbol: "R", toneClass: "bg-cyan-500/20 text-cyan-200" },
+  { name: "Next.js", symbol: "N", toneClass: "bg-zinc-500/25 text-zinc-100" },
+  { name: "Tailwind", symbol: "TW", toneClass: "bg-teal-500/20 text-teal-200" },
+  { name: "Node.js", symbol: "ND", toneClass: "bg-green-500/20 text-green-200" },
+  { name: "Prisma", symbol: "PR", toneClass: "bg-indigo-500/20 text-indigo-200" },
+  { name: "PostgreSQL", symbol: "PG", toneClass: "bg-blue-600/20 text-blue-200" },
+  { name: "Git", symbol: "GT", toneClass: "bg-rose-500/20 text-rose-200" },
+  { name: "Figma", symbol: "FG", toneClass: "bg-pink-500/20 text-pink-200" }
 ];
 
 export const contactLinks: ContactLink[] = [

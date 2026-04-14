@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { projects } from "@/components/portfolio/lib/data";
 import { motion } from "framer-motion";
-import { GitHubCalendar } from "react-github-calendar";
+import Image from "next/image";
 import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
 
 function getRelativeOffset(index: number, activeIndex: number, total: number) {
@@ -164,10 +164,13 @@ export function Projects() {
                     </div>
 
                     <div className="relative h-[calc(100%-42px)] overflow-hidden">
-                      <img
+                      <Image
                         src={project.image}
                         alt={project.imageAlt}
-                        className="h-full w-full object-cover"
+                        fill
+                        sizes="(max-width: 768px) 92vw, (max-width: 1200px) 600px, 600px"
+                        quality={72}
+                        className="object-cover"
                       />
                       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0519]/78 via-[#0a0519]/30 to-transparent" />
                       <div className="pointer-events-none absolute inset-x-0 bottom-0 p-4">
@@ -240,16 +243,13 @@ export function Projects() {
 
           <div className="rounded-2xl border border-violet-300/20 bg-[#100b24]/72 p-4 md:p-6">
             <div className="w-full overflow-x-auto">
-              <div className="mx-auto w-fit min-w-max">
-                <GitHubCalendar
-                  username="Francisco-Neto13"
-                  blockSize={14}
-                  blockMargin={5}
-                  fontSize={14}
-                  colorScheme="dark"
-                  theme={{
-                    dark: ["#22163f", "#4b2f81", "#6d41bf", "#8a53f0", "#9b5cff"],
-                  }}
+              <div className="mx-auto min-w-max">
+                <img
+                  src="https://ghchart.rshah.org/9b5cff/Francisco-Neto13"
+                  alt="Mapa de contribuicoes do GitHub de Francisco Neto"
+                  loading="lazy"
+                  decoding="async"
+                  className="h-auto max-w-none"
                 />
               </div>
             </div>

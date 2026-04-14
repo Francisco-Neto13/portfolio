@@ -60,7 +60,12 @@ export function Hero() {
                     key={`${skill.name}-${index}`}
                     className="inline-flex items-center gap-3 rounded-xl border border-violet-300/20 bg-[#100b24]/70 px-4 py-3"
                   >
-                    <i className={`${skill.iconClass} text-xl`} aria-hidden="true" />
+                    <span
+                      aria-hidden="true"
+                      className={`inline-flex h-7 min-w-7 items-center justify-center rounded-md px-1 text-[10px] font-bold uppercase tracking-[0.08em] ${skill.toneClass}`}
+                    >
+                      {skill.symbol}
+                    </span>
                     <span className="text-sm font-medium text-zinc-100">{skill.name}</span>
                   </span>
                 ))}
