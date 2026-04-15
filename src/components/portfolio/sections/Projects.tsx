@@ -153,7 +153,7 @@ export function Projects() {
         className="relative mx-auto w-full max-w-[1300px] px-4 py-14 sm:px-6 md:py-16 lg:px-10"
       >
         <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Selecao de trabalhos</p>
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Selecção de trabalhos</p>
           <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Projetos em destaque</h2>
           <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
             Navegue projeto por projeto em um cover flow 3D: o item ativo fica em destaque no centro e os outros
@@ -164,7 +164,7 @@ export function Projects() {
         <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(330px,0.8fr)]">
           <div>
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">Use setas do teclado ou os botoes</p>
+              <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">Use setas do teclado ou os botões</p>
 
               <div className="flex items-center gap-2">
                 <button

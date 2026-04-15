@@ -16,26 +16,26 @@ export function Hero() {
       viewport={{ amount: 0.2 }}
       className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[calc(100svh-80px)] w-screen scroll-mt-[95px] overflow-hidden bg-[#09041a]"
     >
-      <div className="relative mx-auto grid h-full w-full max-w-[1460px] grid-cols-1 items-end gap-4 px-4 pb-6 pt-4 sm:px-6 sm:pb-8 md:px-8 lg:grid-cols-[0.94fr_1.06fr] lg:gap-x-4 lg:px-14 lg:pb-10">
-        <div className="order-2 flex h-full flex-col justify-end pb-2 sm:pb-4 lg:order-1 lg:justify-start lg:pb-0 lg:pl-10 lg:pt-20">
+      <div className="relative mx-auto grid w-full max-w-[1320px] grid-cols-1 gap-6 px-4 py-8 sm:px-6 sm:py-10 md:gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 lg:items-end lg:px-10 lg:py-12 xl:px-14">
+        <div className="order-2 flex h-full w-full flex-col items-center justify-center text-center lg:order-1 lg:items-start lg:justify-center lg:pt-6 lg:text-left">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-300/25 bg-violet-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-200 sm:text-[11px]">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-400" />
             </span>
-            Disponivel para novos projetos
+            Disponível para novos projetos
           </div>
 
-          <h1 className="mt-4 max-w-[700px] text-[2rem] font-black uppercase leading-[0.92] tracking-tight text-zinc-100 sm:text-[2.65rem] md:text-[3.15rem] lg:text-[3.9rem] xl:text-[4.2rem]">
+          <h1 className="mt-4 max-w-[700px] text-[2rem] font-black uppercase leading-[0.92] tracking-tight text-zinc-100 sm:text-[2.65rem] md:text-[3.15rem] lg:text-[3.75rem] xl:text-[4.1rem]">
             Desenvolvimento
             <span className="block text-violet-400">Frontend</span>
           </h1>
 
-          <p className="mt-4 max-w-[590px] text-sm leading-relaxed text-zinc-300 sm:text-base md:text-[1.05rem]">
-            Interfaces modernas e performaticas, com foco em codigo limpo, responsividade e experiencia real de uso.
+          <p className="mt-4 max-w-[620px] text-sm leading-relaxed text-zinc-300 sm:text-base md:text-[1.05rem]">
+            Interfaces modernas e performáticas, com foco em código limpo, responsividade e experiência real de uso.
           </p>
 
-          <div className="mt-6 flex flex-wrap gap-2.5">
+          <div className="mt-6 flex w-full flex-wrap justify-center gap-2.5 lg:justify-start">
             <a
               href="#projetos"
               className="inline-flex w-full items-center justify-center rounded-lg border border-violet-300/45 bg-violet-500/90 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-white transition hover:bg-violet-400 sm:w-auto"
@@ -52,16 +52,16 @@ export function Hero() {
 
           <p className="mt-5 text-sm font-medium text-zinc-300/80 sm:mt-6">{profile.name}</p>
 
-          <div className="mt-4 hidden w-full max-w-[620px] md:block">
+          <div className="mt-4 w-full max-w-[760px]">
             <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div className="marquee-row">
                 {[...marqueeSkills, ...marqueeSkills].map((skill, index) => (
                   <span
                     key={`${skill.name}-${index}`}
-                    className="inline-flex items-center gap-3 rounded-xl border border-violet-300/20 bg-[#100b24]/70 px-4 py-3"
+                    className="inline-flex items-center gap-2.5 rounded-xl border border-violet-300/20 bg-[#100b24]/70 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3"
                   >
                     <i aria-hidden="true" className={`${skill.iconClass} text-xl`} />
-                    <span className="text-sm font-medium text-zinc-100">{skill.name}</span>
+                    <span className="text-xs font-medium text-zinc-100 sm:text-sm">{skill.name}</span>
                   </span>
                 ))}
               </div>
@@ -69,15 +69,15 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="relative order-1 flex h-full items-end justify-center lg:order-2 lg:justify-end">
-          <div className="relative h-[40svh] min-h-[260px] w-full max-w-[470px] sm:h-[46svh] sm:max-w-[560px] md:h-[52svh] md:max-w-[650px] lg:h-[calc(100svh-120px)] lg:max-w-[860px]">
+        <div className="order-1 flex w-full items-end justify-center lg:order-2 lg:justify-end">
+          <div className="relative h-[300px] w-full max-w-[420px] sm:h-[360px] sm:max-w-[500px] md:h-[430px] md:max-w-[560px] lg:h-[560px] lg:max-w-[620px] xl:h-[600px]">
             <Image
               src="/assets/images/eu.png"
               alt={profile.name}
               fill
               priority
-              className="object-contain object-bottom lg:scale-[1.08]"
-              sizes="(max-width: 640px) 94vw, (max-width: 1024px) 72vw, 48vw"
+              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 62vw, 42vw"
+              className="object-contain object-bottom scale-[1.03] sm:scale-[1.06] md:scale-[1.08] lg:scale-[1.1]"
             />
           </div>
         </div>

@@ -23,11 +23,11 @@ export function ProfessionalIntro() {
             <p className="mb-3 text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Perfil profissional</p>
 
             <h2 className="mb-4 text-3xl font-bold leading-tight text-white sm:text-4xl md:mb-5 md:text-5xl">
-              Resumo profissional e trajetoria
+              Resumo profissional e trajetória
             </h2>
 
             <p className="mb-9 max-w-[760px] text-sm leading-relaxed text-zinc-300 sm:text-base md:mb-12">
-              Foco em React e Next.js, com experiencia crescente em backend. Construo aplicacoes com base tecnica
+              Foco em React e Next.js, com experiência crescente em backend. Construo aplicações com base técnica
               consistente, priorizando qualidade de interface, performance e manutenibilidade.
             </p>
 
@@ -45,7 +45,7 @@ export function ProfessionalIntro() {
           </div>
 
           <aside className="w-full self-start rounded-2xl border border-violet-300/20 bg-[#100b24]/70 p-5 sm:p-6 xl:sticky xl:top-24">
-            <p className="mb-5 text-xs font-medium uppercase tracking-[0.16em] text-violet-300">Trajetoria</p>
+            <p className="mb-5 text-xs font-medium uppercase tracking-[0.16em] text-violet-300">Trajetória</p>
 
             <div className="space-y-3.5">
               {timeline.map((item, index) => (

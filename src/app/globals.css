@@ -70,10 +70,5 @@ img {
   html {
     scroll-behavior: auto;
   }
-
-  .marquee-row,
-  .marquee-row--reverse {
-    animation: none;
-  }
 }
 

@@ -59,7 +59,7 @@ export function Contact() {
             <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Contato</p>
             <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Fale comigo</h2>
             <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
-              Estou disponivel para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e
+              Estou disponível para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e
               me chama.
             </p>
           </div>

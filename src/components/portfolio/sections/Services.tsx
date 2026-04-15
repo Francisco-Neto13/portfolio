@@ -80,10 +80,10 @@ export function Services() {
         className="relative mx-auto w-full max-w-[1300px] px-4 py-14 sm:px-6 md:py-20 lg:px-10"
       >
         <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Servicos</p>
-          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Meus Servicos</h2>
+          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Serviços</p>
+          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Meus Serviços</h2>
           <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
-            Solucoes que unem design, codigo e eficiencia para construir produtos modernos, estaveis e prontos para
+            Soluções que unem design, código e eficiência para construir produtos modernos, estáveis e prontos para
             evoluir.
           </p>
         </div>
