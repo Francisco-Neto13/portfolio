@@ -44,7 +44,7 @@ export function Contact() {
   return (
     <section
       id="contato"
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[95px] bg-[#09041a]"
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px] bg-[#09041a]"
     >
       <motion.div
         initial={reveal.hiddenState}

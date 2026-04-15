@@ -44,7 +44,7 @@ export function Hero() {
       onViewportEnter={reveal.onViewportEnter}
       onViewportLeave={reveal.onViewportLeave}
       viewport={{ amount: 0.2 }}
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[calc(100svh-80px)] w-screen scroll-mt-[95px] overflow-hidden bg-[#09041a]"
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[calc(100svh-80px)] w-screen overflow-hidden bg-[#09041a]"
     >
       <div className="relative mx-auto grid w-full max-w-[1320px] grid-cols-1 gap-6 px-4 py-8 sm:px-6 sm:py-10 md:gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 lg:items-end lg:px-10 lg:py-12 xl:px-14">
         <div className="order-2 flex h-full w-full flex-col items-center justify-center text-center lg:order-1 lg:items-start lg:justify-center lg:pt-6 lg:text-left">

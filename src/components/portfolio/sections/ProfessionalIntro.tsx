@@ -1,21 +1,17 @@
 import { motion } from "framer-motion";
 import { timeline, highlights } from "@/components/portfolio/lib/data";
-import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
 
 export function ProfessionalIntro() {
-  const reveal = useDirectionalReveal(-26, 0.65);
-
   return (
     <section
       id="trajetoria"
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen scroll-mt-[95px] bg-[#0b0816]"
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen scroll-mt-[80px] bg-[#0b0816]"
     >
       <motion.div
-        initial={reveal.hiddenState}
-        animate={reveal.controls}
-        onViewportEnter={reveal.onViewportEnter}
-        onViewportLeave={reveal.onViewportLeave}
-        viewport={{ amount: 0.2 }}
+        initial={{ opacity: 0, y: -26 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ amount: 0.2, once: true }}
+        transition={{ duration: 0.65, ease: "easeOut" }}
         className="relative mx-auto w-full max-w-[1300px] px-4 pb-14 pt-16 sm:px-6 md:pb-16 md:pt-20 lg:px-10"
       >
         <div className="grid items-start gap-8 lg:gap-10 xl:grid-cols-[minmax(0,1fr)_340px]">

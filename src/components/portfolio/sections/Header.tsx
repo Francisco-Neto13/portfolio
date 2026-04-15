@@ -37,14 +37,7 @@ export function Header({
       }`}
     >
       <div className="mx-auto flex h-full w-full max-w-[1300px] items-center justify-between px-4 sm:px-6 lg:px-10">
-        <a
-          href="#inicio"
-          className="transition-opacity hover:opacity-85"
-          onClick={(event) => {
-            event.preventDefault();
-            onNavigate("#inicio");
-          }}
-        >
+        <div className="transition-opacity">
           <Image
             src="/assets/images/logo.webp"
             alt="Logo - Voltar ao inicio"
@@ -53,7 +46,7 @@ export function Header({
             className="h-11 w-11 object-contain sm:h-12 sm:w-12"
             priority
           />
-        </a>
+        </div>
 
         <button
           type="button"
@@ -100,14 +93,14 @@ export function Header({
           id="mobile-menu"
           className="fixed inset-x-0 top-20 z-[85] h-[calc(100svh-80px)] bg-[#0a0519]/95 px-6 py-10 backdrop-blur-2xl md:hidden"
         >
-          <ul className="flex h-full flex-col items-center justify-center gap-10">
+          <ul className="flex h-full flex-col items-start justify-start gap-6 overflow-y-auto py-2">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
-                <li key={item.href}>
+                <li key={item.href} className="w-full">
                   <a
                     href={item.href}
-                    className={`border-b-2 pb-1 text-lg transition-colors ${
+                    className={`inline-flex w-full border-b-2 pb-2 text-left text-xl font-medium transition-colors ${
                       isActive
                         ? "border-violet-400 text-white"
                         : "border-transparent text-zinc-300 hover:border-violet-400 hover:text-white"
