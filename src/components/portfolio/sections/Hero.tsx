@@ -102,16 +102,16 @@ export function Hero() {
           </div>
         </div>
 
-        <div className="order-1 flex w-full items-end justify-center lg:order-2 lg:justify-end">
-          <div className="relative h-[300px] w-full max-w-[420px] sm:h-[360px] sm:max-w-[500px] md:h-[430px] md:max-w-[560px] lg:h-[560px] lg:max-w-[620px] xl:h-[600px]">
+        <div className="order-1 flex w-full items-center justify-center lg:order-2 lg:justify-end">
+          <div className="relative h-[260px] w-[260px] overflow-hidden rounded-full border border-violet-200/75 sm:h-[320px] sm:w-[320px] md:h-[360px] md:w-[360px] lg:h-[410px] lg:w-[410px] xl:h-[450px] xl:w-[450px]">
             <Image
-              src="/assets/images/eu.png"
+              src="/assets/images/eu.webp"
               alt={profile.name}
               fill
               priority
               fetchPriority="high"
-              sizes="(max-width: 640px) 90vw, (max-width: 1024px) 62vw, 42vw"
-              className="object-contain object-bottom scale-[1.03] sm:scale-[1.06] md:scale-[1.08] lg:scale-[1.1]"
+              sizes="(max-width: 640px) 260px, (max-width: 768px) 320px, (max-width: 1024px) 360px, 450px"
+              className="object-contain object-top translate-y-1 sm:translate-y-2 md:translate-y-3"
             />
           </div>
         </div>

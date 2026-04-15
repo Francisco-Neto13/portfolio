@@ -60,7 +60,7 @@ export function Contact() {
             <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Fale comigo</h2>
             <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
               Estou disponível para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e
-              me chama.
+              entre em contato.
             </p>
           </div>
 

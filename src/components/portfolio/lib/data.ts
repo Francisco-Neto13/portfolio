@@ -39,7 +39,6 @@ export type MarqueeSkill = {
 export type ContactLink = {
   label: string;
   href: string;
-  icon: string | null;
 };
 
 export type Highlight = {
@@ -72,34 +71,34 @@ export const projects: Project[] = [
     title: "Cats & Dungeons",
     description:
       "Roguelike em Java com exploração procedural, combate estratégico e progressão em ondas. O projeto utiliza pathfinding A*, colisão AABB, física vetorial e inventário estruturado.",
-    image: "/assets/images/projeto1.webp",
+    image: "/assets/images/cats&dungeons.webp",
     imageAlt: "Miniatura do Cats & Dungeons",
     tech: ["Java", "TinySound", "JSON", "A*", "Física 2D", "AABB", "Game Loop"],
     links: [{ label: "GitHub", href: "https://github.com/Francisco-Neto13/Cats-and-Dungeons" }]
   },
   {
-    title: "Reconhecimento de Gestos",
+    title: "PawSpace",
     description:
-      "Aplicação web com modelo de visão computacional para reconhecer gestos em webcam e gerar previsões em tempo real direto no navegador.",
-    image: "/assets/images/projeto2.webp",
-    imageAlt: "Miniatura de reconhecimento de gestos",
-    tech: ["TensorFlow.js", "JavaScript", "HTML", "CSS", "WebRTC", "Vercel"],
-    links: [{ label: "GitHub", href: "https://github.com/Francisco-Neto13/jogo-teachable-machine-animais" }]
+      "Hub visual de estudos para mapear trilhas, organizar materiais, registrar sessões e acompanhar progresso em um fluxo único e conectado.",
+    image: "/assets/images/pawspace.png",
+    imageAlt: "Miniatura do PawSpace",
+    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Prisma", "Supabase"],
+    links: [{ label: "Ver Projeto", href: "https://pawspace.vercel.app/" }]
   },
   {
     title: "GsW Website",
     description:
-      "Plataforma para centralizar presença digital e gerenciamento de conteúdo da comunidade, com painel administrativo e atualização em tempo real.",
-    image: "/assets/images/projeto3.webp",
+      "Site institucional da comunidade Guardians of Wynn com guias de Wynncraft, galeria interativa, seção de membros e história da guilda.",
+    image: "/assets/images/gsw.webp",
     imageAlt: "Miniatura do GsW Website",
-    tech: ["React", "Next.js", "TypeScript", "Tailwind", "Supabase", "PostgreSQL"],
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "App Router", "Framer Motion"],
     links: [{ label: "Ver Projeto", href: "https://gsw-website.vercel.app/" }]
   },
   {
     title: "Atmisuki Portfolio",
     description:
       "Sistema para exibição de portfólio e gestão de conteúdo com foco em performance, processamento de imagem e experiência de navegação.",
-    image: "/assets/images/projeto4.webp",
+    image: "/assets/images/atmisuki.webp",
     imageAlt: "Miniatura do Atmisuki Portfolio",
     tech: ["React", "Next.js", "TypeScript", "Web Workers", "Supabase", "RLS"],
     links: [{ label: "Ver Projeto", href: "https://atmisuki-portfolio.vercel.app/" }]
@@ -110,27 +109,27 @@ export const timeline: TimelineEntry[] = [
   {
     year: "2020",
     title: "Primeiro contato com programação",
-    description: "Criei meus primeiros bots para Discord usando JavaScript e Node.js, começando a estudar lógica e estrutura de aplicações." 
+    description: "Criei meus primeiros bots para Discord usando JavaScript e Node.js, começando a estudar lógica e estrutura de aplicações."
   },
   {
     year: "2023",
     title: "Entrada na graduação",
-    description: "Início do Bacharelado em Ciência da Computação na Afya Centro Universitário UNIMA - AL, consolidando base técnica e visão de carreira." 
+    description: "Início do Bacharelado em Ciência da Computação na Afya Centro Universitário UNIMA - AL, consolidando base técnica e visão de carreira."
   },
   {
     year: "2024",
     title: "Fase de aprofundamento acadêmico",
-    description: "Período focado em disciplinas da graduação, organização de rotina e amadurecimento do processo de estudo." 
+    description: "Período focado em disciplinas da graduação, organização de rotina e amadurecimento do processo de estudo."
   },
   {
     year: "2025",
     title: "Projetos e retomada forte",
-    description: "Desenvolvimento de projetos mais completos, incluindo jogo em equipe, reestruturação de projetos antigos e prática com IA e ML." 
+    description: "Desenvolvimento de projetos mais completos, incluindo jogo em equipe, reestruturação de projetos antigos e prática com IA e ML."
   },
   {
     year: "2026",
     title: "Especialização em desenvolvimento web",
-    description: "Foco em React, Next.js e TypeScript com integração a banco de dados e autenticação, criando aplicações com arquitetura e escalabilidade." 
+    description: "Foco em React, Next.js e TypeScript com integração a banco de dados e autenticação, criando aplicações com arquitetura e escalabilidade."
   }
 ];
 
@@ -150,10 +149,10 @@ export const marqueeSkills: MarqueeSkill[] = [
 ];
 
 export const contactLinks: ContactLink[] = [
-  { label: "GitHub", href: "https://github.com/Francisco-Neto13", icon: "/assets/images/github.webp" },
-  { label: "LinkedIn", href: "https://www.linkedin.com/in/jfrancisco-neto/", icon: "/assets/images/linkedin.webp" },
-  { label: "Instagram", href: "https://www.instagram.com/cisscoo_/", icon: "/assets/images/instagram.webp" },
-  { label: "E-mail", href: "mailto:franciscoaneto13@gmail.com", icon: null }
+  { label: "GitHub", href: "https://github.com/Francisco-Neto13" },
+  { label: "LinkedIn", href: "https://www.linkedin.com/in/jfrancisco-neto/" },
+  { label: "Instagram", href: "https://www.instagram.com/cisscoo_/" },
+  { label: "E-mail", href: "mailto:franciscoaneto13@gmail.com" }
 ];
 
 export const highlights: Highlight[] = [
