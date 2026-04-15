@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -11,8 +11,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Francisco Neto | Portfólio",
-  description:
-    "Portfólio de Francisco Neto, desenvolvedor web focado em React, Next.js, TypeScript e experiências digitais modernas.",
+  description: "Portfólio pessoal de Francisco Neto.",
   icons: {
     icon: [{ url: "/assets/images/logo.webp", type: "image/webp" }]
   }
@@ -29,3 +28,4 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
     </html>
   );
 }
+
