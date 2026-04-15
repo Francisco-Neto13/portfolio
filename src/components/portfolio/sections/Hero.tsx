@@ -3,6 +3,7 @@ import Image from "next/image";
 import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
 import { marqueeSkills, profile, type MarqueeSkill } from "@/components/portfolio/lib/data";
 import type { IconType } from "react-icons";
+import type { MouseEvent } from "react";
 import {
   SiCss,
   SiFigma,
@@ -36,6 +37,22 @@ const skillIcons: Record<MarqueeSkill["iconKey"], IconType> = {
 export function Hero() {
   const reveal = useDirectionalReveal(-20, 0.7);
 
+  const handleCtaNavigate = (event: MouseEvent<HTMLAnchorElement>, href: string) => {
+    event.preventDefault();
+
+    const target = document.querySelector(href);
+    if (!(target instanceof HTMLElement)) return;
+
+    const header = document.querySelector("header");
+    const headerHeight = header instanceof HTMLElement ? header.offsetHeight : 80;
+    const targetTop = target.getBoundingClientRect().top + window.scrollY - (headerHeight + 10);
+
+    window.scrollTo({
+      top: Math.max(0, targetTop),
+      behavior: "smooth"
+    });
+  };
+
   return (
     <motion.section
       id="inicio"
@@ -44,9 +61,9 @@ export function Hero() {
       onViewportEnter={reveal.onViewportEnter}
       onViewportLeave={reveal.onViewportLeave}
       viewport={{ amount: 0.2 }}
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] min-h-[calc(100svh-80px)] w-screen overflow-hidden bg-[#09041a]"
+      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-[calc(100svh-80px)] w-screen overflow-hidden bg-[#09041a]"
     >
-      <div className="relative mx-auto grid w-full max-w-[1320px] grid-cols-1 gap-6 px-4 py-8 sm:px-6 sm:py-10 md:gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 lg:items-end lg:px-10 lg:py-12 xl:px-14">
+      <div className="relative mx-auto grid h-full w-full max-w-[1320px] grid-cols-1 gap-6 px-4 py-4 sm:px-6 sm:py-6 md:gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 lg:items-center lg:px-10 lg:py-8 xl:px-14">
         <div className="order-2 flex h-full w-full flex-col items-center justify-center text-center lg:order-1 lg:items-start lg:justify-center lg:pt-6 lg:text-left">
           <div className="inline-flex w-fit items-center gap-2 rounded-full border border-violet-300/25 bg-violet-400/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.16em] text-violet-200 sm:text-[11px]">
             <span className="relative flex h-2.5 w-2.5">
@@ -68,12 +85,14 @@ export function Hero() {
           <div className="mt-6 flex w-full flex-wrap justify-center gap-2.5 lg:justify-start">
             <a
               href="#projetos"
+              onClick={(event) => handleCtaNavigate(event, "#projetos")}
               className="inline-flex w-full items-center justify-center rounded-lg border border-violet-300/45 bg-violet-500/90 px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-white transition hover:bg-violet-400 sm:w-auto"
             >
               Ver projetos
             </a>
             <a
               href="#contato"
+              onClick={(event) => handleCtaNavigate(event, "#contato")}
               className="inline-flex w-full items-center justify-center rounded-lg border border-violet-300/30 bg-[#120c28] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-100 transition hover:border-violet-300/55 hover:text-violet-200 sm:w-auto"
             >
               Falar comigo

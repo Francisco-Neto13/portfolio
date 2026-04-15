@@ -12,7 +12,7 @@ export function ProfessionalIntro() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ amount: 0.2, once: true }}
         transition={{ duration: 0.65, ease: "easeOut" }}
-        className="relative mx-auto w-full max-w-[1300px] px-4 pb-14 pt-16 sm:px-6 md:pb-16 md:pt-20 lg:px-10"
+        className="relative mx-auto w-full max-w-[1300px] px-4 pb-14 pt-10 sm:px-6 md:pb-16 md:pt-12 lg:px-10"
       >
         <div className="grid items-start gap-8 lg:gap-10 xl:grid-cols-[minmax(0,1fr)_340px]">
           <div className="min-w-0">

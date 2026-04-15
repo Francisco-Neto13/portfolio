@@ -79,7 +79,14 @@ export function PortfolioPage() {
   const handleNavigate = (href: string) => {
     const target = document.querySelector(href);
     if (target instanceof HTMLElement) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
+      const header = document.querySelector("header");
+      const headerHeight = header instanceof HTMLElement ? header.offsetHeight : 80;
+      const targetTop = target.getBoundingClientRect().top + window.scrollY - (headerHeight + 10);
+
+      window.scrollTo({
+        top: Math.max(0, targetTop),
+        behavior: "smooth"
+      });
     }
     setMobileMenuOpen(false);
   };
