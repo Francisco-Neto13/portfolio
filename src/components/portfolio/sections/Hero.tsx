@@ -1,7 +1,37 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
-import { marqueeSkills, profile } from "@/components/portfolio/lib/data";
+import { marqueeSkills, profile, type MarqueeSkill } from "@/components/portfolio/lib/data";
+import type { IconType } from "react-icons";
+import {
+  SiCss,
+  SiFigma,
+  SiGit,
+  SiHtml5,
+  SiJavascript,
+  SiNextdotjs,
+  SiNodedotjs,
+  SiPostgresql,
+  SiPrisma,
+  SiReact,
+  SiTailwindcss,
+  SiTypescript
+} from "react-icons/si";
+
+const skillIcons: Record<MarqueeSkill["iconKey"], IconType> = {
+  html5: SiHtml5,
+  css3: SiCss,
+  javascript: SiJavascript,
+  typescript: SiTypescript,
+  react: SiReact,
+  nextjs: SiNextdotjs,
+  tailwind: SiTailwindcss,
+  nodejs: SiNodedotjs,
+  prisma: SiPrisma,
+  postgresql: SiPostgresql,
+  git: SiGit,
+  figma: SiFigma
+};
 
 export function Hero() {
   const reveal = useDirectionalReveal(-20, 0.7);
@@ -27,7 +57,7 @@ export function Hero() {
           </div>
 
           <h1 className="mt-4 max-w-[700px] text-[2rem] font-black uppercase leading-[0.92] tracking-tight text-zinc-100 sm:text-[2.65rem] md:text-[3.15rem] lg:text-[3.75rem] xl:text-[4.1rem]">
-            Desenvolvimento
+            Desenvolvedor
             <span className="block text-violet-400">Frontend</span>
           </h1>
 
@@ -55,15 +85,18 @@ export function Hero() {
           <div className="mt-4 w-full max-w-[760px]">
             <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
               <div className="marquee-row">
-                {[...marqueeSkills, ...marqueeSkills].map((skill, index) => (
+                {[...marqueeSkills, ...marqueeSkills].map((skill, index) => {
+                  const Icon = skillIcons[skill.iconKey];
+                  return (
                   <span
                     key={`${skill.name}-${index}`}
                     className="inline-flex items-center gap-2.5 rounded-xl border border-violet-300/20 bg-[#100b24]/70 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3"
                   >
-                    <i aria-hidden="true" className={`${skill.iconClass} text-xl`} />
+                    <Icon aria-hidden="true" className={`text-xl ${skill.toneClass}`} />
                     <span className="text-xs font-medium text-zinc-100 sm:text-sm">{skill.name}</span>
                   </span>
-                ))}
+                  );
+                })}
               </div>
             </div>
           </div>
@@ -76,6 +109,7 @@ export function Hero() {
               alt={profile.name}
               fill
               priority
+              fetchPriority="high"
               sizes="(max-width: 640px) 90vw, (max-width: 1024px) 62vw, 42vw"
               className="object-contain object-bottom scale-[1.03] sm:scale-[1.06] md:scale-[1.08] lg:scale-[1.1]"
             />

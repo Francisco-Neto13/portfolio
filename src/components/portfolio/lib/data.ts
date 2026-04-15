@@ -20,7 +20,20 @@ export type TimelineEntry = {
 
 export type MarqueeSkill = {
   name: string;
-  iconClass: string;
+  iconKey:
+    | "html5"
+    | "css3"
+    | "javascript"
+    | "typescript"
+    | "react"
+    | "nextjs"
+    | "tailwind"
+    | "nodejs"
+    | "prisma"
+    | "postgresql"
+    | "git"
+    | "figma";
+  toneClass: string;
 };
 
 export type ContactLink = {
@@ -122,18 +135,18 @@ export const timeline: TimelineEntry[] = [
 ];
 
 export const marqueeSkills: MarqueeSkill[] = [
-  { name: "HTML5", iconClass: "devicon-html5-plain colored" },
-  { name: "CSS3", iconClass: "devicon-css3-plain colored" },
-  { name: "JavaScript", iconClass: "devicon-javascript-plain colored" },
-  { name: "TypeScript", iconClass: "devicon-typescript-plain colored" },
-  { name: "React", iconClass: "devicon-react-original colored" },
-  { name: "Next.js", iconClass: "devicon-nextjs-original" },
-  { name: "Tailwind", iconClass: "devicon-tailwindcss-original colored" },
-  { name: "Node.js", iconClass: "devicon-nodejs-plain colored" },
-  { name: "Prisma", iconClass: "devicon-prisma-original" },
-  { name: "PostgreSQL", iconClass: "devicon-postgresql-plain colored" },
-  { name: "Git", iconClass: "devicon-git-plain colored" },
-  { name: "Figma", iconClass: "devicon-figma-plain colored" }
+  { name: "HTML5", iconKey: "html5", toneClass: "text-orange-400" },
+  { name: "CSS3", iconKey: "css3", toneClass: "text-sky-400" },
+  { name: "JavaScript", iconKey: "javascript", toneClass: "text-yellow-300" },
+  { name: "TypeScript", iconKey: "typescript", toneClass: "text-blue-400" },
+  { name: "React", iconKey: "react", toneClass: "text-cyan-300" },
+  { name: "Next.js", iconKey: "nextjs", toneClass: "text-zinc-100" },
+  { name: "Tailwind", iconKey: "tailwind", toneClass: "text-teal-300" },
+  { name: "Node.js", iconKey: "nodejs", toneClass: "text-green-400" },
+  { name: "Prisma", iconKey: "prisma", toneClass: "text-indigo-300" },
+  { name: "PostgreSQL", iconKey: "postgresql", toneClass: "text-blue-300" },
+  { name: "Git", iconKey: "git", toneClass: "text-rose-400" },
+  { name: "Figma", iconKey: "figma", toneClass: "text-pink-300" }
 ];
 
 export const contactLinks: ContactLink[] = [

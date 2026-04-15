@@ -22,10 +22,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="pt-BR">
       <head>
-        <link
-          rel="stylesheet"
-          href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
-        />
+        <link rel="dns-prefetch" href="https://github-contributions-api.jogruber.de" />
+        <link rel="preconnect" href="https://github-contributions-api.jogruber.de" crossOrigin="" />
       </head>
       <body className={poppins.variable}>{children}</body>
     </html>

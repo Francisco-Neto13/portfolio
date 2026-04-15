@@ -5,7 +5,12 @@ import { projects } from "@/components/portfolio/lib/data";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
-import { GitHubCalendar } from "react-github-calendar";
+import dynamic from "next/dynamic";
+
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((module) => module.GitHubCalendar),
+  { ssr: false }
+);
 
 function getRelativeOffset(index: number, activeIndex: number, total: number) {
   let offset = index - activeIndex;
@@ -20,8 +25,10 @@ function getRelativeOffset(index: number, activeIndex: number, total: number) {
 export function Projects() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isInViewport, setIsInViewport] = useState(false);
+  const [shouldLoadCalendar, setShouldLoadCalendar] = useState(false);
   const [viewportWidth, setViewportWidth] = useState(1280);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const calendarRef = useRef<HTMLDivElement | null>(null);
   const touchStartXRef = useRef<number | null>(null);
   const touchStartYRef = useRef<number | null>(null);
   const activeProject = projects[activeIndex];
@@ -54,6 +61,23 @@ export function Projects() {
     observer.observe(section);
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const calendarSection = calendarRef.current;
+    if (!calendarSection || shouldLoadCalendar) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setShouldLoadCalendar(true);
+        observer.disconnect();
+      },
+      { threshold: 0.1, rootMargin: "280px 0px" }
+    );
+
+    observer.observe(calendarSection);
+    return () => observer.disconnect();
+  }, [shouldLoadCalendar]);
 
   useEffect(() => {
     const handleKeyboard = (event: KeyboardEvent) => {
@@ -301,6 +325,7 @@ export function Projects() {
         </div>
 
         <motion.div
+          ref={calendarRef}
           initial={githubReveal.hiddenState}
           animate={githubReveal.controls}
           onViewportEnter={githubReveal.onViewportEnter}
@@ -313,17 +338,21 @@ export function Projects() {
           <div className="rounded-2xl border border-violet-300/20 bg-[#100b24]/72 p-3 sm:p-4 md:p-6">
             <div className="w-full overflow-x-auto">
               <div className="mx-auto min-w-max [&_.react-activity-calendar]:mx-auto">
-                <GitHubCalendar
-                  username="Francisco-Neto13"
-                  blockSize={calendarSettings.blockSize}
-                  blockMargin={calendarSettings.blockMargin}
-                  fontSize={calendarSettings.fontSize}
-                  colorScheme="dark"
-                  theme={{
-                    dark: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"],
-                    light: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"]
-                  }}
-                />
+                {shouldLoadCalendar ? (
+                  <GitHubCalendar
+                    username="Francisco-Neto13"
+                    blockSize={calendarSettings.blockSize}
+                    blockMargin={calendarSettings.blockMargin}
+                    fontSize={calendarSettings.fontSize}
+                    colorScheme="dark"
+                    theme={{
+                      dark: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"],
+                      light: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"]
+                    }}
+                  />
+                ) : (
+                  <div className="h-[118px] w-[620px] rounded-lg border border-violet-300/10 bg-[#130d2a]/60 sm:h-[132px] md:h-[156px]" />
+                )}
               </div>
             </div>
           </div>

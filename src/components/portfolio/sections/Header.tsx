@@ -1,3 +1,5 @@
+"use client";
+
 import { NavItem } from "@/components/portfolio/lib/data";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -28,7 +30,7 @@ export function Header({
 
   return (
     <header
-      className={`fixed inset-x-0 top-0 z-50 h-20 overflow-hidden border-b transition-all duration-300 ${
+      className={`fixed inset-x-0 top-0 z-[80] h-20 border-b transition-all duration-300 ${
         isScrolled
           ? "border-violet-400/30 bg-[#0a0519]/78 backdrop-blur-xl"
           : "border-transparent bg-[#0a0519]/20 backdrop-blur-sm"
@@ -54,7 +56,8 @@ export function Header({
         </a>
 
         <button
-          className="flex flex-col gap-1.5 p-2 md:hidden"
+          type="button"
+          className="relative z-[90] flex min-h-11 min-w-11 touch-manipulation flex-col items-center justify-center gap-1.5 p-2 md:hidden"
           aria-label="Abrir menu"
           aria-expanded={mobileMenuOpen}
           aria-controls="mobile-menu"
@@ -95,7 +98,7 @@ export function Header({
       {mobileMenuOpen ? (
         <nav
           id="mobile-menu"
-          className="fixed inset-x-0 top-20 z-40 h-[calc(100svh-80px)] bg-[#0a0519]/95 px-6 py-10 backdrop-blur-2xl md:hidden"
+          className="fixed inset-x-0 top-20 z-[85] h-[calc(100svh-80px)] bg-[#0a0519]/95 px-6 py-10 backdrop-blur-2xl md:hidden"
         >
           <ul className="flex h-full flex-col items-center justify-center gap-10">
             {navItems.map((item) => {
