@@ -10,11 +10,46 @@ import { ProfessionalIntro } from "@/components/portfolio/sections/ProfessionalI
 import { Projects } from "@/components/portfolio/sections/Projects";
 import { Services } from "@/components/portfolio/sections/Services";
 
+type ThemeMode = "system" | "dark" | "light";
+type ResolvedTheme = "dark" | "light";
+
 export function PortfolioPage() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("inicio");
+  const [themeMode, setThemeMode] = useState<ThemeMode>("dark");
+  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
 
   const year = useMemo(() => new Date().getFullYear(), []);
+
+  useEffect(() => {
+    const stored = window.localStorage.getItem("portfolio-theme-mode");
+    if (stored === "system" || stored === "dark" || stored === "light") {
+      setThemeMode(stored);
+    }
+  }, []);
+
+  useEffect(() => {
+    const root = document.documentElement;
+    const media = window.matchMedia("(prefers-color-scheme: dark)");
+
+    const syncTheme = () => {
+      const nextTheme: ResolvedTheme =
+        themeMode === "system" ? (media.matches ? "dark" : "light") : themeMode;
+
+      root.dataset.theme = nextTheme;
+      setResolvedTheme(nextTheme);
+    };
+
+    syncTheme();
+    window.localStorage.setItem("portfolio-theme-mode", themeMode);
+
+    if (themeMode !== "system") {
+      return;
+    }
+
+    media.addEventListener("change", syncTheme);
+    return () => media.removeEventListener("change", syncTheme);
+  }, [themeMode]);
 
   useEffect(() => {
     document.body.style.overflow = mobileMenuOpen ? "hidden" : "";
@@ -97,14 +132,16 @@ export function PortfolioPage() {
         navItems={navItems}
         activeSection={activeSection}
         mobileMenuOpen={mobileMenuOpen}
+        themeMode={themeMode}
         onToggleMobileMenu={() => setMobileMenuOpen((previous) => !previous)}
+        onThemeModeChange={setThemeMode}
         onNavigate={handleNavigate}
       />
 
-      <main className="pt-20">
+      <main className="portfolio-shell pt-20">
         <Hero />
         <ProfessionalIntro />
-        <Projects />
+        <Projects resolvedTheme={resolvedTheme} />
         <Services />
         <Contact />
       </main>

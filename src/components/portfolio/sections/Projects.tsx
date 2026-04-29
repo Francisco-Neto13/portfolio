@@ -22,7 +22,7 @@ function getRelativeOffset(index: number, activeIndex: number, total: number) {
   return offset;
 }
 
-export function Projects() {
+export function Projects({ resolvedTheme }: { resolvedTheme: "dark" | "light" }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isInViewport, setIsInViewport] = useState(false);
   const [shouldLoadCalendar, setShouldLoadCalendar] = useState(false);
@@ -166,7 +166,7 @@ export function Projects() {
     <section
       ref={sectionRef}
       id="projetos"
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px] bg-[#09041a]"
+      className="portfolio-section-primary relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px]"
     >
       <motion.div
         initial={reveal.hiddenState}
@@ -178,8 +178,8 @@ export function Projects() {
       >
         <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Selecção de trabalhos</p>
-          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Projetos em destaque</h2>
-          <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
+          <h2 className="portfolio-text-title text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Projetos em destaque</h2>
+          <p className="portfolio-text-soft max-w-[650px] text-sm leading-relaxed sm:text-base">
             Navegue projeto por projeto em um cover flow 3D: o item ativo fica em destaque no centro e os outros
             permanecem ao fundo.
           </p>
@@ -188,14 +188,14 @@ export function Projects() {
         <div className="grid items-start gap-6 xl:grid-cols-[minmax(0,1.45fr)_minmax(330px,0.8fr)]">
           <div>
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <p className="text-xs uppercase tracking-[0.14em] text-zinc-400">Use setas do teclado ou os botões</p>
+              <p className="portfolio-text-muted text-xs uppercase tracking-[0.14em]">Use setas do teclado ou os botões</p>
 
               <div className="flex items-center gap-2">
                 <button
                   type="button"
                   onClick={prevProject}
                   aria-label="Projeto anterior"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/30 bg-[#130c28] text-zinc-100 transition hover:border-violet-300/60 hover:text-violet-200"
+                  className="portfolio-surface inline-flex h-10 w-10 items-center justify-center rounded-full border portfolio-text-title transition hover:border-[var(--border-strong)] hover:text-violet-300"
                 >
                   &#8592;
                 </button>
@@ -203,7 +203,7 @@ export function Projects() {
                   type="button"
                   onClick={nextProject}
                   aria-label="Proximo projeto"
-                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-violet-300/30 bg-[#130c28] text-zinc-100 transition hover:border-violet-300/60 hover:text-violet-200"
+                  className="portfolio-surface inline-flex h-10 w-10 items-center justify-center rounded-full border portfolio-text-title transition hover:border-[var(--border-strong)] hover:text-violet-300"
                 >
                   &#8594;
                 </button>
@@ -245,15 +245,15 @@ export function Projects() {
                       zIndex: 40 - absOffset,
                       filter: blur
                     }}
-                    className="absolute left-1/2 top-0 h-full w-[90%] max-w-[600px] -translate-x-1/2 overflow-hidden rounded-2xl border border-violet-300/25 bg-[#0f0a23]/85 shadow-[0_20px_45px_rgba(8,4,18,0.55)] sm:w-[92%]"
+                    className="portfolio-surface absolute left-1/2 top-0 h-full w-[90%] max-w-[600px] -translate-x-1/2 overflow-hidden rounded-2xl border shadow-[0_20px_45px_rgba(8,4,18,0.55)] sm:w-[92%]"
                     onClick={() => setActiveIndex(index)}
                     aria-hidden={!isActive}
                   >
-                    <div className="flex items-center gap-2 border-b border-violet-300/20 bg-[#16112d]/90 px-4 py-2.5">
+                    <div className="portfolio-surface-strong flex items-center gap-2 border-b px-4 py-2.5">
                       <span className="h-2.5 w-2.5 rounded-full bg-[#ff5f57]" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#febc2e]" />
                       <span className="h-2.5 w-2.5 rounded-full bg-[#28c840]" />
-                      <span className="ml-3 line-clamp-1 text-xs text-zinc-300/90">{project.title}</span>
+                      <span className="portfolio-text-soft ml-3 line-clamp-1 text-xs">{project.title}</span>
                     </div>
 
                     <div className="relative h-[calc(100%-42px)] overflow-hidden">
@@ -265,9 +265,9 @@ export function Projects() {
                         quality={72}
                         className="object-cover"
                       />
-                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#0a0519]/78 via-[#0a0519]/30 to-transparent" />
+                      <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[var(--overlay)] to-transparent" />
                       <div className="pointer-events-none absolute inset-x-0 bottom-0 p-3 sm:p-4">
-                        <p className="text-base font-semibold text-violet-100 sm:text-lg md:text-xl">{project.title}</p>
+                        <p className="portfolio-text-title text-base font-semibold sm:text-lg md:text-xl">{project.title}</p>
                       </div>
                     </div>
                   </motion.article>
@@ -295,16 +295,16 @@ export function Projects() {
             initial={{ opacity: 0, y: -14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
-            className="w-full rounded-2xl border border-violet-300/20 bg-[#0f0a23]/72 p-5 sm:p-6 xl:sticky xl:top-24"
+            className="portfolio-surface w-full rounded-2xl border p-5 sm:p-6 xl:sticky xl:top-24"
           >
-            <h3 className="text-xl font-semibold text-violet-100 sm:text-2xl">{activeProject.title}</h3>
-            <p className="mt-3 text-sm leading-relaxed text-zinc-300 md:text-[15px]">{activeProject.description}</p>
+            <h3 className="portfolio-text-title text-xl font-semibold sm:text-2xl">{activeProject.title}</h3>
+            <p className="portfolio-text-soft mt-3 text-sm leading-relaxed md:text-[15px]">{activeProject.description}</p>
 
             <div className="mt-4 flex flex-wrap gap-2">
               {activeProject.tech.map((tech) => (
                 <span
                   key={`${activeProject.title}-${tech}`}
-                  className="rounded-md border border-violet-300/20 bg-violet-400/10 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-violet-200"
+                  className="rounded-md border border-violet-300/20 bg-violet-400/10 px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide text-violet-300"
                 >
                   {tech}
                 </span>
@@ -335,7 +335,7 @@ export function Projects() {
         >
           <p className="mb-4 text-sm font-medium uppercase tracking-[0.18em] text-violet-300">GitHub</p>
 
-          <div className="rounded-2xl border border-violet-300/20 bg-[#100b24]/72 p-3 sm:p-4 md:p-6">
+          <div className="portfolio-surface rounded-2xl border p-3 sm:p-4 md:p-6">
             <div className="w-full overflow-x-auto">
               <div className="mx-auto min-w-max [&_.react-activity-calendar]:mx-auto">
                 {shouldLoadCalendar ? (
@@ -344,14 +344,14 @@ export function Projects() {
                     blockSize={calendarSettings.blockSize}
                     blockMargin={calendarSettings.blockMargin}
                     fontSize={calendarSettings.fontSize}
-                    colorScheme="dark"
+                    colorScheme={resolvedTheme}
                     theme={{
                       dark: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"],
-                      light: ["#140f2b", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"]
+                      light: ["#ede7ff", "#d5c3ff", "#b38bff", "#8f5bff", "#6d34f8"]
                     }}
                   />
                 ) : (
-                  <div className="h-[118px] w-[620px] rounded-lg border border-violet-300/10 bg-[#130d2a]/60 sm:h-[132px] md:h-[156px]" />
+                  <div className="portfolio-surface h-[118px] w-[620px] rounded-lg border sm:h-[132px] md:h-[156px]" />
                 )}
               </div>
             </div>
@@ -361,3 +361,6 @@ export function Projects() {
     </section>
   );
 }
+
+
+

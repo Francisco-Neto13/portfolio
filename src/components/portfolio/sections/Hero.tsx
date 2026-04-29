@@ -61,7 +61,7 @@ export function Hero() {
       onViewportEnter={reveal.onViewportEnter}
       onViewportLeave={reveal.onViewportLeave}
       viewport={{ amount: 0.2 }}
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-[calc(100svh-80px)] w-screen overflow-hidden bg-[#09041a]"
+      className="portfolio-section-primary relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] h-[calc(100svh-80px)] w-screen overflow-hidden"
     >
       <div className="relative mx-auto grid h-full w-full max-w-[1320px] grid-cols-1 gap-6 px-4 py-4 sm:px-6 sm:py-6 md:gap-7 lg:grid-cols-[minmax(0,0.92fr)_minmax(0,1.08fr)] lg:gap-8 lg:items-center lg:px-10 lg:py-8 xl:px-14">
         <div className="order-2 flex h-full w-full flex-col items-center justify-center text-center lg:order-1 lg:items-start lg:justify-center lg:pt-6 lg:text-left">
@@ -73,12 +73,12 @@ export function Hero() {
             Disponível para novos projetos
           </div>
 
-          <h1 className="mt-4 max-w-[700px] text-[2rem] font-black uppercase leading-[0.92] tracking-tight text-zinc-100 sm:text-[2.65rem] md:text-[3.15rem] lg:text-[3.75rem] xl:text-[4.1rem]">
+          <h1 className="portfolio-text-title mt-4 max-w-[700px] text-[2rem] font-black uppercase leading-[0.92] tracking-tight sm:text-[2.65rem] md:text-[3.15rem] lg:text-[3.75rem] xl:text-[4.1rem]">
             Desenvolvedor
             <span className="block text-violet-400">Frontend</span>
           </h1>
 
-          <p className="mt-4 max-w-[620px] text-sm leading-relaxed text-zinc-300 sm:text-base md:text-[1.05rem]">
+          <p className="portfolio-text-soft mt-4 max-w-[620px] text-sm leading-relaxed sm:text-base md:text-[1.05rem]">
             Interfaces modernas e performáticas, com foco em código limpo, responsividade e experiência real de uso.
           </p>
 
@@ -93,13 +93,13 @@ export function Hero() {
             <a
               href="#contato"
               onClick={(event) => handleCtaNavigate(event, "#contato")}
-              className="inline-flex w-full items-center justify-center rounded-lg border border-violet-300/30 bg-[#120c28] px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] text-zinc-100 transition hover:border-violet-300/55 hover:text-violet-200 sm:w-auto"
+              className="inline-flex w-full items-center justify-center rounded-lg border portfolio-border-soft portfolio-surface px-4 py-2.5 text-[11px] font-semibold uppercase tracking-[0.09em] portfolio-text-title transition hover:border-[var(--border-strong)] hover:text-violet-300 sm:w-auto"
             >
               Falar comigo
             </a>
           </div>
 
-          <p className="mt-5 text-sm font-medium text-zinc-300/80 sm:mt-6">{profile.name}</p>
+          <p className="portfolio-text-soft mt-5 text-sm font-medium sm:mt-6">{profile.name}</p>
 
           <div className="mt-4 w-full max-w-[760px]">
             <div className="relative overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
@@ -109,10 +109,10 @@ export function Hero() {
                   return (
                   <span
                     key={`${skill.name}-${index}`}
-                    className="inline-flex items-center gap-2.5 rounded-xl border border-violet-300/20 bg-[#100b24]/70 px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3"
+                    className="portfolio-surface inline-flex items-center gap-2.5 rounded-xl border px-3 py-2.5 sm:gap-3 sm:px-4 sm:py-3"
                   >
                     <Icon aria-hidden="true" className={`text-xl ${skill.toneClass}`} />
-                    <span className="text-xs font-medium text-zinc-100 sm:text-sm">{skill.name}</span>
+                    <span className="portfolio-text-title text-xs font-medium sm:text-sm">{skill.name}</span>
                   </span>
                   );
                 })}

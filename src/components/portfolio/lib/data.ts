@@ -139,7 +139,7 @@ export const marqueeSkills: MarqueeSkill[] = [
   { name: "JavaScript", iconKey: "javascript", toneClass: "text-yellow-300" },
   { name: "TypeScript", iconKey: "typescript", toneClass: "text-blue-400" },
   { name: "React", iconKey: "react", toneClass: "text-cyan-300" },
-  { name: "Next.js", iconKey: "nextjs", toneClass: "text-zinc-100" },
+  { name: "Next.js", iconKey: "nextjs", toneClass: "text-[var(--text-title)]" },
   { name: "Tailwind", iconKey: "tailwind", toneClass: "text-teal-300" },
   { name: "Node.js", iconKey: "nodejs", toneClass: "text-green-400" },
   { name: "Prisma", iconKey: "prisma", toneClass: "text-indigo-300" },

@@ -69,7 +69,7 @@ export function Services() {
   return (
     <section
       id="servicos"
-      className="relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px] bg-[#0b0816]"
+      className="portfolio-section-alt relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px]"
     >
       <motion.div
         initial={reveal.hiddenState}
@@ -81,8 +81,8 @@ export function Services() {
       >
         <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
           <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Serviços</p>
-          <h2 className="text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">Meus Serviços</h2>
-          <p className="max-w-[650px] text-sm leading-relaxed text-zinc-300 sm:text-base">
+          <h2 className="portfolio-text-title text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Meus Serviços</h2>
+          <p className="portfolio-text-soft max-w-[650px] text-sm leading-relaxed sm:text-base">
             Soluções que unem design, código e eficiência para construir produtos modernos, estáveis e prontos para
             evoluir.
           </p>
@@ -92,16 +92,16 @@ export function Services() {
           {services.map((service) => (
             <article
               key={service.title}
-              className="group flex min-h-[250px] flex-col items-center rounded-2xl border border-violet-300/20 bg-[#100b24]/72 px-5 py-6 text-center transition hover:-translate-y-1 hover:border-violet-300/45 hover:bg-[#130d2a] sm:min-h-[280px] sm:px-6 sm:py-8"
+              className="portfolio-surface group flex min-h-[250px] flex-col items-center rounded-2xl border px-5 py-6 text-center transition hover:-translate-y-1 hover:border-[var(--border-strong)] hover:bg-[var(--surface-strong)] sm:min-h-[280px] sm:px-6 sm:py-8"
             >
               <span className="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-violet-300/30 bg-violet-400/10 text-violet-200 transition group-hover:text-violet-100 sm:h-12 sm:w-12">
                 <ServiceGlyph icon={service.icon} />
               </span>
 
-              <h3 className="mt-4 min-h-[58px] text-[1.2rem] font-extrabold leading-tight text-white sm:mt-5 sm:min-h-[68px] sm:text-[1.35rem]">
+              <h3 className="portfolio-text-title mt-4 min-h-[58px] text-[1.2rem] font-extrabold leading-tight sm:mt-5 sm:min-h-[68px] sm:text-[1.35rem]">
                 {service.title}
               </h3>
-              <p className="mx-auto mt-3 max-w-[340px] text-sm leading-relaxed text-zinc-300 sm:mt-4 sm:text-base">
+              <p className="portfolio-text-soft mx-auto mt-3 max-w-[340px] text-sm leading-relaxed sm:mt-4 sm:text-base">
                 {service.description}
               </p>
             </article>
