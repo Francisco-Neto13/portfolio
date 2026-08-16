@@ -18,6 +18,16 @@ html[data-theme="dark"] {
   --border-strong: rgba(196, 181, 253, 0.45);
   --accent: #9b5cff;
   --accent-soft: #c4b5fd;
+  /* Acento legível sobre --bg (10.8:1). */
+  --accent-text: #c4b5fd;
+  /* Fundo de botão sólido, sempre pareado com texto branco (4.9:1). */
+  --accent-strong: #7c3aed;
+  --accent-line: rgba(196, 181, 253, 0.28);
+  --accent-wash: rgba(155, 92, 255, 0.12);
+  --card-shadow: rgba(8, 4, 18, 0.55);
+  --grid-line: rgba(196, 181, 253, 0.07);
+  --glow-a: rgba(155, 92, 255, 0.18);
+  --glow-b: rgba(109, 52, 248, 0.12);
 }
 
 html[data-theme="light"] {
@@ -37,6 +47,15 @@ html[data-theme="light"] {
   --border-strong: rgba(91, 66, 160, 0.42);
   --accent: #7b4aff;
   --accent-soft: #8b5cf6;
+  /* Acento legível sobre --bg (5.4:1). O violet-300 antigo dava 1.5:1. */
+  --accent-text: #6d34f8;
+  --accent-strong: #6d34f8;
+  --accent-line: rgba(109, 52, 248, 0.3);
+  --accent-wash: rgba(109, 52, 248, 0.08);
+  --card-shadow: rgba(70, 50, 130, 0.16);
+  --grid-line: rgba(91, 66, 160, 0.1);
+  --glow-a: rgba(155, 92, 255, 0.16);
+  --glow-b: rgba(109, 52, 248, 0.1);
 }
 
 @theme inline {
@@ -44,6 +63,15 @@ html[data-theme="light"] {
   --color-portfolio-text-main: var(--text-main);
   --color-portfolio-text-soft: var(--text-soft);
   --color-portfolio-accent: var(--accent);
+}
+
+:root {
+  /* Altura do header fixo. Espelhada em lib/scroll.ts (HEADER_HEIGHT). */
+  --header-h: 80px;
+  /* Largura maxima do conteudo. Usada por todas as secoes. */
+  --content-max: 1440px;
+  /* Largura de leitura confortavel (~70 caracteres). */
+  --prose-max: 62ch;
 }
 
 * {
@@ -69,6 +97,13 @@ img {
   display: block;
   max-width: 100%;
   height: auto;
+}
+
+/* Foco visível consistente em todos os controles interativos. */
+:where(a, button, [role="radio"]):focus-visible {
+  outline: 2px solid var(--accent-text);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 .marquee-row {
@@ -98,9 +133,81 @@ img {
   }
 }
 
+/*
+  Reveal por scroll, dirigido pelo IntersectionObserver em lib/Reveal.tsx.
+  Escopado em `html.js` (classe adicionada pelo script inline do head): sem
+  JavaScript a regra nunca aplica e o conteúdo continua visível.
+*/
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+html.js [data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+/*
+  Entrada em cascata: aplique `data-stagger` num grid/lista dentro de um Reveal e
+  os filhos diretos entram em sequencia em vez de tudo de uma vez.
+*/
+html.js [data-stagger] > * {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html.js [data-reveal][data-revealed="true"] [data-stagger] > * {
+  opacity: 1;
+  transform: none;
+}
+
+html.js [data-stagger] > *:nth-child(1) {
+  transition-delay: 0.06s;
+}
+html.js [data-stagger] > *:nth-child(2) {
+  transition-delay: 0.12s;
+}
+html.js [data-stagger] > *:nth-child(3) {
+  transition-delay: 0.18s;
+}
+html.js [data-stagger] > *:nth-child(4) {
+  transition-delay: 0.24s;
+}
+html.js [data-stagger] > *:nth-child(5) {
+  transition-delay: 0.3s;
+}
+html.js [data-stagger] > *:nth-child(6) {
+  transition-delay: 0.36s;
+}
+html.js [data-stagger] > *:nth-child(n + 7) {
+  transition-delay: 0.42s;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+  }
+
+  .marquee-row,
+  .portfolio-ring-spin {
+    animation: none;
+  }
+
+  html.js [data-reveal],
+  html.js [data-reveal][data-revealed="false"],
+  html.js [data-stagger] > * {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    transition-delay: 0s;
   }
 }
 
@@ -139,10 +246,204 @@ img {
   color: var(--text-muted);
 }
 
+.portfolio-text-accent {
+  color: var(--accent-text);
+}
+
 .portfolio-border-soft {
   border-color: var(--border-soft);
 }
 
 .portfolio-border-strong {
   border-color: var(--border-strong);
+}
+
+/* Botão de ação sólido: fundo de acento + texto branco nos dois temas. */
+.portfolio-btn-accent {
+  background: var(--accent-strong);
+  border-color: var(--accent-strong);
+  color: #ffffff;
+}
+
+.portfolio-btn-accent:hover {
+  filter: brightness(1.12);
+}
+
+/* Chip/badge de acento (tags de tecnologia, selo do hero). */
+.portfolio-chip {
+  border-color: var(--accent-line);
+  background: var(--accent-wash);
+  color: var(--accent-text);
+}
+
+.portfolio-card-shadow {
+  box-shadow: 0 20px 45px var(--card-shadow);
+}
+
+/* Halo suave atras do retrato do hero, para o circulo nao ficar flutuando solto. */
+.portfolio-portrait-glow::before {
+  content: "";
+  position: absolute;
+  inset: -14%;
+  z-index: -1;
+  border-radius: 9999px;
+  background: radial-gradient(circle at 50% 42%, var(--accent-wash), transparent 68%);
+}
+
+/*
+  Fundo do hero: grade tecnica + dois brilhos difusos. Tudo em CSS, sem imagem e sem
+  JS — a grade e mascarada por um gradiente radial para nao encostar nas bordas.
+*/
+.portfolio-hero-bg {
+  position: relative;
+  isolation: isolate;
+}
+
+.portfolio-hero-bg::before,
+.portfolio-hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.portfolio-hero-bg::before {
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(ellipse 85% 65% at 50% 40%, #000 30%, transparent 76%);
+  -webkit-mask-image: radial-gradient(ellipse 85% 65% at 50% 40%, #000 30%, transparent 76%);
+}
+
+.portfolio-hero-bg::after {
+  background:
+    radial-gradient(36rem 24rem at 8% 4%, var(--glow-a), transparent 68%),
+    radial-gradient(32rem 22rem at 92% 82%, var(--glow-b), transparent 68%);
+}
+
+/* Anel tracejado girando devagar em volta do retrato. */
+.portfolio-ring-spin {
+  animation: portfolio-spin 30s linear infinite;
+}
+
+@keyframes portfolio-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Texto com degrade de acento. Ambas as pontas passam no contraste dos dois temas. */
+.portfolio-text-gradient {
+  background-image: linear-gradient(100deg, var(--accent-text), var(--accent), var(--accent-text));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/*
+  Barra de progresso de leitura, presa na base do header.
+
+  Alimentada por `--scroll-progress`, calculada dentro do rAF que o detector de
+  seção ativa já executa — nenhum listener novo. A versão anterior usava
+  `animation-timeline: scroll()`, que é mais elegante mas só existe em Chromium
+  recente: fora dele a barra simplesmente não aparecia.
+*/
+.portfolio-scroll-progress {
+  transform: scaleX(var(--scroll-progress, 0));
+  transform-origin: 0 50%;
+  box-shadow: 0 0 12px var(--accent-text);
+}
+
+/* Linha vertical da trajetoria, com os pontos ancorados nela. */
+.portfolio-timeline-item::before {
+  content: "";
+  position: absolute;
+  left: 5px;
+  top: 18px;
+  bottom: -18px;
+  width: 1px;
+  background: var(--border-soft);
+}
+
+.portfolio-timeline-item:last-child::before {
+  display: none;
+}
+
+.portfolio-timeline-dot {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  height: 11px;
+  width: 11px;
+  border-radius: 9999px;
+  border: 2px solid var(--accent-text);
+  background: var(--bg);
+  transition: box-shadow 0.3s ease-out;
+}
+
+.portfolio-timeline-item:hover .portfolio-timeline-dot {
+  box-shadow: 0 0 0 4px var(--accent-wash);
+}
+
+/* Card interativo: borda de acento, leve elevacao e realce do icone no hover. */
+.portfolio-interactive {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    border-color 0.3s ease-out,
+    background-color 0.3s ease-out;
+}
+
+.portfolio-interactive:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent-line);
+  background-color: var(--surface-strong);
+}
+
+.portfolio-interactive .portfolio-arrow {
+  transition:
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.3s ease-out;
+  opacity: 0;
+  transform: translateX(-6px);
+}
+
+.portfolio-interactive:hover .portfolio-arrow,
+.portfolio-interactive:focus-within .portfolio-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.portfolio-interactive .portfolio-icon-chip {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    color 0.3s ease-out;
+}
+
+.portfolio-interactive:hover .portfolio-icon-chip {
+  transform: scale(1.08) rotate(-4deg);
+}
+
+/* Numero de ordem no canto do card, discreto ate o hover. */
+.portfolio-index {
+  transition:
+    color 0.3s ease-out,
+    opacity 0.3s ease-out;
+  opacity: 0.45;
+}
+
+.portfolio-interactive:hover .portfolio-index {
+  opacity: 1;
+  color: var(--accent-text);
+}
+
+/* Marcador que cresce a partir da esquerda nos destaques do perfil. */
+.portfolio-marker {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+  transform-origin: top;
+}
+
+.portfolio-highlight:hover .portfolio-marker {
+  transform: scaleY(1.06) scaleX(2.5);
 }
