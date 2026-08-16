@@ -1,31 +1,40 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { navItems } from "@/components/portfolio/lib/data";
-import { Contact } from "@/components/portfolio/sections/Contact";
-import { Footer } from "@/components/portfolio/sections/Footer";
+import {
+  getServerThemeMode,
+  readStoredThemeMode,
+  resolveTheme,
+  subscribeToThemeMode,
+  writeStoredThemeMode,
+  type ThemeMode
+} from "@/components/portfolio/lib/theme";
+import { HEADER_HEIGHT } from "@/components/portfolio/lib/scroll";
+import { SmoothLink } from "@/components/portfolio/lib/SmoothLink";
 import { Header } from "@/components/portfolio/sections/Header";
-import { Hero } from "@/components/portfolio/sections/Hero";
-import { ProfessionalIntro } from "@/components/portfolio/sections/ProfessionalIntro";
-import { Projects } from "@/components/portfolio/sections/Projects";
-import { Services } from "@/components/portfolio/sections/Services";
 
-type ThemeMode = "system" | "dark" | "light";
-type ResolvedTheme = "dark" | "light";
+const SECTION_IDS = ["inicio", "trajetoria", "experiencia", "projetos", "servicos", "contato"] as const;
 
-export function PortfolioPage() {
+/**
+ * Casca interativa do portfólio: header fixo, tema e detecção da seção ativa.
+ * As seções chegam via `children`, então continuam sendo Server Components.
+ */
+export function PortfolioChrome({ children }: { children: React.ReactNode }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState("inicio");
-  const [themeMode, setThemeMode] = useState<ThemeMode>("dark");
-  const [resolvedTheme, setResolvedTheme] = useState<ResolvedTheme>("dark");
+  const [activeSection, setActiveSection] = useState<string>(SECTION_IDS[0]);
 
-  const year = useMemo(() => new Date().getFullYear(), []);
+  // O localStorage é um store externo: useSyncExternalStore lê o valor real já na
+  // hidratação (sem setState em effect) e mantém a escolha sincronizada entre abas.
+  const themeMode = useSyncExternalStore(subscribeToThemeMode, readStoredThemeMode, getServerThemeMode);
 
-  useEffect(() => {
-    const stored = window.localStorage.getItem("portfolio-theme-mode");
-    if (stored === "system" || stored === "dark" || stored === "light") {
-      setThemeMode(stored);
-    }
+  const showFloatingCta = activeSection !== "inicio" && activeSection !== "contato" && !mobileMenuOpen;
+
+  const closeMobileMenu = useCallback(() => setMobileMenuOpen(false), []);
+  const toggleMobileMenu = useCallback(() => setMobileMenuOpen((previous) => !previous), []);
+
+  const handleThemeModeChange = useCallback((mode: ThemeMode) => {
+    writeStoredThemeMode(mode);
   }, []);
 
   useEffect(() => {
@@ -33,19 +42,12 @@ export function PortfolioPage() {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
 
     const syncTheme = () => {
-      const nextTheme: ResolvedTheme =
-        themeMode === "system" ? (media.matches ? "dark" : "light") : themeMode;
-
-      root.dataset.theme = nextTheme;
-      setResolvedTheme(nextTheme);
+      root.dataset.theme = resolveTheme(themeMode, media.matches);
     };
 
     syncTheme();
-    window.localStorage.setItem("portfolio-theme-mode", themeMode);
 
-    if (themeMode !== "system") {
-      return;
-    }
+    if (themeMode !== "system") return;
 
     media.addEventListener("change", syncTheme);
     return () => media.removeEventListener("change", syncTheme);
@@ -60,9 +62,7 @@ export function PortfolioPage() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 768) {
-        setMobileMenuOpen(false);
-      }
+      if (window.innerWidth >= 768) setMobileMenuOpen(false);
     };
 
     window.addEventListener("resize", handleResize);
@@ -70,83 +70,98 @@ export function PortfolioPage() {
   }, []);
 
   useEffect(() => {
-    const sections = ["inicio", "trajetoria", "projetos", "servicos", "contato"];
+    // Elementos resolvidos uma vez: antes, cada evento de scroll fazia 5 getElementById
+    // + leituras de offsetTop, forçando reflow síncrono a cada frame.
+    const sections = SECTION_IDS.map((id) => document.getElementById(id));
+    let frame = 0;
 
-    const handleScroll = () => {
+    const measure = () => {
+      frame = 0;
       const scrollY = window.scrollY;
       const windowHeight = window.innerHeight;
-      const headerOffset = window.innerWidth < 768 ? 110 : 140;
+      const headerOffset = window.innerWidth < 768 ? HEADER_HEIGHT + 30 : HEADER_HEIGHT + 60;
+      const detectionLine = scrollY + headerOffset;
 
-      const contatoSection = document.getElementById("contato");
-      if (contatoSection) {
-        const sectionTop = contatoSection.offsetTop;
+      // Progresso de leitura, consumido pela barra no header via CSS var.
+      const maxScroll = document.documentElement.scrollHeight - windowHeight;
+      const progress = maxScroll > 0 ? Math.min(1, Math.max(0, scrollY / maxScroll)) : 0;
+      document.documentElement.style.setProperty("--scroll-progress", progress.toFixed(4));
 
-        if (scrollY + windowHeight * 0.38 >= sectionTop) {
-          setActiveSection("contato");
-          return;
-        }
+      /*
+        A ultima secao precisa de regra propria: ela pode comecar abaixo do scroll
+        maximo da pagina, e ai o topo dela nunca cruza a linha de deteccao. Foi o que
+        quebrava o "Falar comigo" — o contato comeca em 4319px, mas a pagina so rola
+        ate 3957px, entao "Servicos" continuava marcado no rodape. Aqui ela vence
+        assim que o topo entra na metade inferior da viewport.
+      */
+      const last = sections[sections.length - 1];
+      if (last && last.offsetTop <= scrollY + windowHeight * 0.6) {
+        setActiveSection(SECTION_IDS[SECTION_IDS.length - 1]);
+        return;
       }
 
-      for (let i = 0; i < sections.length - 1; i++) {
-        const section = document.getElementById(sections[i]);
-        if (!section) continue;
-
-        const nextSection = document.getElementById(sections[i + 1]);
-        const nextSectionTop = nextSection ? nextSection.offsetTop : Infinity;
-
-        if (
-          scrollY + headerOffset >= section.offsetTop &&
-          scrollY + headerOffset < nextSectionTop
-        ) {
-          setActiveSection(sections[i]);
-          return;
-        }
+      // Demais secoes: vale a ultima cujo topo ja passou da linha de deteccao.
+      let currentIndex = 0;
+      for (let i = 0; i < sections.length; i++) {
+        const section = sections[i];
+        if (section && section.offsetTop <= detectionLine) currentIndex = i;
       }
 
-      setActiveSection(sections[sections.length - 1]);
+      setActiveSection(SECTION_IDS[currentIndex]);
     };
 
-    handleScroll();
+    const handleScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(measure);
+    };
+
+    measure();
     window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
+    window.addEventListener("resize", handleScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("resize", handleScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
   }, []);
-
-  const handleNavigate = (href: string) => {
-    const target = document.querySelector(href);
-    if (target instanceof HTMLElement) {
-      const header = document.querySelector("header");
-      const headerHeight = header instanceof HTMLElement ? header.offsetHeight : 80;
-      const targetTop = target.getBoundingClientRect().top + window.scrollY - (headerHeight + 10);
-
-      window.scrollTo({
-        top: Math.max(0, targetTop),
-        behavior: "smooth"
-      });
-    }
-    setMobileMenuOpen(false);
-  };
 
   return (
     <>
+      <a
+        href="#inicio"
+        className="portfolio-btn-accent sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[100] focus:rounded-lg focus:px-4 focus:py-2 focus:text-sm focus:font-semibold"
+      >
+        Pular para o conteúdo
+      </a>
+
       <Header
         navItems={navItems}
         activeSection={activeSection}
         mobileMenuOpen={mobileMenuOpen}
         themeMode={themeMode}
-        onToggleMobileMenu={() => setMobileMenuOpen((previous) => !previous)}
-        onThemeModeChange={setThemeMode}
-        onNavigate={handleNavigate}
+        onToggleMobileMenu={toggleMobileMenu}
+        onCloseMobileMenu={closeMobileMenu}
+        onThemeModeChange={handleThemeModeChange}
       />
 
-      <main className="portfolio-shell pt-20">
-        <Hero />
-        <ProfessionalIntro />
-        <Projects resolvedTheme={resolvedTheme} />
-        <Services />
-        <Contact />
-      </main>
+      <main className="portfolio-shell pt-[var(--header-h)]">{children}</main>
 
-      <Footer year={year} />
+      {/*
+        CTA persistente: some no hero (onde já existe o botão principal) e no contato
+        (onde o usuário já chegou). Reaproveita o activeSection, sem estado novo.
+      */}
+      <SmoothLink
+        href="#contato"
+        className={`portfolio-btn-accent portfolio-card-shadow fixed bottom-5 right-5 z-[70] inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.09em] transition-all duration-300 sm:bottom-7 sm:right-7 ${
+          showFloatingCta
+            ? "translate-y-0 opacity-100"
+            : "pointer-events-none translate-y-3 opacity-0"
+        }`}
+      >
+        <span aria-hidden="true">&#9993;</span>
+        Vamos conversar
+      </SmoothLink>
     </>
   );
 }
