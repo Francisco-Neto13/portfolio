@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
-import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
+import { Reveal } from "@/components/portfolio/lib/Reveal";
+import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
+import { CopyButton } from "@/components/portfolio/lib/CopyButton";
 import { contactLinks } from "@/components/portfolio/lib/data";
 
 function ContactIcon({ label }: { label: string }) {
@@ -38,55 +39,92 @@ function ContactIcon({ label }: { label: string }) {
   );
 }
 
+/**
+ * Texto curto para exibir no card. A URL crua quebrava no meio da palavra e
+ * colidia com o botão de copiar — aqui fica só o identificador.
+ */
+function toDisplayHandle(href: string) {
+  if (href.startsWith("mailto:")) return href.replace("mailto:", "");
+
+  const path = href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/+$/, "");
+  const segments = path.split("/");
+
+  return segments[segments.length - 1] || path;
+}
+
+/** O que vai para a área de transferência: e-mail puro ou a URL completa. */
+function toCopyValue(href: string) {
+  return href.startsWith("mailto:") ? href.replace("mailto:", "") : href;
+}
+
 export function Contact() {
-  const reveal = useDirectionalReveal(-30, 0.65);
-
   return (
-    <section
-      id="contato"
-      className="portfolio-section-primary relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px]"
-    >
-      <motion.div
-        initial={reveal.hiddenState}
-        animate={reveal.controls}
-        onViewportEnter={reveal.onViewportEnter}
-        onViewportLeave={reveal.onViewportLeave}
-        viewport={{ amount: 0.2 }}
-        className="relative mx-auto flex min-h-[82svh] w-full max-w-[1400px] items-start px-4 pb-16 pt-16 sm:px-6 md:min-h-[72svh] md:pb-24 md:pt-24 lg:px-10"
-      >
-        <div className="mx-auto w-full max-w-[1220px]">
-          <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
-            <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Contato</p>
-            <h2 className="portfolio-text-title text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Fale comigo</h2>
-            <p className="portfolio-text-soft max-w-[650px] text-sm leading-relaxed sm:text-base">
-              Estou disponível para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e
-              entre em contato.
-            </p>
-          </div>
+    <section id="contato" className="portfolio-section-primary relative w-full scroll-mt-[var(--header-h)]">
+      <Reveal className="relative mx-auto w-full max-w-[var(--content-max)] px-4 py-16 sm:px-6 sm:py-20 md:py-28 lg:px-10">
+        <div className="w-full">
+          <SectionHeading
+            eyebrow="Contato"
+            title="Fale comigo"
+            description="Estou disponível para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e entre em contato."
+          />
 
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {contactLinks.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                target={item.href.startsWith("http") ? "_blank" : undefined}
-                rel={item.href.startsWith("http") ? "noreferrer" : undefined}
-                className="portfolio-surface group flex min-h-[112px] flex-col items-start justify-between gap-3 rounded-2xl border px-4 py-4 transition hover:-translate-y-0.5 hover:border-[var(--border-strong)] hover:bg-[var(--surface-strong)] sm:px-5 sm:py-5"
-              >
-                <div className="flex items-center gap-3">
-                  <ContactIcon label={item.label} />
-                  <span className="portfolio-text-title text-xs font-semibold uppercase tracking-[0.12em] sm:text-sm">
-                    {item.label}
-                  </span>
-                </div>
-                <span className="portfolio-text-soft break-all text-xs transition group-hover:text-violet-300 sm:text-sm">
-                  {item.href.replace(/^https?:\/\//, "").replace(/^mailto:/, "")}
-                </span>
-              </a>
-            ))}
-          </div>
+          <ul data-stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            {contactLinks.map((item) => {
+              const isExternal = item.href.startsWith("http");
+              const handle = toDisplayHandle(item.href);
+
+              return (
+                <li key={item.href}>
+                  {/*
+                    Link estendido: a âncora cobre o card inteiro e o botão de copiar
+                    fica acima dela. Evita aninhar <button> dentro de <a>, que é HTML
+                    inválido, e mantém as duas ações alcançáveis pelo teclado.
+                  */}
+                  <div className="portfolio-surface portfolio-interactive group relative flex min-h-[124px] flex-col items-start justify-between gap-3 overflow-hidden rounded-2xl border px-4 py-4 sm:px-5 sm:py-5">
+                    <a
+                      href={item.href}
+                      target={isExternal ? "_blank" : undefined}
+                      rel={isExternal ? "noreferrer" : undefined}
+                      className="absolute inset-0 z-0"
+                    >
+                      <span className="sr-only">
+                        {item.label}
+                        {isExternal ? " (abre em nova aba)" : ""}
+                      </span>
+                    </a>
+
+                    <span className="pointer-events-none flex w-full items-center justify-between gap-3">
+                      <span className="flex items-center gap-3">
+                        <ContactIcon label={item.label} />
+                        <span className="portfolio-text-title text-xs font-semibold uppercase tracking-[0.12em] sm:text-sm">
+                          {item.label}
+                        </span>
+                      </span>
+
+                      <span
+                        aria-hidden="true"
+                        className="portfolio-arrow portfolio-text-accent text-sm font-bold"
+                      >
+                        &#8599;
+                      </span>
+                    </span>
+
+                    <span className="flex w-full items-center justify-between gap-2">
+                      <span
+                        title={handle}
+                        className="portfolio-text-soft pointer-events-none min-w-0 truncate text-xs transition group-hover:text-[var(--accent-text)] sm:text-sm"
+                      >
+                        {handle}
+                      </span>
+                      <CopyButton value={toCopyValue(item.href)} label={item.label} />
+                    </span>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
         </div>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }

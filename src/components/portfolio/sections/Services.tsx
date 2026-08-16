@@ -1,25 +1,42 @@
-import { motion } from "framer-motion";
+import { Reveal } from "@/components/portfolio/lib/Reveal";
+import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
+import { SmoothLink } from "@/components/portfolio/lib/SmoothLink";
 import { services } from "@/components/portfolio/lib/data";
-import { useDirectionalReveal } from "@/components/portfolio/lib/useDirectionalReveal";
 
-type ServiceIcon = "frontend" | "ui" | "backend" | "bots" | "automation" | "optimization";
+type ServiceIcon = "automation" | "ai" | "systems" | "backend" | "dashboards" | "frontend";
 
 function ServiceGlyph({ icon }: { icon: ServiceIcon }) {
-  if (icon === "frontend") {
+  if (icon === "automation") {
     return (
       <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-        <rect x="3" y="4" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
-        <path d="M3 8h18" stroke="currentColor" strokeWidth="1.8" />
-        <path d="m10 12-2 2 2 2M14 12l2 2-2 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M7 7h4V3m6 14h-4v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M17 17a7 7 0 0 1-10-10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <path d="M7 7a7 7 0 0 1 10 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
       </svg>
     );
   }
 
-  if (icon === "ui") {
+  if (icon === "ai") {
     return (
       <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-        <rect x="4" y="4" width="16" height="16" rx="3" stroke="currentColor" strokeWidth="1.8" />
-        <path d="M8 9h8M8 13h5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <rect x="6.5" y="6.5" width="11" height="11" rx="3" stroke="currentColor" strokeWidth="1.8" />
+        <circle cx="12" cy="12" r="2" fill="currentColor" />
+        <path
+          d="M10 3.5v3M14 3.5v3M10 17.5v3M14 17.5v3M3.5 10h3M3.5 14h3M17.5 10h3M17.5 14h3"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
+      </svg>
+    );
+  }
+
+  if (icon === "systems") {
+    return (
+      <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
+        <rect x="3" y="4" width="18" height="16" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+        <path d="M3 9h18M9 9v11" stroke="currentColor" strokeWidth="1.8" />
+        <path d="M12 13h6M12 16.5h4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
       </svg>
     );
   }
@@ -34,80 +51,84 @@ function ServiceGlyph({ icon }: { icon: ServiceIcon }) {
     );
   }
 
-  if (icon === "bots") {
+  if (icon === "dashboards") {
     return (
       <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-        <rect x="5" y="8" width="14" height="10" rx="3" stroke="currentColor" strokeWidth="1.8" />
-        <circle cx="9.5" cy="13" r="1" fill="currentColor" />
-        <circle cx="14.5" cy="13" r="1" fill="currentColor" />
-        <path d="M12 8V5m0 0-2 1m2-1 2 1" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      </svg>
-    );
-  }
-
-  if (icon === "automation") {
-    return (
-      <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-        <path d="M7 7h4V3m6 14h-4v4" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M17 17a7 7 0 0 1-10-10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-        <path d="M7 7a7 7 0 0 1 10 10" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+        <rect x="3.5" y="4" width="17" height="16" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+        <path
+          d="M7.5 15.5v-3M12 15.5v-6M16.5 15.5v-4.5"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+        />
       </svg>
     );
   }
 
   return (
     <svg viewBox="0 0 24 24" fill="none" className="h-7 w-7">
-      <path d="M4 17h16M6.5 14l3.5-3.5 2.6 2.6L17.5 8" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M17.5 8H14m3.5 0v3.5" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <rect x="3" y="4" width="18" height="14" rx="2.5" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M3 8h18" stroke="currentColor" strokeWidth="1.8" />
+      <path d="m10 12-2 2 2 2M14 12l2 2-2 2" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
     </svg>
   );
 }
 
 export function Services() {
-  const reveal = useDirectionalReveal(-28, 0.65);
-
   return (
-    <section
-      id="servicos"
-      className="portfolio-section-alt relative left-1/2 right-1/2 -ml-[50vw] -mr-[50vw] w-screen overflow-hidden scroll-mt-[80px]"
-    >
-      <motion.div
-        initial={reveal.hiddenState}
-        animate={reveal.controls}
-        onViewportEnter={reveal.onViewportEnter}
-        onViewportLeave={reveal.onViewportLeave}
-        viewport={{ amount: 0.2 }}
-        className="relative mx-auto w-full max-w-[1300px] px-4 py-14 sm:px-6 md:py-20 lg:px-10"
-      >
-        <div className="mb-8 flex flex-col gap-5 md:mb-10 md:max-w-[760px]">
-          <p className="text-sm font-medium uppercase tracking-[0.18em] text-violet-300">Serviços</p>
-          <h2 className="portfolio-text-title text-3xl font-bold leading-tight sm:text-4xl md:text-5xl">Meus Serviços</h2>
-          <p className="portfolio-text-soft max-w-[650px] text-sm leading-relaxed sm:text-base">
-            Soluções que unem design, código e eficiência para construir produtos modernos, estáveis e prontos para
-            evoluir.
-          </p>
-        </div>
+    <section id="servicos" className="portfolio-section-alt relative w-full scroll-mt-[var(--header-h)]">
+      <Reveal className="relative mx-auto w-full max-w-[var(--content-max)] px-4 py-16 sm:px-6 sm:py-20 md:py-24 lg:px-10">
+        <SectionHeading
+          eyebrow="Serviços"
+          title="Como posso ajudar"
+          description="Da automação que roda em segundo plano ao sistema que a sua equipe abre todo dia — soluções pensadas para o seu processo, não para um template genérico."
+        />
 
-        <div className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {services.map((service) => (
+        {/*
+          Cards alinhados a esquerda: a versao centralizada precisava de `min-h` no
+          titulo para alinhar as linhas, o que abria um vao morto entre titulo e texto.
+        */}
+        <div data-stagger className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {services.map((service, index) => (
             <article
               key={service.title}
-              className="portfolio-surface group flex min-h-[250px] flex-col items-center rounded-2xl border px-5 py-6 text-center transition hover:-translate-y-1 hover:border-[var(--border-strong)] hover:bg-[var(--surface-strong)] sm:min-h-[280px] sm:px-6 sm:py-8"
+              className="portfolio-surface portfolio-interactive relative flex h-full flex-col rounded-2xl border p-6 sm:p-7"
             >
-              <span className="mx-auto inline-flex h-11 w-11 items-center justify-center rounded-xl border border-violet-300/30 bg-violet-400/10 text-violet-200 transition group-hover:text-violet-100 sm:h-12 sm:w-12">
-                <ServiceGlyph icon={service.icon} />
-              </span>
+              {/* Card inteiro leva ao contato: a seta no hover precisa levar a algum lugar. */}
+              <SmoothLink href="#contato" className="absolute inset-0 z-0 rounded-2xl">
+                <span className="sr-only">Falar sobre {service.title}</span>
+              </SmoothLink>
 
-              <h3 className="portfolio-text-title mt-4 min-h-[58px] text-[1.2rem] font-extrabold leading-tight sm:mt-5 sm:min-h-[68px] sm:text-[1.35rem]">
+              <div className="pointer-events-none flex items-start justify-between gap-4">
+                <span className="portfolio-chip portfolio-icon-chip inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border">
+                  <ServiceGlyph icon={service.icon} />
+                </span>
+
+                <span
+                  aria-hidden="true"
+                  className="portfolio-index portfolio-text-muted text-sm font-bold tabular-nums"
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <h3 className="portfolio-text-title pointer-events-none mt-5 text-[1.2rem] font-bold leading-snug sm:text-[1.3rem]">
                 {service.title}
               </h3>
-              <p className="portfolio-text-soft mx-auto mt-3 max-w-[340px] text-sm leading-relaxed sm:mt-4 sm:text-base">
+              <p className="portfolio-text-soft pointer-events-none mt-3 text-sm leading-relaxed sm:text-[15px]">
                 {service.description}
               </p>
+
+              <span
+                aria-hidden="true"
+                className="portfolio-arrow portfolio-text-accent mt-5 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em]"
+              >
+                Falar sobre isso &#8594;
+              </span>
             </article>
           ))}
         </div>
-      </motion.div>
+      </Reveal>
     </section>
   );
 }
