@@ -3,6 +3,11 @@
 node_modules
 *.tsbuildinfo
 
+# Documentos
+*.pdf
+*.docx
+documentation/
+
 .env
 .env*.local
 
