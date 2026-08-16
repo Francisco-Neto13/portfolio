@@ -1,5 +1,5 @@
 export type NavItem = {
-  href: "#inicio" | "#projetos" | "#trajetoria" | "#servicos" | "#contato";
+  href: "#inicio" | "#trajetoria" | "#experiencia" | "#projetos" | "#servicos" | "#contato";
   label: string;
 };
 
@@ -18,21 +18,36 @@ export type TimelineEntry = {
   description: string;
 };
 
+export type ExperienceEntry = {
+  company: string;
+  companyUrl?: string;
+  role: string;
+  period: string;
+  description: string;
+  focus: string[];
+  /** Exibido quando o conteúdo do trabalho é coberto por acordo de confidencialidade. */
+  confidentialNote?: string;
+};
+
 export type MarqueeSkill = {
   name: string;
   iconKey:
-    | "html5"
-    | "css3"
-    | "javascript"
     | "typescript"
+    | "javascript"
     | "react"
     | "nextjs"
     | "tailwind"
     | "nodejs"
-    | "prisma"
+    | "python"
+    | "fastapi"
     | "postgresql"
-    | "git"
-    | "figma";
+    | "prisma"
+    | "supabase"
+    | "docker"
+    | "redis"
+    | "openai"
+    | "n8n"
+    | "git";
   toneClass: string;
 };
 
@@ -49,59 +64,87 @@ export type Highlight = {
 export type ServiceItem = {
   title: string;
   description: string;
-  icon: "frontend" | "ui" | "backend" | "bots" | "automation" | "optimization";
+  icon: "automation" | "ai" | "systems" | "backend" | "dashboards" | "frontend";
 };
 
 export type Profile = {
   name: string;
   subtitle: string;
-  year: number;
 };
 
 export const navItems: NavItem[] = [
   { href: "#inicio", label: "Início" },
   { href: "#trajetoria", label: "Trajetória" },
+  { href: "#experiencia", label: "Experiência" },
   { href: "#projetos", label: "Projetos" },
   { href: "#servicos", label: "Serviços" },
   { href: "#contato", label: "Contato" }
 ];
 
-export const projects: Project[] = [
+/**
+ * Experiência profissional.
+ *
+ * IMPORTANTE: o contrato vigente classifica como confidencial, de forma vitalícia,
+ * nomes de clientes, código, telas, metodologias, algoritmos e métricas de negócio.
+ * Descreva apenas a natureza do trabalho e as tecnologias — nunca o que foi entregue
+ * para quem. Ver a nota no README antes de editar esta seção.
+ */
+export const experiences: ExperienceEntry[] = [
   {
-    title: "Cats & Dungeons",
+    company: "IA Infinity",
+    companyUrl: "https://iainfinity.com.br/",
+    role: "Desenvolvedor · Automação e integração de sistemas",
+    period: "Abr 2026 — atual",
     description:
-      "Roguelike em Java com exploração procedural, combate estratégico e progressão em ondas. O projeto utiliza pathfinding A*, colisão AABB, física vetorial e inventário estruturado.",
-    image: "/assets/images/cats&dungeons.webp",
-    imageAlt: "Miniatura do Cats & Dungeons",
-    tech: ["Java", "TinySound", "JSON", "A*", "Física 2D", "AABB", "Game Loop"],
-    links: [{ label: "GitHub", href: "https://github.com/Francisco-Neto13/Cats-and-Dungeons" }]
-  },
+      "Desenvolvimento de automações e integrações entre sistemas corporativos, além de aplicações web de apoio à operação. O trabalho combina APIs, modelagem e processamento de dados e recursos de IA aplicada, em projetos que vão da coleta e tratamento de informação até a interface usada no dia a dia.",
+    focus: [
+      "Integrações e APIs",
+      "IA aplicada a processos",
+      "Aplicações web internas",
+      "Processamento de dados",
+      "Deploy em containers"
+    ],
+    confidentialNote:
+      "Clientes, produtos e detalhes de implementação são cobertos por acordo de confidencialidade e não são divulgados."
+  }
+];
+
+export const projects: Project[] = [
   {
     title: "PawSpace",
     description:
-      "Hub visual de estudos para mapear trilhas, organizar materiais, registrar sessões e acompanhar progresso em um fluxo único e conectado.",
-    image: "/assets/images/pawspace.png",
+      "Hub de estudos que conecta trilhas, materiais e sessões em um fluxo único. Inclui editor de trilhas em grafo, registro de progresso e visualização de evolução ao longo do tempo.",
+    image: "/assets/images/pawspace.webp",
     imageAlt: "Miniatura do PawSpace",
-    tech: ["Next.js 16", "React 19", "TypeScript", "Tailwind CSS 4", "Prisma", "Supabase"],
+    tech: ["Next.js", "React 19", "TypeScript", "Prisma", "Supabase", "React Flow", "Recharts"],
     links: [{ label: "Ver Projeto", href: "https://pawspace.vercel.app/" }]
   },
   {
-    title: "GsW Website",
+    title: "Guardians of Wynn",
     description:
-      "Site institucional da comunidade Guardians of Wynn com guias de Wynncraft, galeria interativa, seção de membros e história da guilda.",
+      "Ecossistema completo da comunidade: bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico da guilda.",
     image: "/assets/images/gsw.webp",
-    imageAlt: "Miniatura do GsW Website",
-    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "App Router", "Framer Motion"],
+    imageAlt: "Miniatura do Guardians of Wynn",
+    tech: ["Discord.js", "Node.js", "Next.js", "TypeScript", "Docker", "Google APIs", "node-cron"],
     links: [{ label: "Ver Projeto", href: "https://gsw-website.vercel.app/" }]
   },
   {
     title: "Atmisuki Portfolio",
     description:
-      "Sistema para exibição de portfólio e gestão de conteúdo com foco em performance, processamento de imagem e experiência de navegação.",
+      "Sistema de exibição de portfólio com gestão de conteúdo, autenticação e políticas de acesso por linha. Foco em performance de carregamento e processamento de imagem no cliente.",
     image: "/assets/images/atmisuki.webp",
     imageAlt: "Miniatura do Atmisuki Portfolio",
-    tech: ["React", "Next.js", "TypeScript", "Web Workers", "Supabase", "RLS"],
+    tech: ["Next.js", "React", "TypeScript", "Supabase", "RLS", "Web Workers"],
     links: [{ label: "Ver Projeto", href: "https://atmisuki-portfolio.vercel.app/" }]
+  },
+  {
+    title: "Cats & Dungeons",
+    description:
+      "Roguelike em Java com exploração procedural, combate estratégico e progressão em ondas. Implementa pathfinding A*, colisão AABB, física vetorial e inventário estruturado.",
+    image: "/assets/images/cats-and-dungeons.webp",
+    imageAlt: "Miniatura do Cats & Dungeons",
+    tech: ["Java", "TinySound", "JSON", "A*", "Física 2D", "AABB", "Game Loop"],
+    links: [{ label: "GitHub", href: "https://github.com/Francisco-Neto13/Cats-and-Dungeons" }]
   }
 ];
 
@@ -109,115 +152,129 @@ export const timeline: TimelineEntry[] = [
   {
     year: "2020",
     title: "Primeiro contato com programação",
-    description: "Criei meus primeiros bots para Discord usando JavaScript e Node.js, começando a estudar lógica e estrutura de aplicações."
+    description:
+      "Criei meus primeiros bots para Discord usando JavaScript e Node.js, começando a estudar lógica e estrutura de aplicações."
   },
   {
     year: "2023",
     title: "Entrada na graduação",
-    description: "Início do Bacharelado em Ciência da Computação na Afya Centro Universitário UNIMA - AL, consolidando base técnica e visão de carreira."
+    description:
+      "Início do Bacharelado em Ciência da Computação na Afya Centro Universitário UNIMA - AL, consolidando base técnica e visão de carreira."
   },
   {
     year: "2024",
     title: "Fase de aprofundamento acadêmico",
-    description: "Período focado em disciplinas da graduação, organização de rotina e amadurecimento do processo de estudo."
+    description:
+      "Período focado em disciplinas da graduação, organização de rotina e amadurecimento do processo de estudo."
   },
   {
     year: "2025",
-    title: "Projetos e retomada forte",
-    description: "Desenvolvimento de projetos mais completos, incluindo jogo em equipe, reestruturação de projetos antigos e prática com IA e ML."
+    title: "Projetos completos e prática com IA",
+    description:
+      "Desenvolvimento de projetos de ponta a ponta, incluindo jogo em equipe, reestruturação de projetos antigos e primeiros experimentos com IA e ML."
   },
   {
     year: "2026",
-    title: "Especialização em desenvolvimento web",
-    description: "Foco em React, Next.js e TypeScript com integração a banco de dados e autenticação, criando aplicações com arquitetura e escalabilidade."
+    title: "Atuação profissional em automação e IA",
+    description:
+      "Entrada na IA Infinity como desenvolvedor, trabalhando com integração de sistemas, backend em Python e IA aplicada a processos reais de operação."
   }
 ];
 
 export const marqueeSkills: MarqueeSkill[] = [
-  { name: "HTML5", iconKey: "html5", toneClass: "text-orange-400" },
-  { name: "CSS3", iconKey: "css3", toneClass: "text-sky-400" },
-  { name: "JavaScript", iconKey: "javascript", toneClass: "text-yellow-300" },
-  { name: "TypeScript", iconKey: "typescript", toneClass: "text-blue-400" },
-  { name: "React", iconKey: "react", toneClass: "text-cyan-300" },
+  { name: "TypeScript", iconKey: "typescript", toneClass: "text-blue-500" },
+  { name: "React", iconKey: "react", toneClass: "text-cyan-500" },
   { name: "Next.js", iconKey: "nextjs", toneClass: "text-[var(--text-title)]" },
-  { name: "Tailwind", iconKey: "tailwind", toneClass: "text-teal-300" },
-  { name: "Node.js", iconKey: "nodejs", toneClass: "text-green-400" },
-  { name: "Prisma", iconKey: "prisma", toneClass: "text-indigo-300" },
-  { name: "PostgreSQL", iconKey: "postgresql", toneClass: "text-blue-300" },
-  { name: "Git", iconKey: "git", toneClass: "text-rose-400" },
-  { name: "Figma", iconKey: "figma", toneClass: "text-pink-300" }
+  { name: "Tailwind", iconKey: "tailwind", toneClass: "text-teal-500" },
+  { name: "Node.js", iconKey: "nodejs", toneClass: "text-green-600" },
+  { name: "Python", iconKey: "python", toneClass: "text-amber-500" },
+  { name: "FastAPI", iconKey: "fastapi", toneClass: "text-emerald-600" },
+  { name: "PostgreSQL", iconKey: "postgresql", toneClass: "text-blue-600" },
+  { name: "Prisma", iconKey: "prisma", toneClass: "text-indigo-500" },
+  { name: "Supabase", iconKey: "supabase", toneClass: "text-emerald-500" },
+  { name: "Redis", iconKey: "redis", toneClass: "text-red-500" },
+  { name: "Docker", iconKey: "docker", toneClass: "text-sky-500" },
+  { name: "OpenAI", iconKey: "openai", toneClass: "text-[var(--text-title)]" },
+  { name: "n8n", iconKey: "n8n", toneClass: "text-rose-500" },
+  { name: "JavaScript", iconKey: "javascript", toneClass: "text-yellow-500" },
+  { name: "Git", iconKey: "git", toneClass: "text-orange-600" }
 ];
 
 export const contactLinks: ContactLink[] = [
   { label: "GitHub", href: "https://github.com/Francisco-Neto13" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/jfrancisco-neto/" },
-  { label: "Instagram", href: "https://www.instagram.com/cisscoo_/" },
+  { label: "Instagram", href: "https://www.instagram.com/chicooneto__/" },
   { label: "E-mail", href: "mailto:franciscoaneto13@gmail.com" }
 ];
 
 export const highlights: Highlight[] = [
   {
-    title: "Frontend com React e Next.js",
+    title: "Do processo à interface",
     description:
-      "Desenvolvimento de interfaces modernas, responsivas e bem estruturadas, com foco em clareza visual, reutilização de componentes e boa experiência de uso.",
+      "Construo a solução inteira: a rotina que integra os sistemas, a API que sustenta a regra de negócio e a tela que a equipe usa todo dia. Sem depender de terceiros para fechar o ciclo."
   },
   {
-    title: "Performance e manutenibilidade",
+    title: "Automação de operações reais",
     description:
-      "Aplicações pensadas para desempenho, organização de código e escalabilidade, priorizando uma base sólida para evolução do produto.",
+      "Integração entre sistemas, tratamento de dados e rotinas que substituem trabalho manual repetitivo — com atenção a falhas, reprocessamento e rastreabilidade."
   },
   {
-    title: "Backend aplicado ao produto",
+    title: "IA aplicada com critério",
     description:
-      "Experiência crescente com autenticação, banco de dados, storage e integrações, conectando o frontend a funcionalidades reais de forma consistente.",
+      "Uso de modelos de linguagem onde eles resolvem um problema concreto: leitura de documentos, classificação e apoio ao atendimento. Sempre com validação e custo sob controle."
   },
   {
-    title: "Entrega orientada a produto",
+    title: "Backend que aguenta produção",
     description:
-      "Foco em transformar requisitos em soluções funcionais, equilibrando interface, lógica de negócio e qualidade técnica na entrega final.",
+      "APIs em Python e Node com banco relacional, migrações versionadas, autenticação, filas de processamento e deploy em containers."
   },
   {
-    title: "Comunicação e colaboração",
+    title: "Discrição profissional",
     description:
-      "Experiência em trabalhar em equipe, comunicar ideias técnicas de forma clara e contribuir para projetos colaborativos com metodologias ágeis.",
-  },
+      "Trabalho com dados sensíveis de clientes sob acordo de confidencialidade. O que é do cliente permanece do cliente — e isso vale também para você."
+  }
 ];
 
 export const services: ServiceItem[] = [
   {
-    title: "Desenvolvimento Frontend",
-    description: "Landing pages modernas com foco em clareza, conversão e experiência de navegação.",
-    icon: "frontend",
+    title: "Automação de Processos",
+    description:
+      "Integração entre sistemas, rotinas agendadas e fluxos que eliminam tarefas manuais repetitivas da sua operação.",
+    icon: "automation"
   },
   {
-    title: "Layout Responsivo",
-    description: "Interfaces adaptadas para desktop, tablet e mobile com consistência visual.",
-    icon: "ui",
+    title: "IA Aplicada ao Negócio",
+    description:
+      "Leitura automática de documentos, classificação de conteúdo e apoio ao atendimento usando modelos de linguagem.",
+    icon: "ai"
   },
   {
-    title: "Backend e APIs",
-    description: "Integrações com Supabase, Prisma e APIs para dar suporte real ao produto.",
-    icon: "backend",
+    title: "Sistemas Web sob Medida",
+    description:
+      "CRMs, painéis internos e back-offices desenhados para o seu fluxo de trabalho, não para um template genérico.",
+    icon: "systems"
   },
   {
-    title: "Bots para Discord",
-    description: "Criação de bots com painel de controle para gerenciar comandos, dados e automatizações.",
-    icon: "bots",
+    title: "APIs e Backend",
+    description:
+      "APIs em Python ou Node com banco relacional, autenticação, migrações versionadas e deploy em containers.",
+    icon: "backend"
   },
   {
-    title: "Sistemas Automatizados",
-    description: "Sistemas automatizados para reduzir tarefas repetitivas e acelerar operações.",
-    icon: "automation",
+    title: "Dashboards e Relatórios",
+    description:
+      "Visualização de dados, indicadores acompanháveis e exportação em PDF para quem precisa decidir com números.",
+    icon: "dashboards"
   },
   {
-    title: "Otimização de Processos",
-    description: "Melhoria contínua em performance e fluxo para manter o projeto eficiente e escalável.",
-    icon: "optimization",
-  },
+    title: "Sites e Landing Pages",
+    description:
+      "Páginas rápidas, responsivas e bem posicionadas em buscadores, com foco em clareza e conversão.",
+    icon: "frontend"
+  }
 ];
 
 export const profile: Profile = {
   name: "Francisco Neto",
-  subtitle: "Desenvolvedor Frontend",
-  year: new Date().getFullYear(),
+  subtitle: "Desenvolvedor Full Stack"
 };
