@@ -1,0 +1,4 @@
+* text=auto
+# These run on Linux; with CRLF the shell fails on the first line
+*.sh text eol=lf
+Dockerfile text eol=lf

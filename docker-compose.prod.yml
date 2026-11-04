@@ -1,0 +1,32 @@
+# Production on the VPS. The reverse proxy reaches this service as portfolio:3000 through the
+# "borda" network.
+#   docker compose -f docker-compose.prod.yml up -d --build --wait
+# Never publish a port here: Docker bypasses ufw for published ports.
+name: portfolio-prod
+
+services:
+  portfolio:
+    build: .
+    image: portfolio-app
+    restart: unless-stopped
+    # No write access, no Linux capabilities and a memory ceiling: the site needs none of them
+    read_only: true
+    tmpfs:
+      - /app/.next/cache
+      - /tmp
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    mem_limit: 512m
+    networks:
+      - borda
+    healthcheck:
+      test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 5s
+      start_period: 10s
+      retries: 6
+
+networks:
+  borda:
+    external: true

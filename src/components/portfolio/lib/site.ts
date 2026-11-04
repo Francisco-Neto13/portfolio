@@ -1,12 +1,8 @@
 /**
- * Origem canônica do site. Em produção a Vercel expõe VERCEL_PROJECT_PRODUCTION_URL;
- * defina NEXT_PUBLIC_SITE_URL para apontar um domínio próprio.
+ * Origem canônica do site. NEXT_PUBLIC_SITE_URL é lida no build, então trocar o domínio
+ * exige um novo build.
  */
-export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "https://portfolio-three-gold-45.vercel.app");
+export const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "https://chiconeto.dev";
 
 export const SITE_NAME = "Francisco Neto";
 export const SITE_TITLE = "Francisco Neto | Desenvolvedor Full Stack";
