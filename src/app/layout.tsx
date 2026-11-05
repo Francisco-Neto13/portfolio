@@ -1,15 +1,39 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
 import { THEME_INIT_SCRIPT } from "@/components/portfolio/lib/theme";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/components/portfolio/lib/site";
 import "./globals.css";
 
-const poppins = Poppins({
+const display = Bricolage_Grotesque({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700", "900"],
-  variable: "--font-poppins",
+  variable: "--font-display",
   display: "swap"
 });
+
+const sans = Geist({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap"
+});
+
+// Só aparece em rótulos: não precisa competir pelo carregamento inicial.
+const mono = Geist_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+  display: "swap",
+  preload: false
+});
+
+/** Dados estruturados da pessoa, para buscadores. */
+const personJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE_NAME,
+  url: SITE_URL,
+  jobTitle: "Desenvolvedor Full Stack",
+  description: SITE_DESCRIPTION,
+  sameAs: ["https://github.com/Francisco-Neto13", "https://www.linkedin.com/in/jfrancisco-neto/"]
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -71,8 +95,8 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#090614" },
-    { media: "(prefers-color-scheme: light)", color: "#f4f1ff" }
+    { media: "(prefers-color-scheme: dark)", color: "#09080f" },
+    { media: "(prefers-color-scheme: light)", color: "#f6f4ee" }
   ]
 };
 
@@ -88,7 +112,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="dns-prefetch" href="https://github-contributions-api.jogruber.de" />
         <link rel="preconnect" href="https://github-contributions-api.jogruber.de" crossOrigin="" />
       </head>
-      <body className={poppins.variable}>{children}</body>
+      <body className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

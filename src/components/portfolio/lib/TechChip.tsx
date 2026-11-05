@@ -95,12 +95,17 @@ const techIcons: Record<string, { Icon: IconType; tone?: string }> = {
   Vercel: { Icon: SiVercel, tone: TITLE_TONE }
 };
 
-export function TechChip({ name }: { name: string }) {
+export function TechIcon({ name, className = "text-[13px]" }: { name: string; className?: string }) {
   const tech = techIcons[name];
+  if (!tech) return null;
 
+  return <tech.Icon aria-hidden="true" className={`shrink-0 ${className} ${tech.tone ?? ""}`} />;
+}
+
+export function TechChip({ name }: { name: string }) {
   return (
-    <li className="portfolio-chip inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide">
-      {tech ? <tech.Icon aria-hidden="true" className={`shrink-0 text-[13px] ${tech.tone ?? ""}`} /> : null}
+    <li className="portfolio-border-soft portfolio-text-soft font-tech inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-medium">
+      <TechIcon name={name} />
       {name}
     </li>
   );

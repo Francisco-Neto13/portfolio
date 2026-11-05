@@ -1,15 +1,41 @@
 export type NavItem = {
-  href: "#inicio" | "#trajetoria" | "#experiencia" | "#projetos" | "#servicos" | "#contato";
+  href: string;
+  label: string;
+};
+
+/** Etapas do deploy: a narrativa da página. Cada seção corresponde a uma. */
+export type Stage = {
+  id: string;
   label: string;
 };
 
 export type Project = {
   title: string;
-  description: string;
+  /** Natureza do projeto. */
+  kind: string;
+  problem: string;
+  solution: string;
+  result: string;
   image: string;
   imageAlt: string;
   tech: string[];
   links: Array<{ label: string; href: string }>;
+  /** Mostra a demonstração interativa no lugar da miniatura. */
+  demo?: "activation";
+};
+
+/** Depoimento real e autorizado. A seção só aparece quando esta lista tiver itens. */
+export type Testimonial = {
+  quote: string;
+  author: string;
+  role: string;
+};
+
+export type Stat = {
+  value: string;
+  label: string;
+  /** Onde o número pode ser conferido. */
+  source: string;
 };
 
 export type TimelineEntry = {
@@ -31,30 +57,8 @@ export type ExperienceEntry = {
 
 export type WorkArea = {
   title: string;
-  challenge: string;
   approach: string;
   tech: string[];
-};
-
-export type MarqueeSkill = {
-  name: string;
-  iconKey:
-    | "typescript"
-    | "javascript"
-    | "react"
-    | "nextjs"
-    | "tailwind"
-    | "nodejs"
-    | "python"
-    | "fastapi"
-    | "postgresql"
-    | "prisma"
-    | "supabase"
-    | "docker"
-    | "openai"
-    | "n8n"
-    | "git";
-  toneClass: string;
 };
 
 export type SkillGroup = {
@@ -67,15 +71,9 @@ export type ContactLink = {
   href: string;
 };
 
-export type Highlight = {
+export type WorkPrinciple = {
   title: string;
   description: string;
-};
-
-export type ServiceItem = {
-  title: string;
-  description: string;
-  icon: "automation" | "ai" | "systems" | "backend" | "dashboards" | "frontend";
 };
 
 export type Profile = {
@@ -84,12 +82,41 @@ export type Profile = {
 };
 
 export const navItems: NavItem[] = [
-  { href: "#inicio", label: "Início" },
-  { href: "#trajetoria", label: "Trajetória" },
-  { href: "#experiencia", label: "Experiência" },
+  { href: "#construo", label: "O que construo" },
   { href: "#projetos", label: "Projetos" },
-  { href: "#servicos", label: "Serviços" },
-  { href: "#contato", label: "Contato" }
+  { href: "#processo", label: "Processo" },
+  { href: "#stack", label: "Stack" },
+  { href: "#trajetoria", label: "Trajetória" }
+];
+
+export const stages: Stage[] = [
+  { id: "inicio", label: "pedido" },
+  { id: "construo", label: "escopo" },
+  { id: "projetos", label: "build" },
+  { id: "processo", label: "revisão" },
+  { id: "stack", label: "dependências" },
+  { id: "trajetoria", label: "histórico" },
+  { id: "contato", label: "no ar" }
+];
+
+/** Só números conferíveis em fonte pública. Nada de empregador ou cliente. */
+export const stats: Stat[] = [
+  { value: "2020", label: "programando desde", source: "Trajetória" },
+  { value: "7", label: "projetos nesta página", source: "Projetos" },
+  { value: "3.500+", label: "contribuições no GitHub no último ano", source: "GitHub" }
+];
+
+export const testimonials: Testimonial[] = [];
+
+export const capabilities = [
+  {
+    title: "APIs e backend",
+    description: "APIs em Python ou Node com banco relacional, autenticação, migrações versionadas e deploy em containers."
+  },
+  {
+    title: "Dashboards e sites",
+    description: "Painéis com indicadores acompanháveis e páginas rápidas, responsivas e bem posicionadas em buscadores."
+  }
 ];
 
 /**
@@ -129,25 +156,21 @@ export const experiences: ExperienceEntry[] = [
 export const workAreas: WorkArea[] = [
   {
     title: "CRMs e operação comercial",
-    challenge: "Leads, oportunidades, conversas e campanhas costumam ficar espalhados em ferramentas diferentes.",
     approach: "Sistemas que reúnem funil de vendas, atendimento e automações, integrados a canais de mensagem e anúncios.",
     tech: ["React", "TypeScript", "PostgreSQL", "API do WhatsApp"]
   },
   {
     title: "Sistemas internos e gestão",
-    challenge: "Áreas diferentes de uma empresa precisam de sistemas que conversem entre si e com serviços externos.",
     approach: "Aplicações organizadas em módulos, planejadas e entregues por fases, com login único entre os sistemas.",
     tech: ["Next.js", "Node.js", "Python", "Docker"]
   },
   {
     title: "Rotinas financeiras e integrações",
-    challenge: "Rotinas financeiras têm pouca margem para erro, porque uma falha pode alcançar o cliente final.",
     approach: "Fluxos de cobrança e conciliação conectados a sistemas de terceiros, com atenção a falhas e reprocessamento.",
     tech: ["Python", "FastAPI", "PostgreSQL", "APIs REST"]
   },
   {
     title: "IA e automação",
-    challenge: "Tarefas repetitivas de atendimento, triagem e leitura de documentos consomem o tempo das equipes.",
     approach: "Modelos de linguagem e automações aplicados onde resolvem um problema concreto, com validação e custo sob controle.",
     tech: ["OpenAI", "n8n", "Python", "Node.js"]
   }
@@ -156,8 +179,11 @@ export const workAreas: WorkArea[] = [
 export const projects: Project[] = [
   {
     title: "Internship Tracker",
-    description:
-      "Plataforma acadêmica que substitui planilhas e papel na gestão de estágios e atividades complementares. Seis perfis enxergam fatias diferentes dos mesmos dados, com permissões garantidas no próprio banco por Row Level Security, e o sistema roda em servidor próprio.",
+    kind: "Plataforma acadêmica",
+    demo: "activation",
+    problem: "A gestão de estágios de um curso de graduação rodava em planilhas e papel, com seis perfis precisando de acessos diferentes aos mesmos dados, inclusive dados sensíveis.",
+    solution: "Sistema do termo de compromisso à integralização curricular. A autorização vive no banco, com Row Level Security, e a auditoria roda em gatilhos que nenhuma rota consegue contornar.",
+    result: "No ar em servidor próprio, com 8 módulos, 37 regras de negócio e 73 requisitos funcionais especificados.",
     image: "/assets/images/internship-tracker.webp",
     imageAlt: "Tela de login do Internship Tracker",
     tech: ["Next.js", "React 19", "TypeScript", "PostgreSQL", "Drizzle ORM", "Better Auth", "RLS", "Docker", "Caddy"],
@@ -168,8 +194,10 @@ export const projects: Project[] = [
   },
   {
     title: "Patinhas",
-    description:
-      "Projeto de faculdade, feito como extensão universitária, que aproxima a comunidade de abrigos de animais. Apresenta a ONG parceira, os animais para adoção, as necessidades e as campanhas, com painel administrativo para o cadastro e doações que vão direto para a ONG, sem passar pela plataforma.",
+    kind: "Projeto de faculdade · extensão universitária",
+    problem: "Abrigos de animais convivem com falta de recursos, desorganização interna e voluntários sobrecarregados.",
+    solution: "Uma frente de comunicação que conecta a comunidade à ONG parceira, com animais, necessidades e campanhas cadastrados em um painel administrativo.",
+    result: "No ar e sem tocar em dinheiro: o PIX e as doações vão direto para a ONG.",
     image: "/assets/images/patinhas.webp",
     imageAlt: "Página inicial do Patinhas",
     tech: ["Next.js", "React 19", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS", "Framer Motion"],
@@ -180,8 +208,10 @@ export const projects: Project[] = [
   },
   {
     title: "iOS Weather App",
-    description:
-      "Projeto de faculdade, feito para a disciplina de Interface Humano-Computador: uma aplicação de clima que reproduz a interface do iPhone a partir de um modelo do Figma. Usa dados reais da OpenWeather, busca de cidades, geolocalização e locais salvos, com a chave da API protegida em função serverless.",
+    kind: "Projeto de faculdade · Interface Humano-Computador",
+    problem: "Reproduzir com fidelidade uma interface de iPhone na web, trocando os dados estáticos do modelo por dados reais.",
+    solution: "Interface construída a partir de um modelo do Figma, com busca de cidades, geolocalização e locais salvos.",
+    result: "No ar com dados reais da OpenWeather e a chave da API protegida em função serverless.",
     image: "/assets/images/ios-weather-app.webp",
     imageAlt: "Tela do iOS Weather App",
     tech: ["React 19", "Vite", "JavaScript", "Tailwind CSS", "OpenWeather", "Vercel"],
@@ -192,8 +222,10 @@ export const projects: Project[] = [
   },
   {
     title: "PawSpace",
-    description:
-      "Hub de estudos que conecta trilhas, materiais e sessões em um fluxo único. Inclui editor de trilhas em grafo, registro de progresso e visualização de evolução ao longo do tempo.",
+    kind: "Projeto pessoal",
+    problem: "Trilhas, materiais e sessões de estudo costumam ficar espalhados em lugares diferentes.",
+    solution: "Um hub que conecta tudo em um fluxo único, com editor de trilhas em grafo e registro de progresso.",
+    result: "No ar, com a evolução do estudo visível ao longo do tempo.",
     image: "/assets/images/pawspace.webp",
     imageAlt: "Miniatura do PawSpace",
     tech: ["Next.js", "React 19", "TypeScript", "Prisma", "Supabase", "React Flow", "Recharts"],
@@ -201,8 +233,10 @@ export const projects: Project[] = [
   },
   {
     title: "Guardians of Wynn",
-    description:
-      "Ecossistema completo da comunidade: bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico da guilda.",
+    kind: "Projeto pessoal",
+    problem: "Uma comunidade precisava reunir rotinas, administração e presença pública em um só ecossistema.",
+    solution: "Bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico.",
+    result: "Site institucional no ar, ligado a um bot e a um dashboard próprios.",
     image: "/assets/images/gsw.webp",
     imageAlt: "Miniatura do Guardians of Wynn",
     tech: ["Discord.js", "Node.js", "Next.js", "TypeScript", "Docker", "Google APIs", "node-cron"],
@@ -210,8 +244,10 @@ export const projects: Project[] = [
   },
   {
     title: "Atmisuki Portfolio",
-    description:
-      "Sistema de exibição de portfólio com gestão de conteúdo, autenticação e políticas de acesso por linha. Foco em performance de carregamento e processamento de imagem no cliente.",
+    kind: "Projeto pessoal",
+    problem: "Exibir e administrar um portfólio de arte digital sem depender de terceiros para atualizar o conteúdo.",
+    solution: "Sistema de exibição com gestão de conteúdo, autenticação e políticas de acesso por linha.",
+    result: "No ar, com foco em carregamento rápido e imagem processada no cliente.",
     image: "/assets/images/atmisuki.webp",
     imageAlt: "Miniatura do Atmisuki Portfolio",
     tech: ["Next.js", "React", "TypeScript", "Supabase", "RLS", "Web Workers"],
@@ -219,8 +255,10 @@ export const projects: Project[] = [
   },
   {
     title: "Cats & Dungeons",
-    description:
-      "Roguelike em Java com exploração procedural, combate estratégico e progressão em ondas. Implementa pathfinding A*, colisão AABB, física vetorial e inventário estruturado.",
+    kind: "Projeto de jogo",
+    problem: "Construir um roguelike completo em Java, da física ao inventário.",
+    solution: "Exploração procedural, combate estratégico e progressão em ondas, com game loop próprio.",
+    result: "Código aberto no GitHub, com pathfinding A*, colisão AABB e física vetorial.",
     image: "/assets/images/cats-and-dungeons.webp",
     imageAlt: "Miniatura do Cats & Dungeons",
     tech: ["Java", "TinySound", "JSON", "A*", "Física 2D", "AABB", "Game Loop"],
@@ -261,22 +299,22 @@ export const timeline: TimelineEntry[] = [
   }
 ];
 
-export const marqueeSkills: MarqueeSkill[] = [
-  { name: "TypeScript", iconKey: "typescript", toneClass: "text-blue-500" },
-  { name: "React", iconKey: "react", toneClass: "text-cyan-500" },
-  { name: "Next.js", iconKey: "nextjs", toneClass: "text-[var(--text-title)]" },
-  { name: "Tailwind", iconKey: "tailwind", toneClass: "text-teal-500" },
-  { name: "Node.js", iconKey: "nodejs", toneClass: "text-green-600" },
-  { name: "Python", iconKey: "python", toneClass: "text-amber-500" },
-  { name: "FastAPI", iconKey: "fastapi", toneClass: "text-emerald-600" },
-  { name: "PostgreSQL", iconKey: "postgresql", toneClass: "text-blue-600" },
-  { name: "Prisma", iconKey: "prisma", toneClass: "text-indigo-500" },
-  { name: "Supabase", iconKey: "supabase", toneClass: "text-emerald-500" },
-  { name: "Docker", iconKey: "docker", toneClass: "text-sky-500" },
-  { name: "OpenAI", iconKey: "openai", toneClass: "text-[var(--text-title)]" },
-  { name: "n8n", iconKey: "n8n", toneClass: "text-rose-500" },
-  { name: "JavaScript", iconKey: "javascript", toneClass: "text-yellow-500" },
-  { name: "Git", iconKey: "git", toneClass: "text-orange-600" }
+export const marqueeSkills: string[] = [
+  "TypeScript",
+  "React",
+  "Next.js",
+  "Tailwind CSS",
+  "Node.js",
+  "Python",
+  "FastAPI",
+  "PostgreSQL",
+  "Prisma",
+  "Supabase",
+  "Docker",
+  "OpenAI",
+  "Claude",
+  "n8n",
+  "Git"
 ];
 
 /** Competências gerais, sem ligação com um empregador ou projeto específico. */
@@ -296,35 +334,7 @@ export const contactLinks: ContactLink[] = [
   { label: "E-mail", href: "mailto:franciscoaneto13@gmail.com" }
 ];
 
-export const highlights: Highlight[] = [
-  {
-    title: "Do processo à interface",
-    description:
-      "Respondo pela solução inteira: a rotina que integra os sistemas, a API que sustenta a regra de negócio e a tela que a equipe usa todo dia."
-  },
-  {
-    title: "Automação de operações reais",
-    description:
-      "Integração entre sistemas, tratamento de dados e rotinas que substituem trabalho manual repetitivo — com atenção a falhas, reprocessamento e rastreabilidade."
-  },
-  {
-    title: "IA aplicada com critério",
-    description:
-      "Uso de modelos de linguagem onde eles resolvem um problema concreto: leitura de documentos, classificação e apoio ao atendimento. Sempre com validação e custo sob controle."
-  },
-  {
-    title: "Backend que aguenta produção",
-    description:
-      "APIs em Python e Node com banco relacional, migrações versionadas, autenticação, filas de processamento e deploy em containers."
-  },
-  {
-    title: "Discrição profissional",
-    description:
-      "Trabalho com dados sensíveis de clientes sob acordo de confidencialidade. O que é do cliente permanece do cliente — e isso vale também para você."
-  }
-];
-
-export const workPrinciples: Highlight[] = [
+export const workPrinciples: WorkPrinciple[] = [
   {
     title: "Reaproveito o que já funciona",
     description:
@@ -354,45 +364,6 @@ export const workPrinciples: Highlight[] = [
     title: "Produto, não remendo",
     description:
       "Se algo exigiria ajuste manual toda hora, prefiro transformar em recurso do próprio sistema, como uma tela no lugar de uma configuração escondida."
-  }
-];
-
-export const services: ServiceItem[] = [
-  {
-    title: "Automação de Processos",
-    description:
-      "Integração entre sistemas, rotinas agendadas e fluxos que eliminam tarefas manuais repetitivas da sua operação.",
-    icon: "automation"
-  },
-  {
-    title: "IA Aplicada ao Negócio",
-    description:
-      "Leitura automática de documentos, classificação de conteúdo e apoio ao atendimento usando modelos de linguagem.",
-    icon: "ai"
-  },
-  {
-    title: "Sistemas Web sob Medida",
-    description:
-      "CRMs, painéis internos e back-offices desenhados para o seu fluxo de trabalho, não para um template genérico.",
-    icon: "systems"
-  },
-  {
-    title: "APIs e Backend",
-    description:
-      "APIs em Python ou Node com banco relacional, autenticação, migrações versionadas e deploy em containers.",
-    icon: "backend"
-  },
-  {
-    title: "Dashboards e Relatórios",
-    description:
-      "Visualização de dados, indicadores acompanháveis e exportação em PDF para quem precisa decidir com números.",
-    icon: "dashboards"
-  },
-  {
-    title: "Sites e Landing Pages",
-    description:
-      "Páginas rápidas, responsivas e bem posicionadas em buscadores, com foco em clareza e conversão.",
-    icon: "frontend"
   }
 ];
 
