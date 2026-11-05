@@ -44,29 +44,34 @@ priorizando performance, acessibilidade e uma base de código simples de manter.
 ```
 src/
 ├── app/
-│   ├── styles/                   # palettes, tokens, components e motion: o design system
-│   ├── projetos/[slug]/          # Página de cada projeto, com os detalhes
-│   ├── sobre/                    # Experiência, trajetória, tecnologias e GitHub
-│   └── page.tsx                  # Home: uma ideia por tela
+│   ├── styles/                   # palettes, tokens, components, visuals, motion e scenes
+│   ├── projetos/[slug]/          # Página de cada projeto, com a demonstração interativa
+│   └── page.tsx                  # Hero, letreiros, O que construo, Projetos, Processo, Stack, Prova, Trajetória, Contato
 └── components/portfolio/
     ├── lib/
     │   ├── data.ts               # Todo o conteúdo do site (fonte única)
-    │   ├── palette.ts            # Paleta ativa (ACTIVE_PALETTE)
+    │   ├── palette.ts            # O que da paleta precisa existir fora do CSS
     │   ├── site.ts               # URL canônica, título e descrição
+    │   ├── Effects.tsx           # Progresso da rolagem, luz do cursor e rolagem suave (Lenis)
     │   ├── Reveal.tsx            # Dispara a entrada dos blocos
+    │   ├── BrowserFrame.tsx      # A janela de navegador de todo print real
     │   ├── TechChip.tsx          # Ícones e chip de tecnologia
-    │   ├── ActivationDemo.tsx    # Demonstração interativa do Internship Tracker
+    │   ├── ActivationDemo.tsx    # Demonstração do Internship Tracker
+    │   ├── ContactTrail.tsx      # Rastro de prints no contato
     │   └── GithubActivity.tsx    # Calendário do GitHub, carregado sob demanda
-    └── sections/                 # Header, Hero, O que construo, Projetos, Processo, Sobre, Contato, Footer
+    └── sections/
 ```
+
+## Como o movimento funciona
+
+* `[data-track]` recebe `--p`, o progresso da rolagem de 0 a 1, e o CSS deriva tudo dele. Com `data-steps`, recebe também `data-active`.
+* Todo efeito fica dentro de `prefers-reduced-motion: no-preference` e de `html.js`. Sem isso, a página aparece inteira e parada.
+* A primeira tela anima só com CSS (`.enter`), para não atrasar a pintura. O Lenis é baixado depois, e só em dispositivos com mouse.
 
 ## Design system
 
-* **Cor:** componentes só usam tokens `--color-*`. Para trocar a paleta, mude `ACTIVE_PALETTE` em `palette.ts`.
-* **Superfície:** um fundo de página e um único card (`.card`). Seções não têm fundo próprio.
-* **Espaço e texto:** só os tokens de `styles/tokens.css` e as classes `.text-*`.
-* **Movimento:** tudo entra do mesmo jeito (`styles/motion.css`): `.enter` na primeira tela, `Reveal` no resto.
-* **Conteúdo:** uma ideia por tela na home. Detalhe vai para `/projetos/[slug]` ou `/sobre`.
+* **Cor e luz:** só tokens de `styles/palettes.css` e `tokens.css`. As folhas `.sheet-light` e `.sheet-violet` redefinem os tokens, e o conteúdo se adapta.
+* **Superfície:** um card (`.card`, com `.spot` para a luz do cursor), uma janela (`.window`) e um chip (`.chip`).
 * **Números só de fonte pública:** o site não usa métrica de empregador nem de cliente.
 
 ## Scripts

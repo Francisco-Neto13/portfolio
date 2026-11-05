@@ -45,7 +45,7 @@ export function Hero() {
           <span aria-hidden="true" className="hero-mark-glow">
             <span className="logo-mark hero-mark" />
           </span>
-          <p className="text-label">
+          <p className="text-label whitespace-nowrap">
             {profile.name} · {profile.subtitle}
           </p>
           <h1 className="text-display mt-5">
@@ -68,7 +68,7 @@ export function Hero() {
               no ar
             </li>
           </ol>
-          <p className="text-label mt-8">
+          <p className="hero-scroll text-label mt-8">
             Role para acender a luz <span aria-hidden="true" className="hero-scroll-hint">↓</span>
           </p>
         </div>

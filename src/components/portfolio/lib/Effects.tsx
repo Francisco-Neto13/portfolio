@@ -3,19 +3,36 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
+/** Altura do cabeçalho: --header-h em tokens.css. */
+const ANCHOR_OFFSET = 72;
+
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
 /**
  * O motor de movimento do site, sem nada na tela:
  * - escreve `--p` (progresso da rolagem) em quem tem [data-track];
  * - escreve a posição do cursor em .spot e a inclinação em [data-tilt];
- * - liga a rolagem suave no desktop, baixando a biblioteca só depois de a página abrir.
+ * - dispara as entradas de [data-reveal], com um único observador;
+ * - liga a rolagem suave no desktop, baixando a biblioteca só depois de a página abrir;
+ * - confere o destino das âncoras, porque seções ainda não desenhadas têm altura estimada.
  */
 export function Effects() {
   const pathname = usePathname();
 
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
+    const revealer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          (entry.target as HTMLElement).dataset.revealed = "true";
+          revealer.unobserve(entry.target);
+        }
+      },
+      { rootMargin: "0px 0px -8% 0px" }
+    );
+    document.querySelectorAll("[data-reveal]:not([data-revealed])").forEach((element) => revealer.observe(element));
 
     const tracks = [...document.querySelectorAll<HTMLElement>("[data-track]")];
     const header = document.querySelector<HTMLElement>(".site-header");
@@ -83,17 +100,54 @@ export function Effects() {
       document.addEventListener("pointerout", handleLeave, { passive: true });
     }
 
-    let lenis: { destroy: () => void } | undefined;
+    let lenis: { destroy: () => void; scrollTo: (target: number, options?: { immediate?: boolean }) => void } | undefined;
+    let settleTimer = 0;
+
+    const settleAnchor = (id: string, attempts: number) => {
+      window.clearTimeout(settleTimer);
+      let last = window.scrollY;
+
+      const check = () => {
+        if (Math.abs(window.scrollY - last) > 1) {
+          last = window.scrollY;
+          settleTimer = window.setTimeout(check, 160);
+          return;
+        }
+
+        const target = document.getElementById(id);
+        if (!target) return;
+        const offset = target.getBoundingClientRect().top - ANCHOR_OFFSET;
+        if (Math.abs(offset) <= 2 || attempts <= 0) return;
+
+        const top = window.scrollY + offset;
+        if (lenis) lenis.scrollTo(top, { immediate: true });
+        else window.scrollTo({ top, behavior: "auto" });
+        settleTimer = window.setTimeout(() => settleAnchor(id, attempts - 1), 200);
+      };
+
+      settleTimer = window.setTimeout(check, 200);
+    };
+
+    const handleClick = (event: MouseEvent) => {
+      const href = (event.target as Element | null)?.closest("a")?.getAttribute("href");
+      const hash = href?.split("#")[1];
+      if (hash && (href?.startsWith("#") || href?.startsWith("/#"))) settleAnchor(hash, 3);
+    };
+    document.addEventListener("click", handleClick);
+
     let cancelled = false;
     if (canHover) {
       import("lenis").then(({ default: Lenis }) => {
         if (cancelled) return;
-        lenis = new Lenis({ autoRaf: true, lerp: 0.1, anchors: { offset: -72 } });
+        lenis = new Lenis({ autoRaf: true, lerp: 0.1, anchors: { offset: -ANCHOR_OFFSET } });
       });
     }
 
     return () => {
       cancelled = true;
+      window.clearTimeout(settleTimer);
+      document.removeEventListener("click", handleClick);
+      revealer.disconnect();
       lenis?.destroy();
       window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);

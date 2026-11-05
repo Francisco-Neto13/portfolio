@@ -10,7 +10,8 @@ import "./globals.css";
 const display = Bricolage_Grotesque({
   subsets: ["latin"],
   variable: "--font-display",
-  display: "swap"
+  // A fonte é pré-carregada; "optional" evita que o título salte quando ela chega.
+  display: "optional"
 });
 
 const sans = Geist({
@@ -24,7 +25,7 @@ const serif = Instrument_Serif({
   weight: "400",
   style: "italic",
   variable: "--font-serif",
-  display: "swap"
+  display: "optional"
 });
 
 // Só aparece em rótulos: não precisa competir pelo carregamento inicial.

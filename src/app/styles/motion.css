@@ -198,13 +198,17 @@
     animation: mark-glow 3.4s ease-in-out infinite;
   }
 
+  html.js .hero-scroll {
+    display: block;
+  }
+
   html.js .hero-scroll-hint {
     display: inline-block;
     animation: nudge 1.6s ease-in-out infinite;
   }
 
   html.js .hero-step {
-    opacity: clamp(0.34, calc((var(--p, 0) - var(--t)) * 16 + 0.34), 1);
+    opacity: clamp(0.82, calc((var(--p, 0) - var(--t)) * 16 + 0.82), 1);
     transition: color var(--motion-ui) var(--motion-ease);
   }
 
@@ -294,7 +298,7 @@
   }
 
   /* Cartões empilhados: só onde a tela comporta o cartão inteiro. */
-  @media (min-width: 1024px) and (min-height: 800px) {
+  @media (min-width: 1024px) and (min-height: 860px) {
     html.js .case-item {
       position: sticky;
       top: calc(var(--header-h) + 12px + var(--i) * 10px);

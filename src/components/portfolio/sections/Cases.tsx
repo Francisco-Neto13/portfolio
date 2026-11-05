@@ -93,7 +93,7 @@ export function Cases() {
                             <span className="sr-only"> - {project.title} (abre em nova aba)</span>
                           </a>
                         ))}
-                        <Link href={`/projetos/${project.slug}`} className="link ml-1 text-[length:var(--size-small)]">
+                        <Link href={`/projetos/${project.slug}`} prefetch={false} className="link ml-1 text-[length:var(--size-small)]">
                           {project.demo ? "Ver caso e testar a demo" : "Ver caso completo"}
                         </Link>
                       </div>

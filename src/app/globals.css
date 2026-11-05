@@ -5,6 +5,7 @@
 @import "./styles/components.css" layer(components);
 @import "./styles/visuals.css" layer(components);
 @import "./styles/motion.css" layer(components);
+@import "./styles/scenes.css" layer(components);
 
 * {
   box-sizing: border-box;
