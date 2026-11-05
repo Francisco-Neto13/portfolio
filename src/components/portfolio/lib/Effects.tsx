@@ -157,7 +157,9 @@ export function Effects() {
     if (canHover) {
       import("lenis").then(({ default: Lenis }) => {
         if (cancelled) return;
-        lenis = new Lenis({ autoRaf: true, lerp: 0.1, anchors: { offset: -ANCHOR_OFFSET } });
+        // 0.1, o padrão, leva quase 900ms para parar depois de um clique da roda e parece pesado.
+        // Com 0.2, a página chega a 90% do caminho em ~190ms e continua suave.
+        lenis = new Lenis({ autoRaf: true, lerp: 0.2, anchors: { offset: -ANCHOR_OFFSET } });
       });
     }
 

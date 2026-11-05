@@ -97,14 +97,14 @@ export function Hero() {
               <p className="text-label text-live flex items-center gap-2.5">
                 <span className="status-light" /> no ar
               </p>
-              <p className="text-h2 mt-4">
+              <p className="text-h2 mt-4 short:mt-3 short:text-[clamp(2.25rem,7.4vh,3.75rem)]">
                 Sistemas que saem do papel <span className="text-serif">e ficam no ar.</span>
               </p>
-              <p className="text-lead mt-5">
+              <p className="text-lead mt-5 short:mt-3">
                 Construo sistemas sob medida, integrações e automações com IA para empresas, e respondo por eles até
                 estarem em produção.
               </p>
-              <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+              <div className="mt-7 flex flex-col gap-3 short:mt-5 sm:flex-row">
                 <a href="#contato" className="btn">
                   Falar sobre um projeto <span aria-hidden="true" className="btn-arrow">→</span>
                 </a>
@@ -112,7 +112,8 @@ export function Hero() {
                   Ver projetos
                 </a>
               </div>
-              <dl className="mt-8 hidden grid-cols-3 gap-5 border-t border-[var(--color-line)] pt-5 sm:grid">
+              {/* Os mesmos números voltam na seção de provas: em tela muito baixa, ficam só lá. */}
+              <dl className="mt-8 hidden grid-cols-3 gap-5 border-t border-[var(--color-line)] pt-5 short:mt-5 short:pt-4 sm:grid tiny:sm:hidden">
                 {stats.map((stat) => (
                   <div key={stat.label} className="flex flex-col-reverse justify-end gap-1">
                     <dt className="text-small">{stat.label}</dt>
