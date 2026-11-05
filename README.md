@@ -51,14 +51,19 @@ src/
     │   ├── theme.ts              # Tipos, store do tema e script de pré-hidratação
     │   ├── scroll.ts             # Rolagem ancorada + altura do header
     │   ├── Reveal.tsx            # Animação de entrada via IntersectionObserver
+    │   ├── ActivationDemo.tsx    # Demonstração interativa do Internship Tracker
+    │   ├── GithubActivity.tsx    # Calendário do GitHub, carregado sob demanda
     │   └── SmoothLink.tsx        # Âncora com rolagem suave
-    ├── pages/PortfolioPage.tsx   # Casca interativa (header, tema, seção ativa)
-    └── sections/                 # Hero, Trajetória, Experiência, Como trabalho, Habilidades, Projetos, Serviços, Contato
+    ├── pages/PortfolioPage.tsx   # Casca interativa (header, tema, etapa atual)
+    └── sections/                 # Hero, O que construo, Projetos, Processo, Stack, Trajetória, Contato
 ```
 
-**Fronteira cliente/servidor:** só `PortfolioChrome`, `Header`, `Projects`, `Reveal` e
-`SmoothLink` são Client Components. Todas as seções de conteúdo são Server Components —
-o `framer-motion` só é carregado por causa do cover flow em Projetos.
+**Conceito:** a página é lida como um deploy, do pedido até o "no ar". Cada seção é uma etapa
+de `stages` em `data.ts`, e o indicador fixo mostra a etapa atual.
+
+**Fronteira cliente/servidor:** só `PortfolioChrome`, `Header`, `Reveal`, `SmoothLink`,
+`CopyButton`, `ActivationDemo` e `GithubActivity` são Client Components. As seções de conteúdo
+são Server Components, e as animações são CSS: não há biblioteca de animação.
 
 ## Decisões técnicas
 
@@ -71,8 +76,9 @@ o `framer-motion` só é carregado por causa do cover flow em Projetos.
 * **Reveal sem listener de scroll:** o `IntersectionObserver` informa pelo `boundingClientRect`
   se o elemento saiu por cima ou por baixo, dispensando rastrear a direção manualmente.
   As regras CSS são escopadas em `html.js`, então sem JavaScript o conteúdo continua visível.
-* **Sem layout shift no slider:** as alturas do cover flow são classes responsivas e o
-  deslocamento lateral é percentual — nada depende de medir `window.innerWidth` no cliente.
+* **Só desenhar o que está perto da tela:** as seções abaixo do hero usam `content-visibility: auto`,
+  com alturas medidas em `globals.css`. Se uma seção mudar muito de tamanho, atualize `--section-h`.
+* **Números só de fonte pública:** o site não usa métrica de empregador nem de cliente.
 * **Altura do header:** definida uma vez na CSS var `--header-h` e espelhada em
   `HEADER_HEIGHT` (`lib/scroll.ts`).
 
