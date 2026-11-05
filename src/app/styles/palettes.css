@@ -1,62 +1,55 @@
 /*
-  Paletas do site. Cada uma define exatamente os mesmos tokens, então nenhum componente
-  conhece cor. Para trocar, mude ACTIVE_PALETTE em lib/palette.ts.
+  A paleta do site: tinta violeta profunda, roxo elétrico como luz e um toque de magenta
+  nas pontas do brilho. O verde-água existe só para o estado "no ar".
   O contraste de todas as combinações é conferido por script (WCAG AA).
 */
-
-/* Grafite e Lima: escura, quente e com um único acento forte. A escolhida. */
-[data-palette="grafite"] {
+:root {
   color-scheme: dark;
-  --color-bg: #0d0d0c;
-  --color-surface: #161614;
-  --color-surface-raised: #20201d;
-  --color-line: rgba(242, 241, 236, 0.13);
-  --color-line-strong: rgba(242, 241, 236, 0.28);
-  --color-text: #f2f1ec;
-  --color-text-soft: #b6b5ad;
-  --color-text-muted: #8f8e86;
-  --color-accent: #c6f135;
-  --color-accent-hover: #d7f96a;
-  --color-on-accent: #11130a;
-  --color-focus: #c6f135;
-  --color-danger: #ff8f75;
-  --color-header: rgba(13, 13, 12, 0.78);
-}
-
-/* Papel e Cobalto: clara e editorial. */
-[data-palette="papel"] {
-  color-scheme: light;
-  --color-bg: #f5f3ee;
-  --color-surface: #fcfbf8;
-  --color-surface-raised: #ebe8e1;
-  --color-line: rgba(21, 20, 15, 0.14);
-  --color-line-strong: rgba(21, 20, 15, 0.32);
-  --color-text: #15140f;
-  --color-text-soft: #4b4942;
-  --color-text-muted: #66645c;
-  --color-accent: #2036e8;
-  --color-accent-hover: #1727bd;
+  --color-bg: #08060f;
+  --color-bg-soft: #0e0a1a;
+  --color-surface: #130e22;
+  --color-surface-raised: #1c1531;
+  --color-line: rgba(196, 181, 253, 0.15);
+  --color-line-strong: rgba(196, 181, 253, 0.36);
+  --color-text: #f6f3ff;
+  --color-text-soft: #cbc5de;
+  --color-text-muted: #a098ba;
+  --color-accent: #c4b5fd;
+  --color-accent-strong: #7c3aed;
+  --color-accent-hover: #8b5cf6;
   --color-on-accent: #ffffff;
-  --color-focus: #2036e8;
-  --color-danger: #b42318;
-  --color-header: rgba(245, 243, 238, 0.82);
+  --color-focus: #c4b5fd;
+  --color-live: #5eead4;
+  --color-header: rgba(8, 6, 15, 0.72);
+  --light-violet: 139, 92, 246;
+  --light-magenta: 217, 70, 239;
 }
 
-/* Noite e Coral: azul profundo com acento quente. */
-[data-palette="noite"] {
-  color-scheme: dark;
-  --color-bg: #0b0e14;
-  --color-surface: #131720;
-  --color-surface-raised: #1d2330;
-  --color-line: rgba(238, 240, 244, 0.13);
-  --color-line-strong: rgba(238, 240, 244, 0.28);
-  --color-text: #eef0f4;
-  --color-text-soft: #b4bac7;
-  --color-text-muted: #8d95a7;
-  --color-accent: #ff7a59;
-  --color-accent-hover: #ff9478;
-  --color-on-accent: #1a0b06;
-  --color-focus: #ff7a59;
-  --color-danger: #ff9b8a;
-  --color-header: rgba(11, 14, 20, 0.78);
+/* Folhas que sobem sobre o escuro. Redefinem os tokens, e todo componente dentro delas se adapta. */
+.sheet-light {
+  --color-surface: #ffffff;
+  --color-surface-raised: #e9e3f7;
+  --color-line: rgba(20, 14, 36, 0.14);
+  --color-line-strong: rgba(20, 14, 36, 0.34);
+  --color-text: #140e24;
+  --color-text-soft: #443c5a;
+  --color-text-muted: #5b5372;
+  --color-accent: #6227d9;
+  --color-focus: #6227d9;
+  background: #f3effb;
+  color: var(--color-text);
+}
+
+.sheet-violet {
+  --color-surface: rgba(255, 255, 255, 0.1);
+  --color-surface-raised: rgba(255, 255, 255, 0.16);
+  --color-line: rgba(255, 255, 255, 0.24);
+  --color-line-strong: rgba(255, 255, 255, 0.5);
+  --color-text: #ffffff;
+  --color-text-soft: #f1ecff;
+  --color-text-muted: #e6deff;
+  --color-accent: #ffffff;
+  --color-focus: #ffffff;
+  background: #5b21b6;
+  color: var(--color-text);
 }

@@ -3,10 +3,20 @@
 @import "./styles/tokens.css";
 /* Em camada, para os utilitários de espaçamento e layout poderem ajustar os componentes. */
 @import "./styles/components.css" layer(components);
+@import "./styles/visuals.css" layer(components);
 @import "./styles/motion.css" layer(components);
 
 * {
   box-sizing: border-box;
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
 }
 
 body {
@@ -27,7 +37,7 @@ img {
   height: auto;
 }
 
-:where(a, button, input):focus-visible {
+:where(a, button, input, summary):focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 3px;
   border-radius: var(--radius-s);

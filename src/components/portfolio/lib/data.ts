@@ -1,8 +1,12 @@
 export type Project = {
   slug: string;
+  /** Matiz da luz atrás do print, tirado da cor dominante dele. */
+  hue: number;
   title: string;
   /** Uma frase: é tudo o que aparece na home. O resto fica na página do projeto. */
   summary: string;
+  /** O que é, por extenso. */
+  description: string;
   /** Natureza do projeto. */
   kind: string;
   problem: string;
@@ -44,9 +48,14 @@ export type ExperienceEntry = {
   confidentialNote?: string;
 };
 
-export type WorkArea = {
+export type Service = {
   title: string;
   description: string;
+  examples: string[];
+  tech: string[];
+  visual: "pipeline" | "flow" | "agent" | "api" | "finance" | "chart" | "site";
+  /** Matiz da luz ambiente deste item. */
+  hue: number;
 };
 
 export type SkillGroup = {
@@ -72,7 +81,7 @@ export type Profile = {
 /** Só números conferíveis em fonte pública. Nada de empregador ou cliente. */
 export const stats: Stat[] = [
   { value: "2020", label: "programando desde" },
-  { value: "7", label: "projetos publicados aqui" },
+  { value: "7", label: "projetos nesta página" },
   { value: "3.500+", label: "contribuições no GitHub no último ano" }
 ];
 
@@ -100,20 +109,74 @@ export const experiences: ExperienceEntry[] = [
 ];
 
 /**
- * Áreas de atuação. Descrevem a capacidade, agregada e sem ligação com um projeto ou
- * cliente: não incluir resultado, número, setor, nome de produto ou integração específica.
+ * O que eu construo. Descreve a capacidade, agregada e sem ligação com um projeto ou cliente:
+ * não incluir resultado, número, setor, nome de produto ou integração específica.
  */
-export const workAreas: WorkArea[] = [
-  { title: "CRMs e operação comercial", description: "Funil de vendas, atendimento e automações no mesmo sistema." },
-  { title: "Sistemas internos", description: "Aplicações em módulos, com login único entre elas." },
-  { title: "Rotinas financeiras", description: "Cobrança e conciliação conectadas a sistemas de terceiros." },
-  { title: "IA e automação", description: "Modelos de linguagem onde resolvem um problema concreto." }
+export const services: Service[] = [
+  {
+    title: "Sistemas web sob medida",
+    description: "CRMs, painéis internos e back-offices desenhados para o seu fluxo de trabalho, não para um template genérico.",
+    examples: ["CRMs e funil de vendas", "Atendimento integrado a canais de mensagem", "Módulos com login único entre os sistemas"],
+    tech: ["React", "Next.js", "TypeScript", "PostgreSQL"],
+    visual: "pipeline",
+    hue: 262
+  },
+  {
+    title: "Automação de processos",
+    description: "Integração entre sistemas, rotinas agendadas e fluxos que eliminam tarefas manuais repetitivas da sua operação.",
+    examples: ["Integrações entre sistemas", "Rotinas agendadas", "Atenção a falhas, reprocessamento e rastreabilidade"],
+    tech: ["n8n", "Node.js", "Python", "Webhooks"],
+    visual: "flow",
+    hue: 285
+  },
+  {
+    title: "IA aplicada ao negócio",
+    description: "Leitura automática de documentos, classificação de conteúdo e apoio ao atendimento usando modelos de linguagem.",
+    examples: ["Leitura de documentos", "Classificação de conteúdo", "Apoio ao atendimento, com validação e custo sob controle"],
+    tech: ["OpenAI", "Claude", "Agentes de IA", "Python"],
+    visual: "agent",
+    hue: 305
+  },
+  {
+    title: "APIs e backend",
+    description: "APIs em Python ou Node com banco relacional, autenticação, migrações versionadas e deploy em containers.",
+    examples: ["Autenticação", "Migrações versionadas", "Filas de processamento"],
+    tech: ["Python", "FastAPI", "Node.js", "Docker"],
+    visual: "api",
+    hue: 240
+  },
+  {
+    title: "Rotinas financeiras e integrações",
+    description: "Fluxos de cobrança e conciliação conectados a sistemas de terceiros, com atenção a falhas e reprocessamento.",
+    examples: ["Fluxos de cobrança", "Conciliação", "Conexão com sistemas de terceiros"],
+    tech: ["Python", "FastAPI", "PostgreSQL", "APIs REST"],
+    visual: "finance",
+    hue: 275
+  },
+  {
+    title: "Dashboards e relatórios",
+    description: "Visualização de dados, indicadores acompanháveis e exportação em PDF para quem precisa decidir com números.",
+    examples: ["Indicadores acompanháveis", "Visualização de dados", "Exportação em PDF"],
+    tech: ["React", "TypeScript", "PostgreSQL", "Python"],
+    visual: "chart",
+    hue: 225
+  },
+  {
+    title: "Sites e landing pages",
+    description: "Páginas rápidas, responsivas e bem posicionadas em buscadores, com foco em clareza e conversão.",
+    examples: ["Páginas rápidas", "Responsivas de verdade", "SEO e metadados completos"],
+    tech: ["Next.js", "Tailwind CSS", "TypeScript", "Docker"],
+    visual: "site",
+    hue: 318
+  }
 ];
 
 export const projects: Project[] = [
   {
     slug: "internship-tracker",
+    hue: 215,
     title: "Internship Tracker",
+    description: "Plataforma acadêmica que substitui planilhas e papel na gestão de estágios e atividades complementares. Seis perfis enxergam fatias diferentes dos mesmos dados, com permissões garantidas no próprio banco por Row Level Security, e o sistema roda em servidor próprio.",
     summary: "Gestão de estágios com seis perfis e permissões garantidas no banco.",
     kind: "Plataforma acadêmica",
     demo: "activation",
@@ -130,7 +193,9 @@ export const projects: Project[] = [
   },
   {
     slug: "patinhas",
+    hue: 30,
     title: "Patinhas",
+    description: "Projeto de faculdade, feito como extensão universitária, que aproxima a comunidade de abrigos de animais. Apresenta a ONG parceira, os animais para adoção, as necessidades e as campanhas, com painel administrativo para o cadastro e doações que vão direto para a ONG, sem passar pela plataforma.",
     summary: "Projeto de faculdade que aproxima a comunidade de abrigos de animais.",
     kind: "Projeto de faculdade · extensão universitária",
     problem: "Abrigos de animais convivem com falta de recursos, desorganização interna e voluntários sobrecarregados.",
@@ -146,7 +211,9 @@ export const projects: Project[] = [
   },
   {
     slug: "ios-weather-app",
+    hue: 262,
     title: "iOS Weather App",
+    description: "Projeto de faculdade, feito para a disciplina de Interface Humano-Computador: uma aplicação de clima que reproduz a interface do iPhone a partir de um modelo do Figma. Usa dados reais da OpenWeather, busca de cidades, geolocalização e locais salvos, com a chave da API protegida em função serverless.",
     summary: "Projeto de faculdade: clima com interface de iPhone e dados reais.",
     kind: "Projeto de faculdade · Interface Humano-Computador",
     problem: "Reproduzir com fidelidade uma interface de iPhone na web, trocando os dados estáticos do modelo por dados reais.",
@@ -162,7 +229,9 @@ export const projects: Project[] = [
   },
   {
     slug: "pawspace",
+    hue: 270,
     title: "PawSpace",
+    description: "Hub de estudos que conecta trilhas, materiais e sessões em um fluxo único. Inclui editor de trilhas em grafo, registro de progresso e visualização de evolução ao longo do tempo.",
     summary: "Hub de estudos com trilhas em grafo e registro de progresso.",
     kind: "Projeto pessoal",
     problem: "Trilhas, materiais e sessões de estudo costumam ficar espalhados em lugares diferentes.",
@@ -175,7 +244,9 @@ export const projects: Project[] = [
   },
   {
     slug: "guardians-of-wynn",
+    hue: 292,
     title: "Guardians of Wynn",
+    description: "Ecossistema completo da comunidade: bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico da guilda.",
     summary: "Bot de Discord, dashboard e site para uma comunidade.",
     kind: "Projeto pessoal",
     problem: "Uma comunidade precisava reunir rotinas, administração e presença pública em um só ecossistema.",
@@ -188,7 +259,9 @@ export const projects: Project[] = [
   },
   {
     slug: "atmisuki",
+    hue: 330,
     title: "Atmisuki Portfolio",
+    description: "Sistema de exibição de portfólio com gestão de conteúdo, autenticação e políticas de acesso por linha. Foco em performance de carregamento e processamento de imagem no cliente.",
     summary: "Portfólio de arte digital com gestão de conteúdo.",
     kind: "Projeto pessoal",
     problem: "Exibir e administrar um portfólio de arte digital sem depender de terceiros para atualizar o conteúdo.",
@@ -201,7 +274,9 @@ export const projects: Project[] = [
   },
   {
     slug: "cats-and-dungeons",
+    hue: 150,
     title: "Cats & Dungeons",
+    description: "Roguelike em Java com exploração procedural, combate estratégico e progressão em ondas. Implementa pathfinding A*, colisão AABB, física vetorial e inventário estruturado.",
     summary: "Roguelike em Java com exploração procedural.",
     kind: "Projeto de jogo",
     problem: "Construir um roguelike completo em Java, da física ao inventário.",
@@ -257,6 +332,12 @@ export const skillGroups: SkillGroup[] = [
   { title: "IA", items: ["OpenAI", "Claude", "Agentes de IA", "Leitura de documentos"] }
 ];
 
+/** Os letreiros usam as mesmas tecnologias da seção Stack. */
+export const marqueeRows: string[][] = [
+  ["TypeScript", "React", "Next.js", "Vite", "Tailwind CSS", "Node.js", "Fastify", "Python", "FastAPI", "Prisma"],
+  ["PostgreSQL", "Supabase", "Docker", "Nginx", "Traefik", "Git", "n8n", "API do WhatsApp", "OpenAI", "Claude"]
+];
+
 export const contactLinks: ContactLink[] = [
   { label: "GitHub", href: "https://github.com/Francisco-Neto13" },
   { label: "LinkedIn", href: "https://www.linkedin.com/in/jfrancisco-neto/" },
@@ -265,12 +346,64 @@ export const contactLinks: ContactLink[] = [
 ];
 
 export const workPrinciples: WorkPrinciple[] = [
-  { title: "Reaproveito o que funciona", description: "O que é resolvido em um projeto chega mais rápido ao próximo." },
-  { title: "IA com direção", description: "Agentes executam, e eu cobro o motivo técnico de cada solução." },
-  { title: "Plano antes de construir", description: "Divido em etapas e confiro o que falta antes de seguir." },
-  { title: "Interface padronizada", description: "Telas, componentes e identidade consistentes do início ao fim." },
-  { title: "Da conversa ao escopo", description: "Reuniões e mensagens viram escopo, tarefas e documentação." },
-  { title: "Produto, não remendo", description: "O que exigiria ajuste manual toda hora vira recurso do sistema." }
+  {
+    title: "Reaproveito o que já funciona",
+    description:
+      "Uso soluções que já estão no ar como referência. O que é resolvido em um projeto chega mais rápido ao próximo, sem começar do zero."
+  },
+  {
+    title: "IA no fluxo, com direção",
+    description:
+      "Agentes de IA fazem parte do meu desenvolvimento. Eu defino o objetivo, delego pesquisa e execução e cobro o motivo técnico antes de aceitar uma solução."
+  },
+  {
+    title: "Plano antes de construir",
+    description:
+      "Planejo e divido o trabalho em etapas antes de começar, e a cada fase confiro o que ainda falta para fechar."
+  },
+  {
+    title: "Interface padronizada",
+    description:
+      "Mantenho telas, componentes e identidade visual consistentes. Quando algo foge do padrão do projeto, corrijo tomando como base o que já existe."
+  },
+  {
+    title: "Da conversa ao escopo",
+    description:
+      "Transformo reuniões, transcrições e mensagens em escopo e tarefas, e mantenho a documentação junto do trabalho."
+  },
+  {
+    title: "Produto, não remendo",
+    description:
+      "Se algo exigiria ajuste manual toda hora, prefiro transformar em recurso do próprio sistema, como uma tela no lugar de uma configuração escondida."
+  }
+];
+
+export const highlights: WorkPrinciple[] = [
+  {
+    title: "Do processo à interface",
+    description:
+      "Respondo pela solução inteira: a rotina que integra os sistemas, a API que sustenta a regra de negócio e a tela que a equipe usa todo dia."
+  },
+  {
+    title: "Automação de operações reais",
+    description:
+      "Integração entre sistemas, tratamento de dados e rotinas que substituem trabalho manual repetitivo — com atenção a falhas, reprocessamento e rastreabilidade."
+  },
+  {
+    title: "IA aplicada com critério",
+    description:
+      "Uso de modelos de linguagem onde eles resolvem um problema concreto: leitura de documentos, classificação e apoio ao atendimento. Sempre com validação e custo sob controle."
+  },
+  {
+    title: "Backend que aguenta produção",
+    description:
+      "APIs em Python e Node com banco relacional, migrações versionadas, autenticação, filas de processamento e deploy em containers."
+  },
+  {
+    title: "Discrição profissional",
+    description:
+      "Trabalho com dados sensíveis de clientes sob acordo de confidencialidade. O que é do cliente permanece do cliente — e isso vale também para você."
+  }
 ];
 
 export const profile: Profile = {

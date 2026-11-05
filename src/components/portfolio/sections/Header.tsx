@@ -7,7 +7,7 @@ export function Header() {
     <header className="site-header">
       <div className="container flex h-full items-center justify-between gap-4">
         <Link href="/" aria-label={`${profile.name}, voltar ao início`} className="flex items-center gap-3">
-          <span aria-hidden="true" className="site-logo" />
+          <span aria-hidden="true" className="logo-mark site-logo" />
           <span className="hidden sm:inline">{profile.name}</span>
         </Link>
 

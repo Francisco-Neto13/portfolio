@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
-import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
-import { ACTIVE_PALETTE, palette } from "@/components/portfolio/lib/palette";
+import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
+import { Effects } from "@/components/portfolio/lib/Effects";
+import { palette } from "@/components/portfolio/lib/palette";
 import { Footer } from "@/components/portfolio/sections/Footer";
 import { Header } from "@/components/portfolio/sections/Header";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/components/portfolio/lib/site";
@@ -15,6 +16,14 @@ const display = Bricolage_Grotesque({
 const sans = Geist({
   subsets: ["latin"],
   variable: "--font-sans",
+  display: "swap"
+});
+
+const serif = Instrument_Serif({
+  subsets: ["latin"],
+  weight: "400",
+  style: "italic",
+  variable: "--font-serif",
   display: "swap"
 });
 
@@ -103,8 +112,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html
       lang="pt-BR"
-      data-palette={ACTIVE_PALETTE}
-      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      className={`${display.variable} ${serif.variable} ${sans.variable} ${mono.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -117,8 +125,9 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
         <Header />
-        <main className="pt-[var(--header-h)]">{children}</main>
+        <main>{children}</main>
         <Footer />
+        <Effects />
       </body>
     </html>
   );

@@ -1,8 +1,7 @@
 /*
-  A única linguagem de movimento do site: sobe e aparece, uma vez.
-  `.enter` é para o que já está na primeira tela e roda sem JavaScript, para não atrasar a
-  pintura. `[data-reveal]` é para o resto, disparado por lib/Reveal.tsx. Sem JavaScript,
-  `html.js` não existe e nada fica escondido.
+  A linguagem de movimento do site. Tudo fica dentro de `no-preference` e de `html.js`:
+  com movimento reduzido ou sem JavaScript, a página aparece inteira e parada.
+  `--p` é o progresso da rolagem (0 a 1), escrito por lib/Effects.tsx em quem tem [data-track].
 */
 @keyframes enter {
   from {
@@ -12,57 +11,320 @@
   }
 }
 
-.enter {
-  animation: enter var(--motion-enter) var(--motion-ease) both;
-  animation-delay: calc(var(--i, 0) * var(--motion-stagger));
-}
-
-html.js [data-reveal] {
-  opacity: 0;
-  transform: translateY(var(--motion-rise));
-  transition:
-    opacity var(--motion-enter) var(--motion-ease),
-    transform var(--motion-enter) var(--motion-ease);
-  transition-delay: calc(var(--i, 0) * var(--motion-stagger));
-}
-
-html.js [data-reveal][data-revealed="true"] {
-  opacity: 1;
-  transform: none;
-}
-
-.card-media img {
-  transition: transform var(--motion-enter) var(--motion-ease);
-}
-
-@media (hover: hover) {
-  .card-link:hover .card-media img {
-    transform: scale(1.02);
+@keyframes btn-sweep {
+  0%,
+  45% {
+    transform: translateX(-120%);
+  }
+  85%,
+  100% {
+    transform: translateX(120%);
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  html {
-    scroll-behavior: smooth;
+@keyframes mark-glow {
+  50% {
+    filter: drop-shadow(0 0 34px rgba(var(--light-violet), 1)) drop-shadow(0 0 96px rgba(var(--light-violet), 0.8));
+  }
+}
+
+@keyframes pulse-live {
+  70%,
+  100% {
+    box-shadow:
+      0 0 12px var(--color-live),
+      0 0 0 9px transparent;
+  }
+  0% {
+    box-shadow:
+      0 0 12px var(--color-live),
+      0 0 0 0 color-mix(in srgb, var(--color-live) 55%, transparent);
+  }
+}
+
+@keyframes nudge {
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .enter {
+  .btn::after {
     animation: none;
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .enter {
+    animation: enter var(--motion-enter) var(--motion-ease) both;
+    animation-delay: calc(var(--i, 0) * var(--motion-stagger));
+  }
+
+  .status-light {
+    animation: pulse-live 2.4s ease-out infinite;
   }
 
   html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(var(--motion-rise));
+    transition:
+      opacity var(--motion-enter) var(--motion-ease),
+      transform var(--motion-enter) var(--motion-ease);
+    transition-delay: calc(var(--i, 0) * var(--motion-stagger));
+  }
+
+  html.js [data-reveal][data-revealed="true"] {
     opacity: 1;
     transform: none;
-    transition: none;
   }
 
-  .card-media img {
-    transition: none;
+  /* Hero: a luz acende com a rolagem e o sistema vai ao ar. */
+  html.js .hero-track {
+    height: 340svh;
   }
 
-  .card-link:hover .card-media img {
-    transform: none;
+  html.js .hero-stage {
+    --intro-out: clamp(0, calc((var(--p, 0) - 0.2) / 0.14), 1);
+    --lit: clamp(0, calc((var(--p, 0) - 0.08) / 0.34), 1);
+    --show: clamp(0, calc((var(--p, 0) - 0.3) / 0.2), 1);
+    --move: clamp(0, calc((var(--p, 0) - 0.62) / 0.2), 1);
+    --final: clamp(0, calc((var(--p, 0) - 0.74) / 0.14), 1);
+    position: sticky;
+    top: 0;
+    height: 100svh;
+  }
+
+  html.js .hero-light {
+    opacity: calc(0.14 + var(--lit) * 0.86);
+    transform: scale(calc(0.72 + var(--lit) * 0.42));
+    will-change: transform, opacity;
+  }
+
+  html.js .hero-grid {
+    opacity: var(--lit);
+  }
+
+  html.js .hero-hud {
+    display: block;
+    position: absolute;
+    inset: calc(var(--header-h) + 0.75rem) 1.5rem 1.5rem;
+    z-index: 5;
+    pointer-events: none;
+    opacity: calc(1 - var(--final));
+  }
+
+  html.js .hud-corner {
+    position: absolute;
+    height: 20px;
+    width: 20px;
+    border: 1px solid var(--color-line-strong);
+  }
+
+  html.js .hud-corner:nth-child(1) {
+    top: 0;
+    left: 0;
+    border-width: 1px 0 0 1px;
+  }
+
+  html.js .hud-corner:nth-child(2) {
+    top: 0;
+    right: 0;
+    border-width: 1px 1px 0 0;
+  }
+
+  html.js .hud-corner:nth-child(3) {
+    bottom: 0;
+    left: 0;
+    border-width: 0 0 1px 1px;
+  }
+
+  html.js .hud-corner:nth-child(4) {
+    bottom: 0;
+    right: 0;
+    border-width: 0 1px 1px 0;
+  }
+
+  html.js .hud-label {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+  }
+
+  html.js .hud-bar {
+    position: relative;
+    display: block;
+    height: 1px;
+    width: clamp(70px, 12vw, 180px);
+    background: var(--color-line-strong);
+  }
+
+  html.js .hud-bar i {
+    position: absolute;
+    inset: -0.5px 0;
+    display: block;
+    transform: scaleX(var(--p, 0));
+    transform-origin: 0 50%;
+    background: var(--color-accent);
+    box-shadow: 0 0 10px var(--color-accent);
+  }
+
+  html.js .hero-intro {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: var(--header-h) var(--gutter) 3rem;
+    opacity: calc(1 - var(--intro-out));
+    transform: translateY(calc(var(--intro-out) * -7vh)) scale(calc(1 - var(--intro-out) * 0.06));
+    pointer-events: none;
+  }
+
+  html.js .hero-intro a {
+    pointer-events: auto;
+  }
+
+  html.js .hero-mark-glow {
+    animation: mark-glow 3.4s ease-in-out infinite;
+  }
+
+  html.js .hero-scroll-hint {
+    display: inline-block;
+    animation: nudge 1.6s ease-in-out infinite;
+  }
+
+  html.js .hero-step {
+    opacity: clamp(0.34, calc((var(--p, 0) - var(--t)) * 16 + 0.34), 1);
+    transition: color var(--motion-ui) var(--motion-ease);
+  }
+
+  html.js .hero-showcase {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: none;
+    padding: var(--header-h) var(--gutter) 1.5rem;
+    opacity: var(--show);
+    transform:
+      translate3d(calc(var(--move) * var(--show-x)), calc((1 - var(--show)) * 12vh + var(--move) * var(--show-y)), 0)
+      scale(calc((0.8 + var(--show) * 0.2) * (1 - var(--move) * var(--show-shrink))));
+    will-change: transform, opacity;
+    --show-x: 23vw;
+    --show-y: 0vh;
+    --show-shrink: 0.42;
+  }
+
+  html.js .hero-main {
+    position: relative;
+    z-index: 2;
+    width: min(100%, 1040px);
+  }
+
+  html.js .hero-side {
+    display: block;
+    position: absolute;
+    top: 50%;
+    width: min(46%, 520px);
+    opacity: calc(var(--show) * 0.68 * (1 - var(--move)));
+  }
+
+  html.js .hero-side--left {
+    left: calc(50% - min(46vw, 620px));
+    transform: translate3d(calc((1 - var(--show)) * 12vw - var(--move) * 7vw), -62%, 0) rotate(-4deg);
+  }
+
+  html.js .hero-side--right {
+    right: calc(50% - min(46vw, 620px));
+    transform: translate3d(calc((var(--show) - 1) * 12vw + var(--move) * 7vw), -30%, 0) rotate(4deg);
+  }
+
+  html.js .hero-final {
+    position: absolute;
+    inset: 0;
+    z-index: 4;
+    display: flex;
+    align-items: center;
+    padding: var(--header-h) 0 1.5rem;
+    opacity: var(--final);
+    transform: translateY(calc((1 - var(--final)) * 5vh));
+    pointer-events: none;
+  }
+
+  html.js .hero-track[data-final="true"] .hero-final {
+    pointer-events: auto;
+  }
+
+  @media (max-width: 1023px) {
+    html.js .hero-showcase {
+      --show-x: 0vw;
+      --show-y: -25svh;
+      --show-shrink: 0.12;
+    }
+
+    html.js .hero-final {
+      align-items: flex-end;
+      padding-bottom: 2rem;
+    }
+
+    html.js .hero-side {
+      width: 62%;
+    }
+  }
+
+  /* Letreiro */
+  .marquee-row {
+    animation: marquee var(--marquee, 54s) linear infinite;
+  }
+
+  .marquee-row--reverse {
+    animation-direction: reverse;
+  }
+
+  /* Cartões empilhados: só onde a tela comporta o cartão inteiro. */
+  @media (min-width: 1024px) and (min-height: 800px) {
+    html.js .case-item {
+      position: sticky;
+      top: calc(var(--header-h) + 12px + var(--i) * 10px);
+    }
+
+    /* Tempo de leitura: o próximo cartão só cobre este depois de ele ter parado na tela. */
+    html.js .case-item + .case-item {
+      margin-top: 22vh;
+    }
+  }
+
+  /* O print inclina com o cursor e desliza dentro da janela conforme a rolagem. */
+  .tilt {
+    transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform var(--motion-hover) var(--motion-ease);
+  }
+
+  @supports (animation-timeline: view()) {
+    @keyframes shot-parallax {
+      from {
+        transform: scale(1.12) translateY(-4%);
+      }
+      to {
+        transform: scale(1.12) translateY(4%);
+      }
+    }
+
+    .window-shot--parallax img {
+      animation: shot-parallax linear both;
+      animation-timeline: view();
+    }
   }
 }
