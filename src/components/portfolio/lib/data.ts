@@ -44,6 +44,7 @@ export type ExperienceEntry = {
   role: string;
   period: string;
   description: string;
+  focus: string[];
   /** Exibido quando o conteúdo do trabalho é coberto por acordo de confidencialidade. */
   confidentialNote?: string;
 };
@@ -103,6 +104,7 @@ export const experiences: ExperienceEntry[] = [
     period: "Abr 2026 — atual",
     description:
       "Desenvolvimento de sistemas sob medida com agentes de IA: CRMs, integrações com WhatsApp e APIs de terceiros, automações, rotinas financeiras e sistemas internos. Acompanho as entregas do pedido até a produção: transformo reuniões em escopo, dirijo o desenvolvimento, testo em homologação e coloco no ar.",
+    focus: ["CRMs", "Integrações e APIs", "Automações", "Rotinas financeiras", "Sistemas internos", "IA aplicada", "Deploy em containers"],
     confidentialNote:
       "Clientes, produtos e detalhes de implementação são cobertos por acordo de confidencialidade e não são divulgados."
   }

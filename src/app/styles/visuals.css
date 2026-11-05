@@ -1,1 +1,602 @@
-/* Miniaturas desenhadas em CSS na seção "O que eu construo". Preenchido na segunda etapa. */
+/* Estilos das seções abaixo do hero. O movimento delas fica em scenes.css. */
+
+/* Superfícies de seção */
+.sheet-dark {
+  background: var(--color-bg-soft);
+}
+
+.sheet-dark .card {
+  background: rgba(255, 255, 255, 0.035);
+  backdrop-filter: blur(6px);
+}
+
+.section-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background: radial-gradient(60% 34% at 50% 0%, rgba(var(--light-violet), 0.22), transparent 72%);
+}
+
+/* Letreiro */
+.marquee {
+  padding-block: clamp(3.5rem, 7vw, 6rem);
+  border-block: var(--border);
+  overflow: hidden;
+}
+
+.marquee-mask {
+  overflow: hidden;
+  mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
+
+.marquee-mask + .marquee-mask {
+  margin-top: 1.25rem;
+}
+
+.marquee-row {
+  display: flex;
+  width: max-content;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding-inline: clamp(1.25rem, 2.5vw, 2.25rem);
+  font-family: var(--font-title);
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px var(--color-text-muted);
+}
+
+/* Linhas numeradas */
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--border);
+}
+
+.row {
+  display: grid;
+  gap: var(--space-text);
+  padding-block: clamp(1.5rem, 2.6vw, 2.25rem);
+  border-bottom: var(--border);
+  transition: padding-left var(--motion-hover) var(--motion-ease);
+}
+
+@media (min-width: 900px) {
+  .row {
+    grid-template-columns: 64px minmax(0, 0.95fr) minmax(0, 1.05fr);
+    gap: var(--space-block);
+    align-items: baseline;
+  }
+}
+
+@media (hover: hover) {
+  .row:hover {
+    padding-left: 0.875rem;
+  }
+}
+
+/* O que eu construo: sem movimento, é uma lista de painéis. */
+.svc-track {
+  overflow-x: clip;
+}
+
+.svc-head {
+  margin-bottom: var(--space-block);
+  padding-top: var(--space-section);
+}
+
+.svc-panels {
+  display: grid;
+  gap: var(--space-block);
+  padding-bottom: var(--space-section);
+}
+
+.svc-panel {
+  position: relative;
+  display: grid;
+  gap: var(--space-item);
+}
+
+.svc-ambient {
+  position: absolute;
+  inset: -12% -8%;
+  z-index: -1;
+  pointer-events: none;
+  background: radial-gradient(50% 50% at 70% 50%, hsl(var(--hue) 85% 58% / 0.3), transparent 72%);
+}
+
+.svc-examples {
+  display: grid;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.svc-examples li {
+  position: relative;
+  padding-left: 1.125rem;
+}
+
+.svc-examples li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6em;
+  height: 6px;
+  width: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+  box-shadow: 0 0 10px var(--color-accent);
+}
+
+.svc-visual-body {
+  display: flex;
+  min-height: clamp(220px, 30vw, 380px);
+  align-items: center;
+  justify-content: center;
+  padding: clamp(1.25rem, 3vw, 2.5rem);
+}
+
+.svc-visual-body > * {
+  width: 100%;
+}
+
+.svc-progress {
+  display: none;
+}
+
+/* Miniaturas */
+.viz-columns {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.625rem;
+}
+
+.viz-column {
+  display: grid;
+  align-content: start;
+  gap: 0.5rem;
+  min-height: 190px;
+  padding: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: var(--radius-s);
+  background: rgba(255, 255, 255, 0.025);
+  position: relative;
+}
+
+.viz-column i {
+  display: block;
+  height: 34px;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.07);
+}
+
+.viz-column .viz-lead {
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(135deg, #8b5cf6, #d946ef);
+  box-shadow: 0 8px 26px -6px rgba(var(--light-violet), 0.9);
+}
+
+.viz-flow,
+.viz-steps {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem 0;
+}
+
+.viz-node {
+  position: relative;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-s);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-label);
+  font-size: 0.8125rem;
+  color: var(--color-text);
+}
+
+.viz-node + .viz-node {
+  margin-left: 1.75rem;
+}
+
+.viz-node + .viz-node::before {
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  width: 1.75rem;
+  height: 1px;
+  background: rgba(196, 181, 253, 0.55);
+}
+
+.viz-steps small {
+  flex-basis: 100%;
+  margin-top: 0.75rem;
+  text-align: center;
+}
+
+.viz-chat {
+  display: grid;
+  gap: 0.75rem;
+  font-size: 0.9375rem;
+}
+
+.viz-chat p {
+  width: fit-content;
+  max-width: 85%;
+  margin: 0;
+  padding: 0.75rem 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 14px 14px 14px 4px;
+  color: var(--color-text);
+}
+
+.viz-chat .viz-chat-answer {
+  justify-self: end;
+  border-color: transparent;
+  border-radius: 14px 14px 4px 14px;
+  background: linear-gradient(135deg, #7c3aed, #a21caf);
+  color: #ffffff;
+}
+
+.viz-typing {
+  display: flex;
+  gap: 0.3rem;
+}
+
+.viz-typing i {
+  height: 7px;
+  width: 7px;
+  border-radius: var(--radius-full);
+  background: var(--color-accent);
+}
+
+.viz-log {
+  display: grid;
+  gap: 0.625rem;
+  font-family: var(--font-label);
+  font-size: 0.875rem;
+  color: var(--color-text-soft);
+}
+
+.viz-log b {
+  color: var(--color-live);
+  font-weight: 400;
+}
+
+.viz-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 0.75rem;
+  height: 220px;
+}
+
+.viz-chart i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 6px 6px 0 0;
+  background: linear-gradient(180deg, #c4b5fd, #6d28d9);
+}
+
+.viz-site {
+  display: grid;
+  justify-items: center;
+  gap: 0.75rem;
+}
+
+.viz-site i {
+  display: block;
+  height: 10px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.viz-site .viz-site-title {
+  width: 70%;
+  height: 28px;
+  background: linear-gradient(90deg, #ffffff, #c4b5fd);
+}
+
+.viz-site .viz-site-line {
+  width: 58%;
+}
+
+.viz-site .viz-site-line--short {
+  width: 38%;
+}
+
+.viz-site-button {
+  height: 34px;
+  width: 124px;
+  margin-top: 0.5rem;
+  border-radius: var(--radius-s);
+  background: var(--color-accent-strong);
+  box-shadow: 0 10px 30px -8px rgba(var(--light-violet), 1);
+}
+
+/* Stack */
+.stack-list {
+  display: grid;
+  gap: 0.25rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.stack-item {
+  display: flex;
+  align-items: center;
+  gap: 0.875rem;
+  padding: 0.4375rem 0.5rem;
+  border-radius: var(--radius-s);
+  font-weight: 500;
+  color: var(--color-text);
+  transition:
+    background-color var(--motion-ui) var(--motion-ease),
+    transform var(--motion-hover) var(--motion-ease);
+}
+
+.stack-icon {
+  display: flex;
+  height: 40px;
+  width: 40px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: var(--border);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.04);
+  transition:
+    border-color var(--motion-ui) var(--motion-ease),
+    box-shadow var(--motion-hover) var(--motion-ease);
+}
+
+.stack-item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(4px);
+}
+
+.stack-item:hover .stack-icon {
+  border-color: var(--color-line-strong);
+  box-shadow: 0 0 24px -4px rgba(var(--light-violet), 0.9);
+}
+
+/* Trajetória */
+.portrait {
+  position: relative;
+  height: 15rem;
+  width: 15rem;
+  overflow: hidden;
+  border: 1px solid var(--color-line-strong);
+  border-radius: var(--radius-full);
+  background: radial-gradient(circle at 50% 30%, rgba(var(--light-violet), 0.55), transparent 75%);
+  box-shadow: 0 0 80px -16px rgba(var(--light-violet), 0.8);
+}
+
+.timeline {
+  display: grid;
+  gap: var(--space-block) var(--space-item);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 900px) {
+  .timeline {
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    background: linear-gradient(var(--color-line-strong), var(--color-line-strong)) 0 7px / 100% 1px no-repeat;
+  }
+}
+
+.timeline-dot {
+  display: block;
+  height: 15px;
+  width: 15px;
+  margin-bottom: 1.25rem;
+  border: 2px solid var(--color-accent);
+  border-radius: var(--radius-full);
+  background: var(--color-bg-soft);
+  box-shadow: 0 0 18px rgba(var(--light-violet), 0.9);
+}
+
+/* Contato */
+.contact-scene {
+  overflow: hidden;
+  background: var(--color-bg);
+  padding-block: clamp(7rem, 15vw, 13rem);
+}
+
+.contact-light {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 60% at 74% 28%, rgba(var(--light-violet), 0.42), transparent 72%),
+    radial-gradient(40% 40% at 90% 78%, rgba(var(--light-magenta), 0.2), transparent 72%);
+}
+
+.trail-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.trail-shot {
+  position: absolute;
+  width: clamp(180px, 20vw, 300px);
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  object-position: top;
+  pointer-events: none;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: var(--radius-s);
+  box-shadow: 0 30px 60px -20px rgba(var(--light-violet), 0.7);
+  transform: translate(-50%, -50%) rotate(var(--rot));
+}
+
+.copy-button {
+  position: relative;
+  z-index: 10;
+  display: inline-flex;
+  height: 34px;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.375rem;
+  padding-inline: 0.625rem;
+  border: var(--border);
+  border-radius: var(--radius-s);
+  font-family: var(--font-label);
+  font-size: var(--size-label);
+  color: var(--color-text-soft);
+  transition:
+    border-color var(--motion-ui) var(--motion-ease),
+    color var(--motion-ui) var(--motion-ease);
+}
+
+.copy-button:hover {
+  border-color: var(--color-line-strong);
+  color: var(--color-text);
+}
+
+/* Cabeçalho do celular e demais peças */
+.menu-button {
+  display: inline-grid;
+  height: 44px;
+  width: 44px;
+  place-content: center;
+  gap: 7px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.menu-button i {
+  display: block;
+  height: 2px;
+  width: 24px;
+  border-radius: 2px;
+  background: var(--color-text);
+  transition: transform var(--motion-ui) var(--motion-ease);
+}
+
+.site-header[data-open="true"] .menu-button i:first-child {
+  transform: translateY(4.5px) rotate(45deg);
+}
+
+.site-header[data-open="true"] .menu-button i:last-child {
+  transform: translateY(-4.5px) rotate(-45deg);
+}
+
+.site-header[data-open="true"] {
+  background: var(--color-bg);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: var(--header-h) 0 0;
+  z-index: 49;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 2rem var(--gutter);
+  background: var(--color-bg);
+}
+
+.site-header .mobile-menu a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-size: var(--size-h3);
+  font-family: var(--font-title);
+  font-weight: 700;
+}
+
+.nav-link {
+  position: relative;
+}
+
+.site-footer {
+  position: relative;
+  z-index: 3;
+  border-top: var(--border);
+  background: var(--color-bg);
+}
+
+/* Página de projeto */
+.case-page {
+  position: relative;
+  overflow: hidden;
+}
+
+.case-page-light {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 900px;
+  pointer-events: none;
+  background: radial-gradient(60% 60% at 70% 22%, hsl(var(--hue) 85% 55% / 0.34), transparent 72%);
+}
+
+/*
+  O navegador só desenha estas seções quando elas se aproximam da tela, o que poupa bastante
+  trabalho no celular. As alturas foram medidas e reservam o espaço para a rolagem não saltar;
+  `auto` guarda a altura real depois da primeira renderização.
+*/
+#projetos,
+#processo,
+#stack,
+#prova,
+#trajetoria,
+#contato {
+  content-visibility: auto;
+  contain-intrinsic-block-size: auto var(--section-h);
+}
+
+#projetos { --section-h: 7650px; }
+#processo { --section-h: 1700px; }
+#stack { --section-h: 2420px; }
+#prova { --section-h: 1570px; }
+#trajetoria { --section-h: 3030px; }
+#contato { --section-h: 1240px; }
+
+@media (min-width: 768px) {
+  #projetos { --section-h: 6750px; }
+  #processo { --section-h: 1380px; }
+  #stack { --section-h: 1450px; }
+  #prova { --section-h: 970px; }
+  #trajetoria { --section-h: 2470px; }
+  #contato { --section-h: 910px; }
+}
+
+@media (min-width: 1024px) {
+  #projetos { --section-h: 5510px; }
+  #processo { --section-h: 1260px; }
+  #stack { --section-h: 1540px; }
+  #prova { --section-h: 1030px; }
+  #trajetoria { --section-h: 1620px; }
+  #contato { --section-h: 910px; }
+}
+
+@media (min-width: 1280px) {
+  #projetos { --section-h: 6280px; }
+  #processo { --section-h: 1510px; }
+  #stack { --section-h: 1410px; }
+  #prova { --section-h: 1120px; }
+  #trajetoria { --section-h: 1880px; }
+  #contato { --section-h: 1140px; }
+}
