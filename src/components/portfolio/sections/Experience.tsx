@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/portfolio/lib/Reveal";
 import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
-import { experiences } from "@/components/portfolio/lib/data";
+import { experiences, workAreas } from "@/components/portfolio/lib/data";
 
 function LockGlyph() {
   return (
@@ -18,7 +18,7 @@ export function Experience() {
         <SectionHeading
           eyebrow="Experiência"
           title="Onde atuo hoje"
-          description="Atuação profissional com desenvolvimento aplicado a operações reais de empresas."
+          description="Atuação profissional com sistemas sob medida, integrações e IA aplicados a operações reais de empresas."
         />
 
         <ol data-stagger className="flex flex-col gap-5">
@@ -74,6 +74,29 @@ export function Experience() {
             </li>
           ))}
         </ol>
+
+        <h3 className="portfolio-text-title mb-5 mt-12 text-xl font-semibold sm:text-2xl">Áreas de atuação</h3>
+
+        <div data-stagger className="grid grid-cols-1 gap-4 sm:gap-5 md:grid-cols-2">
+          {workAreas.map((area) => (
+            <article key={area.title} className="portfolio-surface portfolio-interactive rounded-2xl border p-5 sm:p-6">
+              <h4 className="portfolio-text-title text-base font-semibold sm:text-lg">{area.title}</h4>
+              <p className="portfolio-text-muted mt-3 text-sm leading-relaxed">{area.challenge}</p>
+              <p className="portfolio-text-soft mt-2 text-sm leading-relaxed">{area.approach}</p>
+
+              <ul className="mt-4 flex flex-wrap gap-2">
+                {area.tech.map((tech) => (
+                  <li
+                    key={`${area.title}-${tech}`}
+                    className="portfolio-chip rounded-md border px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide"
+                  >
+                    {tech}
+                  </li>
+                ))}
+              </ul>
+            </article>
+          ))}
+        </div>
       </Reveal>
     </section>
   );

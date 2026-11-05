@@ -29,6 +29,13 @@ export type ExperienceEntry = {
   confidentialNote?: string;
 };
 
+export type WorkArea = {
+  title: string;
+  challenge: string;
+  approach: string;
+  tech: string[];
+};
+
 export type MarqueeSkill = {
   name: string;
   iconKey:
@@ -96,16 +103,49 @@ export const experiences: ExperienceEntry[] = [
     role: "Desenvolvedor · Automação e integração de sistemas",
     period: "Abr 2026 — atual",
     description:
-      "Desenvolvimento de automações e integrações entre sistemas corporativos, além de aplicações web de apoio à operação. O trabalho combina APIs, modelagem e processamento de dados e recursos de IA aplicada, em projetos que vão da coleta e tratamento de informação até a interface usada no dia a dia.",
+      "Desenvolvimento de sistemas sob medida com agentes de IA: CRMs, integrações com WhatsApp e APIs de terceiros, automações, rotinas financeiras e sistemas internos. Acompanho as entregas do pedido até a produção: transformo reuniões em escopo, dirijo o desenvolvimento, testo em homologação e coloco no ar.",
     focus: [
+      "CRMs",
       "Integrações e APIs",
-      "IA aplicada a processos",
-      "Aplicações web internas",
-      "Processamento de dados",
+      "Automações",
+      "Rotinas financeiras",
+      "Sistemas internos",
+      "IA aplicada",
       "Deploy em containers"
     ],
     confidentialNote:
       "Clientes, produtos e detalhes de implementação são cobertos por acordo de confidencialidade e não são divulgados."
+  }
+];
+
+/**
+ * Áreas de atuação. Descrevem a capacidade, agregada e sem ligação com um projeto ou
+ * cliente: não incluir resultado, número, setor, nome de produto ou integração específica.
+ */
+export const workAreas: WorkArea[] = [
+  {
+    title: "CRMs e operação comercial",
+    challenge: "Leads, oportunidades, conversas e campanhas costumam ficar espalhados em ferramentas diferentes.",
+    approach: "Sistemas que reúnem funil de vendas, atendimento e automações, integrados a canais de mensagem e anúncios.",
+    tech: ["React", "TypeScript", "PostgreSQL", "API do WhatsApp"]
+  },
+  {
+    title: "Sistemas internos e gestão",
+    challenge: "Áreas diferentes de uma empresa precisam de sistemas que conversem entre si e com serviços externos.",
+    approach: "Aplicações organizadas em módulos, planejadas e entregues por fases, com login único entre os sistemas.",
+    tech: ["Next.js", "Node.js", "Python", "Docker"]
+  },
+  {
+    title: "Rotinas financeiras e integrações",
+    challenge: "Rotinas financeiras têm pouca margem para erro, porque uma falha pode alcançar o cliente final.",
+    approach: "Fluxos de cobrança e conciliação conectados a sistemas de terceiros, com atenção a falhas e reprocessamento.",
+    tech: ["Python", "FastAPI", "PostgreSQL", "APIs REST"]
+  },
+  {
+    title: "IA e automação",
+    challenge: "Tarefas repetitivas de atendimento, triagem e leitura de documentos consomem o tempo das equipes.",
+    approach: "Modelos de linguagem e automações aplicados onde resolvem um problema concreto, com validação e custo sob controle.",
+    tech: ["OpenAI", "n8n", "Python", "Node.js"]
   }
 ];
 
