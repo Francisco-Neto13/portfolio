@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/portfolio/lib/Reveal";
 import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
+import { TechChip } from "@/components/portfolio/lib/TechChip";
 import { skillGroups } from "@/components/portfolio/lib/data";
 
 export function Stack() {
@@ -18,12 +19,7 @@ export function Stack() {
               <h3 className="portfolio-text-title text-base font-semibold sm:text-lg">{group.title}</h3>
               <ul className="mt-4 flex flex-wrap gap-2">
                 {group.items.map((item) => (
-                  <li
-                    key={`${group.title}-${item}`}
-                    className="portfolio-chip rounded-md border px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide"
-                  >
-                    {item}
-                  </li>
+                  <TechChip key={`${group.title}-${item}`} name={item} />
                 ))}
               </ul>
             </article>

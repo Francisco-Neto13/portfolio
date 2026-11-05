@@ -155,13 +155,49 @@ export const workAreas: WorkArea[] = [
 
 export const projects: Project[] = [
   {
+    title: "Internship Tracker",
+    description:
+      "Plataforma acadêmica que substitui planilhas e papel na gestão de estágios e atividades complementares. Seis perfis enxergam fatias diferentes dos mesmos dados, com permissões garantidas no próprio banco por Row Level Security, e o sistema roda em servidor próprio.",
+    image: "/assets/images/internship-tracker.webp",
+    imageAlt: "Tela de login do Internship Tracker",
+    tech: ["Next.js", "React 19", "TypeScript", "PostgreSQL", "Drizzle ORM", "Better Auth", "RLS", "Docker", "Caddy"],
+    links: [
+      { label: "Ver Projeto", href: "https://internship.chiconeto.dev/" },
+      { label: "GitHub", href: "https://github.com/Francisco-Neto13/internship-tracker" }
+    ]
+  },
+  {
+    title: "Patinhas",
+    description:
+      "Projeto de faculdade, feito como extensão universitária, que aproxima a comunidade de abrigos de animais. Apresenta a ONG parceira, os animais para adoção, as necessidades e as campanhas, com painel administrativo para o cadastro e doações que vão direto para a ONG, sem passar pela plataforma.",
+    image: "/assets/images/patinhas.webp",
+    imageAlt: "Página inicial do Patinhas",
+    tech: ["Next.js", "React 19", "TypeScript", "PostgreSQL", "Prisma", "Tailwind CSS", "Framer Motion"],
+    links: [
+      { label: "Ver Projeto", href: "https://patinhas.slocksert.dev/" },
+      { label: "GitHub", href: "https://github.com/Francisco-Neto13/patinhas" }
+    ]
+  },
+  {
+    title: "iOS Weather App",
+    description:
+      "Projeto de faculdade, feito para a disciplina de Interface Humano-Computador: uma aplicação de clima que reproduz a interface do iPhone a partir de um modelo do Figma. Usa dados reais da OpenWeather, busca de cidades, geolocalização e locais salvos, com a chave da API protegida em função serverless.",
+    image: "/assets/images/ios-weather-app.webp",
+    imageAlt: "Tela do iOS Weather App",
+    tech: ["React 19", "Vite", "JavaScript", "Tailwind CSS", "OpenWeather", "Vercel"],
+    links: [
+      { label: "Ver Projeto", href: "https://ios-weather-app.vercel.app/" },
+      { label: "GitHub", href: "https://github.com/Francisco-Neto13/ios-weather-app" }
+    ]
+  },
+  {
     title: "PawSpace",
     description:
       "Hub de estudos que conecta trilhas, materiais e sessões em um fluxo único. Inclui editor de trilhas em grafo, registro de progresso e visualização de evolução ao longo do tempo.",
     image: "/assets/images/pawspace.webp",
     imageAlt: "Miniatura do PawSpace",
     tech: ["Next.js", "React 19", "TypeScript", "Prisma", "Supabase", "React Flow", "Recharts"],
-    links: [{ label: "Ver Projeto", href: "https://pawspace.vercel.app/" }]
+    links: [{ label: "Ver Projeto", href: "https://pawspace-alpha.vercel.app/" }]
   },
   {
     title: "Guardians of Wynn",

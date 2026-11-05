@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import { Reveal } from "@/components/portfolio/lib/Reveal";
 import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
+import { TechChip } from "@/components/portfolio/lib/TechChip";
 import { useResolvedTheme } from "@/components/portfolio/lib/useResolvedTheme";
 import dynamic from "next/dynamic";
 
@@ -340,26 +341,28 @@ export function Projects() {
 
             <ul className="mt-4 flex flex-wrap gap-2">
               {activeProject.tech.map((tech) => (
-                <li
-                  key={`${activeProject.title}-${tech}`}
-                  className="portfolio-chip rounded-md border px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide"
-                >
-                  {tech}
-                </li>
+                <TechChip key={`${activeProject.title}-${tech}`} name={tech} />
               ))}
             </ul>
 
-            {activeProject.links[0] ? (
-              <a
-                href={activeProject.links[0].href}
-                target="_blank"
-                rel="noreferrer"
-                className="portfolio-btn-accent mt-5 inline-flex rounded-md border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition"
-              >
-                {activeProject.links[0].label}
-                <span className="sr-only"> - {activeProject.title} (abre em nova aba)</span>
-              </a>
-            ) : null}
+            <div className="mt-5 flex flex-wrap gap-2.5">
+              {activeProject.links.map((link, index) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  className={`inline-flex rounded-md border px-4 py-2 text-xs font-semibold uppercase tracking-wide transition ${
+                    index === 0
+                      ? "portfolio-btn-accent"
+                      : "portfolio-border-soft portfolio-surface portfolio-text-title hover:border-[var(--border-strong)] hover:text-[var(--accent-text)]"
+                  }`}
+                >
+                  {link.label}
+                  <span className="sr-only"> - {activeProject.title} (abre em nova aba)</span>
+                </a>
+              ))}
+            </div>
           </motion.article>
         </div>
 

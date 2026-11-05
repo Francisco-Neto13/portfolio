@@ -1,5 +1,6 @@
 import { Reveal } from "@/components/portfolio/lib/Reveal";
 import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
+import { TechChip } from "@/components/portfolio/lib/TechChip";
 import { experiences, workAreas } from "@/components/portfolio/lib/data";
 
 function LockGlyph() {
@@ -26,27 +27,25 @@ export function Experience() {
             <li key={`${item.company}-${item.period}`}>
               <article className="portfolio-surface portfolio-interactive rounded-2xl border p-5 sm:p-6 md:p-7">
                 <div className="flex flex-col gap-2 sm:flex-row sm:items-baseline sm:justify-between sm:gap-6">
-                  <h3 className="portfolio-text-title text-xl font-semibold sm:text-2xl">
-                    {item.companyUrl ? (
-                      <a
-                        href={item.companyUrl}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="transition hover:text-[var(--accent-text)]"
-                      >
-                        {item.company}
-                        <span className="sr-only"> (abre em nova aba)</span>
-                      </a>
-                    ) : (
-                      item.company
-                    )}
-                  </h3>
+                  <h3 className="portfolio-text-title text-xl font-semibold sm:text-2xl">{item.company}</h3>
                   <p className="portfolio-text-muted shrink-0 text-xs font-semibold uppercase tracking-[0.14em]">
                     {item.period}
                   </p>
                 </div>
 
                 <p className="portfolio-text-accent mt-1.5 text-sm font-medium">{item.role}</p>
+
+                {item.companyUrl ? (
+                  <a
+                    href={item.companyUrl}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="portfolio-text-soft mt-1.5 inline-flex text-sm underline underline-offset-4 transition hover:text-[var(--accent-text)]"
+                  >
+                    {item.companyUrl.replace(/^https?:\/\/|\/$/g, "")}
+                    <span className="sr-only"> - site da {item.company} (abre em nova aba)</span>
+                  </a>
+                ) : null}
 
                 {/* Largura de leitura limitada: no container de 1440px a linha passava de 130 caracteres. */}
                 <p className="portfolio-text-soft mt-4 max-w-[75ch] text-sm leading-relaxed md:text-[15px]">
@@ -86,12 +85,7 @@ export function Experience() {
 
               <ul className="mt-4 flex flex-wrap gap-2">
                 {area.tech.map((tech) => (
-                  <li
-                    key={`${area.title}-${tech}`}
-                    className="portfolio-chip rounded-md border px-2.5 py-1 text-[11px] font-medium uppercase tracking-wide"
-                  >
-                    {tech}
-                  </li>
+                  <TechChip key={`${area.title}-${tech}`} name={tech} />
                 ))}
               </ul>
             </article>
