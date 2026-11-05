@@ -1,0 +1,62 @@
+/*
+  Paletas do site. Cada uma define exatamente os mesmos tokens, então nenhum componente
+  conhece cor. Para trocar, mude ACTIVE_PALETTE em lib/palette.ts.
+  O contraste de todas as combinações é conferido por script (WCAG AA).
+*/
+
+/* Grafite e Lima: escura, quente e com um único acento forte. A escolhida. */
+[data-palette="grafite"] {
+  color-scheme: dark;
+  --color-bg: #0d0d0c;
+  --color-surface: #161614;
+  --color-surface-raised: #20201d;
+  --color-line: rgba(242, 241, 236, 0.13);
+  --color-line-strong: rgba(242, 241, 236, 0.28);
+  --color-text: #f2f1ec;
+  --color-text-soft: #b6b5ad;
+  --color-text-muted: #8f8e86;
+  --color-accent: #c6f135;
+  --color-accent-hover: #d7f96a;
+  --color-on-accent: #11130a;
+  --color-focus: #c6f135;
+  --color-danger: #ff8f75;
+  --color-header: rgba(13, 13, 12, 0.78);
+}
+
+/* Papel e Cobalto: clara e editorial. */
+[data-palette="papel"] {
+  color-scheme: light;
+  --color-bg: #f5f3ee;
+  --color-surface: #fcfbf8;
+  --color-surface-raised: #ebe8e1;
+  --color-line: rgba(21, 20, 15, 0.14);
+  --color-line-strong: rgba(21, 20, 15, 0.32);
+  --color-text: #15140f;
+  --color-text-soft: #4b4942;
+  --color-text-muted: #66645c;
+  --color-accent: #2036e8;
+  --color-accent-hover: #1727bd;
+  --color-on-accent: #ffffff;
+  --color-focus: #2036e8;
+  --color-danger: #b42318;
+  --color-header: rgba(245, 243, 238, 0.82);
+}
+
+/* Noite e Coral: azul profundo com acento quente. */
+[data-palette="noite"] {
+  color-scheme: dark;
+  --color-bg: #0b0e14;
+  --color-surface: #131720;
+  --color-surface-raised: #1d2330;
+  --color-line: rgba(238, 240, 244, 0.13);
+  --color-line-strong: rgba(238, 240, 244, 0.28);
+  --color-text: #eef0f4;
+  --color-text-soft: #b4bac7;
+  --color-text-muted: #8d95a7;
+  --color-accent: #ff7a59;
+  --color-accent-hover: #ff9478;
+  --color-on-accent: #1a0b06;
+  --color-focus: #ff7a59;
+  --color-danger: #ff9b8a;
+  --color-header: rgba(11, 14, 20, 0.78);
+}
