@@ -1,4 +1,5 @@
 import { ImageResponse } from "next/og";
+import { palette } from "@/components/portfolio/lib/palette";
 import { SITE_NAME } from "@/components/portfolio/lib/site";
 
 export const alt = `${SITE_NAME} | Do pedido à produção`;
@@ -17,11 +18,11 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px",
-          color: "#ffffff",
-          background: "radial-gradient(900px 620px at 78% 12%, #3b1a85 0%, #09080f 72%)"
+          color: palette.text,
+          background: palette.bg
         }}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 28, color: "#c9c5d6" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 28, color: palette.soft }}>
           <div style={{ display: "flex" }}>{SITE_NAME}</div>
           <div style={{ display: "flex" }}>Desenvolvedor Full Stack</div>
         </div>
@@ -38,15 +39,15 @@ export default function OpenGraphImage() {
         >
           <div style={{ display: "flex" }}>Do pedido</div>
           <div style={{ display: "flex" }}>
-            à<span style={{ color: "#c4b5fd", marginLeft: 34 }}>produção.</span>
+            à<span style={{ color: palette.accent, marginLeft: 34 }}>produção.</span>
           </div>
         </div>
 
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 28 }}>
-          <div style={{ display: "flex", color: "#c9c5d6" }}>Sistemas sob medida · Integrações · IA aplicada</div>
-          <div style={{ display: "flex", alignItems: "center", color: "#41e0a3" }}>
+          <div style={{ display: "flex", color: palette.soft }}>Sistemas sob medida · Integrações · IA aplicada</div>
+          <div style={{ display: "flex", alignItems: "center", color: palette.accent }}>
             <div
-              style={{ display: "flex", width: 18, height: 18, marginRight: 14, borderRadius: 999, background: "#41e0a3" }}
+              style={{ display: "flex", width: 18, height: 18, marginRight: 14, borderRadius: 999, background: palette.accent }}
             />
             no ar
           </div>

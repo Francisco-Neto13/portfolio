@@ -2,7 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState } from "react";
-import { useResolvedTheme } from "@/components/portfolio/lib/useResolvedTheme";
+import { palette } from "@/components/portfolio/lib/palette";
 
 const GitHubCalendar = dynamic(
   () => import("react-github-calendar").then((module) => module.GitHubCalendar),
@@ -21,11 +21,10 @@ function getSettings(width: number) {
   return { blockSize: 14, blockMargin: 5, fontSize: 14 };
 }
 
-/** Atividade real do GitHub. A biblioteca só é baixada quando a seção se aproxima da tela. */
+/** Atividade real do GitHub. A biblioteca só é baixada quando o bloco se aproxima da tela. */
 export function GithubActivity() {
   const [viewportWidth, setViewportWidth] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const resolvedTheme = useResolvedTheme();
 
   useEffect(() => {
     const container = containerRef.current;
@@ -52,12 +51,9 @@ export function GithubActivity() {
           <GitHubCalendar
             username="Francisco-Neto13"
             labels={LABELS}
-            colorScheme={resolvedTheme}
+            colorScheme={palette.mode}
+            theme={{ dark: palette.calendar, light: palette.calendar }}
             {...getSettings(viewportWidth)}
-            theme={{
-              dark: ["#17141f", "#2b1b58", "#4d2e99", "#7b4aff", "#a783ff"],
-              light: ["#e8e4da", "#d5c3ff", "#b38bff", "#8f5bff", "#6d34f8"]
-            }}
           />
         ) : null}
       </div>

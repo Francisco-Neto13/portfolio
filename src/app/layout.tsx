@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
-import { THEME_INIT_SCRIPT } from "@/components/portfolio/lib/theme";
+import { ACTIVE_PALETTE, palette } from "@/components/portfolio/lib/palette";
+import { Footer } from "@/components/portfolio/sections/Footer";
+import { Header } from "@/components/portfolio/sections/Header";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/components/portfolio/lib/site";
 import "./globals.css";
 
@@ -94,30 +96,29 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: dark)", color: "#09080f" },
-    { media: "(prefers-color-scheme: light)", color: "#f6f4ee" }
-  ]
+  themeColor: palette.bg
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="pt-BR" data-theme="dark" suppressHydrationWarning>
+    <html
+      lang="pt-BR"
+      data-palette={ACTIVE_PALETTE}
+      className={`${display.variable} ${sans.variable} ${mono.variable}`}
+      suppressHydrationWarning
+    >
       <head>
-        {/*
-          Aplica o tema salvo antes do primeiro paint. Sem isso, quem escolheu "Claro"
-          ou "Sistema" carrega a página escura e vê o flash de troca na hidratação.
-        */}
-        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
-        <link rel="dns-prefetch" href="https://github-contributions-api.jogruber.de" />
-        <link rel="preconnect" href="https://github-contributions-api.jogruber.de" crossOrigin="" />
+        {/* Marca que há JavaScript. Sem ele, nada fica escondido à espera da animação. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
       </head>
-      <body className={`${display.variable} ${sans.variable} ${mono.variable}`}>
+      <body>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
         />
-        {children}
+        <Header />
+        <main className="pt-[var(--header-h)]">{children}</main>
+        <Footer />
       </body>
     </html>
   );

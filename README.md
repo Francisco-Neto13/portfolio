@@ -43,44 +43,31 @@ priorizando performance, acessibilidade e uma base de código simples de manter.
 
 ```
 src/
-├── app/                          # App Router: layout, página, SEO (robots, sitemap, OG image)
+├── app/
+│   ├── styles/                   # palettes, tokens, components e motion: o design system
+│   ├── projetos/[slug]/          # Página de cada projeto, com os detalhes
+│   ├── sobre/                    # Experiência, trajetória, tecnologias e GitHub
+│   └── page.tsx                  # Home: uma ideia por tela
 └── components/portfolio/
-    ├── lib/                      # Dados, tema, utilidades e componentes-cliente pequenos
+    ├── lib/
     │   ├── data.ts               # Todo o conteúdo do site (fonte única)
+    │   ├── palette.ts            # Paleta ativa (ACTIVE_PALETTE)
     │   ├── site.ts               # URL canônica, título e descrição
-    │   ├── theme.ts              # Tipos, store do tema e script de pré-hidratação
-    │   ├── scroll.ts             # Rolagem ancorada + altura do header
-    │   ├── Reveal.tsx            # Animação de entrada via IntersectionObserver
+    │   ├── Reveal.tsx            # Dispara a entrada dos blocos
+    │   ├── TechChip.tsx          # Ícones e chip de tecnologia
     │   ├── ActivationDemo.tsx    # Demonstração interativa do Internship Tracker
-    │   ├── GithubActivity.tsx    # Calendário do GitHub, carregado sob demanda
-    │   └── SmoothLink.tsx        # Âncora com rolagem suave
-    ├── pages/PortfolioPage.tsx   # Casca interativa (header, tema, etapa atual)
-    └── sections/                 # Hero, O que construo, Projetos, Processo, Stack, Trajetória, Contato
+    │   └── GithubActivity.tsx    # Calendário do GitHub, carregado sob demanda
+    └── sections/                 # Header, Hero, O que construo, Projetos, Processo, Sobre, Contato, Footer
 ```
 
-**Conceito:** a página é lida como um deploy, do pedido até o "no ar". Cada seção é uma etapa
-de `stages` em `data.ts`, e o indicador fixo mostra a etapa atual.
+## Design system
 
-**Fronteira cliente/servidor:** só `PortfolioChrome`, `Header`, `Reveal`, `SmoothLink`,
-`CopyButton`, `ActivationDemo` e `GithubActivity` são Client Components. As seções de conteúdo
-são Server Components, e as animações são CSS: não há biblioteca de animação.
-
-## Decisões técnicas
-
-* **Tema sem flash:** um script síncrono no `<head>` (`THEME_INIT_SCRIPT`) aplica o tema salvo
-  antes do primeiro paint. O modo é lido com `useSyncExternalStore`, o que também sincroniza
-  a escolha entre abas abertas.
-* **Contraste nos dois temas:** cores de acento vêm de tokens (`--accent-text`, `--accent-strong`)
-  calibrados para passar no WCAG AA tanto no claro quanto no escuro. Não use `text-violet-*`
-  direto — use `.portfolio-text-accent` / `.portfolio-btn-accent` / `.portfolio-chip`.
-* **Reveal sem listener de scroll:** o `IntersectionObserver` informa pelo `boundingClientRect`
-  se o elemento saiu por cima ou por baixo, dispensando rastrear a direção manualmente.
-  As regras CSS são escopadas em `html.js`, então sem JavaScript o conteúdo continua visível.
-* **Só desenhar o que está perto da tela:** as seções abaixo do hero usam `content-visibility: auto`,
-  com alturas medidas em `globals.css`. Se uma seção mudar muito de tamanho, atualize `--section-h`.
+* **Cor:** componentes só usam tokens `--color-*`. Para trocar a paleta, mude `ACTIVE_PALETTE` em `palette.ts`.
+* **Superfície:** um fundo de página e um único card (`.card`). Seções não têm fundo próprio.
+* **Espaço e texto:** só os tokens de `styles/tokens.css` e as classes `.text-*`.
+* **Movimento:** tudo entra do mesmo jeito (`styles/motion.css`): `.enter` na primeira tela, `Reveal` no resto.
+* **Conteúdo:** uma ideia por tela na home. Detalhe vai para `/projetos/[slug]` ou `/sobre`.
 * **Números só de fonte pública:** o site não usa métrica de empregador nem de cliente.
-* **Altura do header:** definida uma vez na CSS var `--header-h` e espelhada em
-  `HEADER_HEIGHT` (`lib/scroll.ts`).
 
 ## Scripts
 

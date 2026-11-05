@@ -1,16 +1,8 @@
-export type NavItem = {
-  href: string;
-  label: string;
-};
-
-/** Etapas do deploy: a narrativa da página. Cada seção corresponde a uma. */
-export type Stage = {
-  id: string;
-  label: string;
-};
-
 export type Project = {
+  slug: string;
   title: string;
+  /** Uma frase: é tudo o que aparece na home. O resto fica na página do projeto. */
+  summary: string;
   /** Natureza do projeto. */
   kind: string;
   problem: string;
@@ -20,7 +12,7 @@ export type Project = {
   imageAlt: string;
   tech: string[];
   links: Array<{ label: string; href: string }>;
-  /** Mostra a demonstração interativa no lugar da miniatura. */
+  /** Mostra a demonstração interativa na página do projeto. */
   demo?: "activation";
 };
 
@@ -34,8 +26,6 @@ export type Testimonial = {
 export type Stat = {
   value: string;
   label: string;
-  /** Onde o número pode ser conferido. */
-  source: string;
 };
 
 export type TimelineEntry = {
@@ -50,15 +40,13 @@ export type ExperienceEntry = {
   role: string;
   period: string;
   description: string;
-  focus: string[];
   /** Exibido quando o conteúdo do trabalho é coberto por acordo de confidencialidade. */
   confidentialNote?: string;
 };
 
 export type WorkArea = {
   title: string;
-  approach: string;
-  tech: string[];
+  description: string;
 };
 
 export type SkillGroup = {
@@ -81,43 +69,14 @@ export type Profile = {
   subtitle: string;
 };
 
-export const navItems: NavItem[] = [
-  { href: "#construo", label: "O que construo" },
-  { href: "#projetos", label: "Projetos" },
-  { href: "#processo", label: "Processo" },
-  { href: "#stack", label: "Stack" },
-  { href: "#trajetoria", label: "Trajetória" }
-];
-
-export const stages: Stage[] = [
-  { id: "inicio", label: "pedido" },
-  { id: "construo", label: "escopo" },
-  { id: "projetos", label: "build" },
-  { id: "processo", label: "revisão" },
-  { id: "stack", label: "dependências" },
-  { id: "trajetoria", label: "histórico" },
-  { id: "contato", label: "no ar" }
-];
-
 /** Só números conferíveis em fonte pública. Nada de empregador ou cliente. */
 export const stats: Stat[] = [
-  { value: "2020", label: "programando desde", source: "Trajetória" },
-  { value: "7", label: "projetos nesta página", source: "Projetos" },
-  { value: "3.500+", label: "contribuições no GitHub no último ano", source: "GitHub" }
+  { value: "2020", label: "programando desde" },
+  { value: "7", label: "projetos publicados aqui" },
+  { value: "3.500+", label: "contribuições no GitHub no último ano" }
 ];
 
 export const testimonials: Testimonial[] = [];
-
-export const capabilities = [
-  {
-    title: "APIs e backend",
-    description: "APIs em Python ou Node com banco relacional, autenticação, migrações versionadas e deploy em containers."
-  },
-  {
-    title: "Dashboards e sites",
-    description: "Painéis com indicadores acompanháveis e páginas rápidas, responsivas e bem posicionadas em buscadores."
-  }
-];
 
 /**
  * Experiência profissional.
@@ -135,15 +94,6 @@ export const experiences: ExperienceEntry[] = [
     period: "Abr 2026 — atual",
     description:
       "Desenvolvimento de sistemas sob medida com agentes de IA: CRMs, integrações com WhatsApp e APIs de terceiros, automações, rotinas financeiras e sistemas internos. Acompanho as entregas do pedido até a produção: transformo reuniões em escopo, dirijo o desenvolvimento, testo em homologação e coloco no ar.",
-    focus: [
-      "CRMs",
-      "Integrações e APIs",
-      "Automações",
-      "Rotinas financeiras",
-      "Sistemas internos",
-      "IA aplicada",
-      "Deploy em containers"
-    ],
     confidentialNote:
       "Clientes, produtos e detalhes de implementação são cobertos por acordo de confidencialidade e não são divulgados."
   }
@@ -154,31 +104,17 @@ export const experiences: ExperienceEntry[] = [
  * cliente: não incluir resultado, número, setor, nome de produto ou integração específica.
  */
 export const workAreas: WorkArea[] = [
-  {
-    title: "CRMs e operação comercial",
-    approach: "Sistemas que reúnem funil de vendas, atendimento e automações, integrados a canais de mensagem e anúncios.",
-    tech: ["React", "TypeScript", "PostgreSQL", "API do WhatsApp"]
-  },
-  {
-    title: "Sistemas internos e gestão",
-    approach: "Aplicações organizadas em módulos, planejadas e entregues por fases, com login único entre os sistemas.",
-    tech: ["Next.js", "Node.js", "Python", "Docker"]
-  },
-  {
-    title: "Rotinas financeiras e integrações",
-    approach: "Fluxos de cobrança e conciliação conectados a sistemas de terceiros, com atenção a falhas e reprocessamento.",
-    tech: ["Python", "FastAPI", "PostgreSQL", "APIs REST"]
-  },
-  {
-    title: "IA e automação",
-    approach: "Modelos de linguagem e automações aplicados onde resolvem um problema concreto, com validação e custo sob controle.",
-    tech: ["OpenAI", "n8n", "Python", "Node.js"]
-  }
+  { title: "CRMs e operação comercial", description: "Funil de vendas, atendimento e automações no mesmo sistema." },
+  { title: "Sistemas internos", description: "Aplicações em módulos, com login único entre elas." },
+  { title: "Rotinas financeiras", description: "Cobrança e conciliação conectadas a sistemas de terceiros." },
+  { title: "IA e automação", description: "Modelos de linguagem onde resolvem um problema concreto." }
 ];
 
 export const projects: Project[] = [
   {
+    slug: "internship-tracker",
     title: "Internship Tracker",
+    summary: "Gestão de estágios com seis perfis e permissões garantidas no banco.",
     kind: "Plataforma acadêmica",
     demo: "activation",
     problem: "A gestão de estágios de um curso de graduação rodava em planilhas e papel, com seis perfis precisando de acessos diferentes aos mesmos dados, inclusive dados sensíveis.",
@@ -193,7 +129,9 @@ export const projects: Project[] = [
     ]
   },
   {
+    slug: "patinhas",
     title: "Patinhas",
+    summary: "Projeto de faculdade que aproxima a comunidade de abrigos de animais.",
     kind: "Projeto de faculdade · extensão universitária",
     problem: "Abrigos de animais convivem com falta de recursos, desorganização interna e voluntários sobrecarregados.",
     solution: "Uma frente de comunicação que conecta a comunidade à ONG parceira, com animais, necessidades e campanhas cadastrados em um painel administrativo.",
@@ -207,7 +145,9 @@ export const projects: Project[] = [
     ]
   },
   {
+    slug: "ios-weather-app",
     title: "iOS Weather App",
+    summary: "Projeto de faculdade: clima com interface de iPhone e dados reais.",
     kind: "Projeto de faculdade · Interface Humano-Computador",
     problem: "Reproduzir com fidelidade uma interface de iPhone na web, trocando os dados estáticos do modelo por dados reais.",
     solution: "Interface construída a partir de um modelo do Figma, com busca de cidades, geolocalização e locais salvos.",
@@ -221,7 +161,9 @@ export const projects: Project[] = [
     ]
   },
   {
+    slug: "pawspace",
     title: "PawSpace",
+    summary: "Hub de estudos com trilhas em grafo e registro de progresso.",
     kind: "Projeto pessoal",
     problem: "Trilhas, materiais e sessões de estudo costumam ficar espalhados em lugares diferentes.",
     solution: "Um hub que conecta tudo em um fluxo único, com editor de trilhas em grafo e registro de progresso.",
@@ -232,7 +174,9 @@ export const projects: Project[] = [
     links: [{ label: "Ver Projeto", href: "https://pawspace-alpha.vercel.app/" }]
   },
   {
+    slug: "guardians-of-wynn",
     title: "Guardians of Wynn",
+    summary: "Bot de Discord, dashboard e site para uma comunidade.",
     kind: "Projeto pessoal",
     problem: "Uma comunidade precisava reunir rotinas, administração e presença pública em um só ecossistema.",
     solution: "Bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico.",
@@ -243,7 +187,9 @@ export const projects: Project[] = [
     links: [{ label: "Ver Projeto", href: "https://gsw-website.vercel.app/" }]
   },
   {
+    slug: "atmisuki",
     title: "Atmisuki Portfolio",
+    summary: "Portfólio de arte digital com gestão de conteúdo.",
     kind: "Projeto pessoal",
     problem: "Exibir e administrar um portfólio de arte digital sem depender de terceiros para atualizar o conteúdo.",
     solution: "Sistema de exibição com gestão de conteúdo, autenticação e políticas de acesso por linha.",
@@ -254,7 +200,9 @@ export const projects: Project[] = [
     links: [{ label: "Ver Projeto", href: "https://atmisuki-portfolio.vercel.app/" }]
   },
   {
+    slug: "cats-and-dungeons",
     title: "Cats & Dungeons",
+    summary: "Roguelike em Java com exploração procedural.",
     kind: "Projeto de jogo",
     problem: "Construir um roguelike completo em Java, da física ao inventário.",
     solution: "Exploração procedural, combate estratégico e progressão em ondas, com game loop próprio.",
@@ -299,24 +247,6 @@ export const timeline: TimelineEntry[] = [
   }
 ];
 
-export const marqueeSkills: string[] = [
-  "TypeScript",
-  "React",
-  "Next.js",
-  "Tailwind CSS",
-  "Node.js",
-  "Python",
-  "FastAPI",
-  "PostgreSQL",
-  "Prisma",
-  "Supabase",
-  "Docker",
-  "OpenAI",
-  "Claude",
-  "n8n",
-  "Git"
-];
-
 /** Competências gerais, sem ligação com um empregador ou projeto específico. */
 export const skillGroups: SkillGroup[] = [
   { title: "Frontend", items: ["TypeScript", "React", "Next.js", "Vite", "Tailwind CSS"] },
@@ -335,36 +265,12 @@ export const contactLinks: ContactLink[] = [
 ];
 
 export const workPrinciples: WorkPrinciple[] = [
-  {
-    title: "Reaproveito o que já funciona",
-    description:
-      "Uso soluções que já estão no ar como referência. O que é resolvido em um projeto chega mais rápido ao próximo, sem começar do zero."
-  },
-  {
-    title: "IA no fluxo, com direção",
-    description:
-      "Agentes de IA fazem parte do meu desenvolvimento. Eu defino o objetivo, delego pesquisa e execução e cobro o motivo técnico antes de aceitar uma solução."
-  },
-  {
-    title: "Plano antes de construir",
-    description:
-      "Planejo e divido o trabalho em etapas antes de começar, e a cada fase confiro o que ainda falta para fechar."
-  },
-  {
-    title: "Interface padronizada",
-    description:
-      "Mantenho telas, componentes e identidade visual consistentes. Quando algo foge do padrão do projeto, corrijo tomando como base o que já existe."
-  },
-  {
-    title: "Da conversa ao escopo",
-    description:
-      "Transformo reuniões, transcrições e mensagens em escopo e tarefas, e mantenho a documentação junto do trabalho."
-  },
-  {
-    title: "Produto, não remendo",
-    description:
-      "Se algo exigiria ajuste manual toda hora, prefiro transformar em recurso do próprio sistema, como uma tela no lugar de uma configuração escondida."
-  }
+  { title: "Reaproveito o que funciona", description: "O que é resolvido em um projeto chega mais rápido ao próximo." },
+  { title: "IA com direção", description: "Agentes executam, e eu cobro o motivo técnico de cada solução." },
+  { title: "Plano antes de construir", description: "Divido em etapas e confiro o que falta antes de seguir." },
+  { title: "Interface padronizada", description: "Telas, componentes e identidade consistentes do início ao fim." },
+  { title: "Da conversa ao escopo", description: "Reuniões e mensagens viram escopo, tarefas e documentação." },
+  { title: "Produto, não remendo", description: "O que exigiria ajuste manual toda hora vira recurso do sistema." }
 ];
 
 export const profile: Profile = {

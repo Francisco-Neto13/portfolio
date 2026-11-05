@@ -35,58 +35,45 @@ export function ActivationDemo() {
   };
 
   return (
-    <div className="flex h-full flex-col justify-between gap-5 p-4 sm:p-6">
-      <fieldset>
-        <legend className="portfolio-text-title text-sm font-semibold">
-          Teste a regra: o estágio só ativa com tudo certo
-        </legend>
-
-        <div className="mt-3 grid gap-x-4 gap-y-1 sm:grid-cols-2">
-          {GUARDS.map((guard) => (
-            <label
-              key={guard.id}
-              className="portfolio-text-soft flex min-h-9 cursor-pointer items-center gap-2.5 text-[13px] leading-tight"
-            >
-              <input
-                type="checkbox"
-                checked={!missing.has(guard.id)}
-                onChange={() => toggle(guard.id)}
-                className="h-4 w-4 shrink-0 cursor-pointer accent-[var(--accent-strong)]"
-              />
-              {guard.label}
-            </label>
-          ))}
-        </div>
+    <div className="card card-body grid gap-[var(--space-block)] md:grid-cols-2">
+      <fieldset className="m-0 border-0 p-0">
+        <legend className="sr-only">Condições para ativar o estágio</legend>
+        {GUARDS.map((guard) => (
+          <label key={guard.id} className="text-body flex min-h-10 cursor-pointer items-center gap-3">
+            <input
+              type="checkbox"
+              checked={!missing.has(guard.id)}
+              onChange={() => toggle(guard.id)}
+              className="h-4 w-4 shrink-0 cursor-pointer accent-[var(--color-accent)]"
+            />
+            {guard.label}
+          </label>
+        ))}
       </fieldset>
 
-      <div
-        aria-live="polite"
-        className={`font-tech min-h-[132px] rounded-xl border p-4 text-[13px] transition-colors ${
-          isActive ? "border-[var(--live)] bg-[var(--live-wash)]" : "portfolio-border-soft"
-        }`}
-      >
-        <p className={`flex items-center gap-2.5 font-medium ${isActive ? "portfolio-text-live" : "portfolio-text-title"}`}>
-          <span className="status-light" data-live={isActive} />
-          {isActive ? "ATIVO" : "EM_FORMALIZACAO"}
+      <div aria-live="polite" className="stack-text">
+        <p className={`text-h3 flex items-center gap-3 ${isActive ? "text-accent" : ""}`}>
+          {isActive ? <span className="status-light" /> : null}
+          {isActive ? "Estágio ativo" : "Em formalização"}
         </p>
 
         {isActive ? (
-          <p className="portfolio-text-soft mt-2.5">Todas as guardas passaram na mesma transação.</p>
+          <p className="text-body">Todas as condições passaram na mesma transação.</p>
         ) : (
           <>
-            <p className="portfolio-text-muted mt-2.5">
-              {impediments.length === 1 ? "1 impedimento:" : `${impediments.length} impedimentos, todos de uma vez:`}
+            <p className="text-label">
+              {impediments.length === 1 ? "1 impedimento" : `${impediments.length} impedimentos, todos de uma vez`}
             </p>
-            <ul className="portfolio-text-soft mt-1.5 space-y-0.5">
+            <ul className="text-body m-0 list-none p-0">
               {impediments.map((guard) => (
-                <li key={guard.id}>· {guard.impediment}</li>
+                <li key={guard.id}>{guard.impediment}</li>
               ))}
             </ul>
           </>
         )}
-      </div>
 
-      <p className="portfolio-text-muted text-xs">Simulação das regras reais do sistema, sem dados de ninguém.</p>
+        <p className="text-label !mt-6">Simulação das regras reais do sistema, sem dados de ninguém.</p>
+      </div>
     </div>
   );
 }
