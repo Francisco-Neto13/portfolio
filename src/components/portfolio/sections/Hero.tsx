@@ -7,22 +7,25 @@ const enter = (index: number) => ({ "--i": index }) as React.CSSProperties;
 export function Hero() {
   return (
     <section id="inicio" className="container screen">
-      <p className="text-label enter" style={enter(0)}>
-        {profile.name} · {profile.subtitle}
-      </p>
+      {/* O texto principal entra junto, sem atraso: é o que define a velocidade percebida. */}
+      <div className="enter">
+        <p className="text-label">
+          {profile.name} · {profile.subtitle}
+        </p>
 
-      <h1 className="text-display enter mt-6" style={enter(1)}>
-        Do pedido
-        <span className="block">
-          à <span className="text-accent">produção.</span>
-        </span>
-      </h1>
+        <h1 className="text-display mt-6">
+          Do pedido
+          <span className="block">
+            à <span className="text-accent">produção.</span>
+          </span>
+        </h1>
 
-      <p className="text-lead enter mt-8" style={enter(2)}>
-        Sistemas sob medida, integrações e automações com IA, do primeiro pedido até estar no ar.
-      </p>
+        <p className="text-lead mt-8">
+          Sistemas sob medida, integrações e automações com IA, do primeiro pedido até estar no ar.
+        </p>
+      </div>
 
-      <div className="enter mt-8 flex flex-wrap items-center gap-x-7 gap-y-3" style={enter(3)}>
+      <div className="enter mt-8 flex flex-wrap items-center gap-x-7 gap-y-3" style={enter(1)}>
         <a href="#contato" className="btn">
           Falar sobre um projeto
         </a>
@@ -31,7 +34,7 @@ export function Hero() {
         </a>
       </div>
 
-      <ol className="deploy-steps text-label enter mt-14" style={enter(4)} aria-label="Etapas de uma entrega">
+      <ol className="deploy-steps text-label enter mt-14" style={enter(2)} aria-label="Etapas de uma entrega">
         {DEPLOY_STEPS.map((step) => (
           <li key={step}>{step}</li>
         ))}
