@@ -46,7 +46,7 @@ import {
   SiWhatsapp
 } from "react-icons/si";
 
-const TITLE_TONE = "text-[var(--text-title)]";
+const TITLE_TONE = "text-[var(--color-text)]";
 
 /** Sem `tone`, o ícone herda a cor do chip. Conceitos fora deste mapa aparecem só como texto. */
 const techIcons: Record<string, { Icon: IconType; tone?: string }> = {
@@ -104,7 +104,7 @@ export function TechIcon({ name, className = "text-[13px]" }: { name: string; cl
 
 export function TechChip({ name }: { name: string }) {
   return (
-    <li className="portfolio-border-soft portfolio-text-soft font-tech inline-flex items-center gap-1.5 rounded-md border px-2.5 py-1 text-[11px] font-medium">
+    <li className="chip">
       <TechIcon name={name} />
       {name}
     </li>
