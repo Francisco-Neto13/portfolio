@@ -1,119 +1,90 @@
-# Francisco Neto | Portfólio Pessoal
-
 <div align="center">
-  <img src="./public/assets/images/logo.webp" width="120" alt="Francisco Neto Logo">
-  <p>Portfólio pessoal com foco em interface moderna, narrativa profissional e apresentação de projetos reais.</p>
-  <a href="https://chiconeto.dev/"><strong>Visualizar Portfólio Live</strong></a>
+  <img src="./public/assets/images/logo.webp" width="96" alt="Logo de Francisco Neto">
+
+  <h1>Francisco Neto</h1>
+
+  <p><strong>Do pedido à produção.</strong><br>Meu portfólio, construído como um produto.</p>
+
+  <a href="https://chiconeto.dev/"><strong>chiconeto.dev</strong></a>
+
+  <br><br>
+
+  <img src="https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white" alt="Next.js 16">
+  <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" alt="React 19">
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" alt="Tailwind CSS 4">
+  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white" alt="Docker">
 </div>
 
-<br />
+<br>
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Next.js_16-000000?style=for-the-badge&logo=nextdotjs&logoColor=white">
-  <img src="https://img.shields.io/badge/React_19-20232A?style=for-the-badge&logo=react&logoColor=61DAFB">
-  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-  <img src="https://img.shields.io/badge/Tailwind_CSS_4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white">
-  <img src="https://img.shields.io/badge/Docker-2496ED?style=for-the-badge&logo=docker&logoColor=white">
-</div>
+![O portfólio no ar](./.github/assets/preview.webp)
 
----
+## O projeto
 
-## ⚠️ Antes de editar o conteúdo
+A página conta uma história: abre no escuro, a rolagem acende a luz, os sistemas entram em cena e tudo termina no estado "no ar". É a mesma ideia do que eu entrego, um único responsável do primeiro pedido até a produção.
 
-A seção **Experiência** (`src/components/portfolio/lib/data.ts` → `experiences`) descreve
-trabalho coberto por acordo de confidencialidade vitalício.
+Este repositório é um trabalho autoral. Conceito, design, conteúdo e código são de minha autoria e responsabilidade.
 
-**Pode entrar:** nome da empresa, cargo, período, natureza genérica do trabalho e tecnologias.
+## O que há para ver
 
-**Não pode entrar, nunca:** nomes de clientes ou de projetos internos, prints de tela,
-trechos de código, diagramas de arquitetura, metodologias proprietárias, métricas de
-negócio, quantidade de clientes ou de tarefas e nomes de colegas.
+- **Abertura em palco:** a luz, os prints reais e a proposta são controlados pela posição da rolagem.
+- **O que eu construo:** sete frentes em um palco fixo, cada uma com a própria luz e uma ilustração animada.
+- **Projetos:** sete casos em janelas de navegador, com problema, solução, stack e resultado.
+- **Demonstração interativa:** as regras reais de ativação de estágio do Internship Tracker, para testar direto na página do projeto.
+- **Atividade no GitHub:** meus dados reais, percorridos por uma cobra de luz em zigue-zague.
+- **Lâmpada no topo:** claro, escuro ou sistema, com a troca nascendo da própria lâmpada.
 
-Na dúvida, descreva a *capacidade* ("integração entre sistemas corporativos"), não a
-*entrega* ("integrei o sistema X do cliente Y").
+## Stack
 
----
+| Área | Tecnologias |
+|---|---|
+| Base | Next.js 16 (App Router), React 19, TypeScript |
+| Estilo | Tailwind CSS 4 e design system próprio em CSS |
+| Movimento | CSS, View Transitions API e Lenis para a rolagem suave |
+| Conteúdo | Dados tipados em um único arquivo, ícones reais com React Icons |
+| Infraestrutura | Docker em build `standalone`, VPS própria e proxy reverso com HTTPS automático |
+| Entrega | GitHub Actions e deploy a partir da `main` |
 
-## Visão Geral
+## Decisões técnicas
 
-Portfólio desenvolvido com **Next.js 16 (App Router) + React 19 + TypeScript + Tailwind CSS 4**,
-priorizando performance, acessibilidade e uma base de código simples de manter.
+**Movimento sem biblioteca de animação.** A rolagem escreve uma única variável, `--p`, de 0 a 1, e o CSS deriva dela luz, opacidade e posição. O efeito é rico, com pouco JavaScript no navegador.
 
-## Arquitetura
+**A primeira tela não espera o JavaScript.** O hero anima só com CSS e a logo vem embutida na folha de estilo. As seções fora da tela usam `content-visibility`, e o Lenis e o calendário do GitHub são baixados sob demanda.
+
+**Acessível por padrão, não por exceção.** Todo efeito depende de `prefers-reduced-motion: no-preference` e de JavaScript ativo. Sem isso, a página aparece inteira e parada. O contraste das paletas segue o WCAG AA.
+
+**Tema sem flash.** Um script no `<head>` aplica o tema antes da primeira pintura. O modo Sistema é o padrão e acompanha o sistema operacional ao vivo.
+
+**Um design system, não estilos soltos.** Cor, luz, espaço, tipografia e movimento são tokens. As folhas clara e violeta só redefinem esses tokens, e todo componente dentro delas se adapta.
+
+**Prints reais, sempre nítidos.** Capturados em 2880 px, servidos no tamanho certo para cada tela e apresentados por um único componente de janela.
+
+**Deploy sem acesso amplo.** A chave usada pelo CI só consegue disparar o deploy. O contêiner roda sem root, em modo somente leitura, sem capabilities do Linux e com limite de memória.
+
+## Estrutura
 
 ```
 src/
 ├── app/
-│   ├── styles/                   # palettes, tokens, components, visuals, motion e scenes
-│   ├── projetos/[slug]/          # Página de cada projeto, com a demonstração interativa
-│   └── page.tsx                  # Hero, letreiros, O que construo, Projetos, Processo, Stack, Prova, Trajetória, Contato
+│   ├── styles/                # palettes, tokens, components, visuals, motion e scenes
+│   ├── projetos/[slug]/       # Página de cada projeto
+│   └── page.tsx               # A narrativa da home
 └── components/portfolio/
-    ├── lib/
-    │   ├── data.ts               # Todo o conteúdo do site (fonte única)
-    │   ├── palette.ts            # O que da paleta precisa existir fora do CSS
-    │   ├── site.ts               # URL canônica, título e descrição
-    │   ├── Effects.tsx           # Progresso da rolagem, luz do cursor e rolagem suave (Lenis)
-    │   ├── Reveal.tsx            # Dispara a entrada dos blocos
-    │   ├── BrowserFrame.tsx      # A janela de navegador de todo print real
-    │   ├── TechChip.tsx          # Ícones e chip de tecnologia
-    │   ├── ActivationDemo.tsx    # Demonstração do Internship Tracker
-    │   ├── ContactTrail.tsx      # Rastro de prints no contato
-    │   └── GithubActivity.tsx    # Calendário do GitHub, carregado sob demanda
-    └── sections/
+    ├── lib/                   # Conteúdo, tema, efeitos e componentes compartilhados
+    └── sections/              # Uma seção por arquivo
 ```
 
-## Como o movimento funciona
+## Rodando localmente
 
-* `[data-track]` recebe `--p`, o progresso da rolagem de 0 a 1, e o CSS deriva tudo dele. Com `data-steps`, recebe também `data-active`.
-* Todo efeito fica dentro de `prefers-reduced-motion: no-preference` e de `html.js`. Sem isso, a página aparece inteira e parada.
-* A primeira tela anima só com CSS (`.enter`), para não atrasar a pintura. O Lenis é baixado depois, e só em dispositivos com mouse.
+```bash
+npm install
+npm run dev     # servidor de desenvolvimento
+npm run check   # tipos, lint e build de produção
+```
 
-## Temas
+## Autoria e licença
 
-Claro, Escuro e Sistema (padrão). A escolha fica em `localStorage`, e o script em `lib/theme.ts` a aplica antes da primeira pintura. A lâmpada usa a View Transitions API para a troca; sem suporte ou com movimento reduzido, o tema só muda.
+Criado e mantido por **[Francisco Neto](https://chiconeto.dev/)**.
 
-## Design system
-
-* **Cor e luz:** só tokens de `styles/palettes.css` e `tokens.css`. As folhas `.sheet-light` e `.sheet-violet` redefinem os tokens, e o conteúdo se adapta.
-* **Superfície:** um card (`.card`, com `.spot` para a luz do cursor), uma janela (`.window`) e um chip (`.chip`).
-* **Números só de fonte pública:** o site não usa métrica de empregador nem de cliente.
-
-## Scripts
-
-| Comando | O que faz |
-| --- | --- |
-| `npm run dev` | Servidor de desenvolvimento |
-| `npm run build` | Build de produção |
-| `npm run lint` | ESLint 9 (flat config) |
-| `npm run typecheck` | `tsc --noEmit` |
-| `npm run check` | typecheck + lint + build |
-
-## Configuração
-
-`NEXT_PUBLIC_SITE_URL` define a origem canônica usada em metadata, `robots.txt` e `sitemap.xml`.
-Sem ela, vale `https://chiconeto.dev`. O valor é lido no build, então trocar o domínio exige um novo build.
-
-## Produção
-
-O site roda em https://chiconeto.dev, em um contêiner na minha VPS. Um proxy reverso encaminha o
-domínio para `portfolio:3000` pela rede Docker `borda`. Este projeto não publica nenhuma porta.
-
-| Situação | O que fazer |
-| --- | --- |
-| Publicar | Push na `main`. Com o CI verde, `.github/workflows/deploy.yml` publica. Se o build falhar, a versão atual continua no ar |
-| Simular | Actions > Deploy > Run workflow > `dry_run` |
-
-A chave do deploy só dispara o deploy: usuário `deploy-portfolio`, com comando forçado
-(`scripts/servidor/configurar-deploy.sh`). A chave do host fica fixada no secret `VPS_KNOWN_HOSTS`.
-
-## Especificações
-
-* **Desenvolvedor:** Francisco Neto
-* **Stack:** Next.js, React, TypeScript, Tailwind CSS
-* **Hospedagem:** VPS própria, com Docker e Caddy
-
----
-
-<div align="center">
-  <p>Este projeto está sob a licença <strong>All Rights Reserved</strong>.</p>
-</div>
+© 2026 Francisco Neto. Todos os direitos reservados. O código está público para consulta, mas não pode ser copiado, modificado ou redistribuído sem autorização por escrito. Veja a [licença](./LICENSE).
