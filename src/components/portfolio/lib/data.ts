@@ -175,9 +175,9 @@ export const timeline: TimelineEntry[] = [
   },
   {
     year: "2026",
-    title: "Atuação profissional em automação e IA",
+    title: "Sistemas sob medida com IA",
     description:
-      "Entrada na IA Infinity como desenvolvedor, trabalhando com integração de sistemas, backend em Python e IA aplicada a processos reais de operação."
+      "Entrada na IA Infinity como desenvolvedor, com CRMs, integrações com WhatsApp e APIs de terceiros, automações, rotinas financeiras e sistemas internos, usando agentes de IA no desenvolvimento."
   }
 ];
 
@@ -211,7 +211,7 @@ export const highlights: Highlight[] = [
   {
     title: "Do processo à interface",
     description:
-      "Construo a solução inteira: a rotina que integra os sistemas, a API que sustenta a regra de negócio e a tela que a equipe usa todo dia. Sem depender de terceiros para fechar o ciclo."
+      "Respondo pela solução inteira: a rotina que integra os sistemas, a API que sustenta a regra de negócio e a tela que a equipe usa todo dia."
   },
   {
     title: "Automação de operações reais",

@@ -16,9 +16,10 @@ export function ProfessionalIntro() {
             </h2>
 
             <p className="portfolio-text-soft mb-10 max-w-[70ch] text-sm leading-relaxed sm:text-base md:mb-12">
-              Comecei pelo frontend com React e Next.js e fui descendo a pilha até backend, dados e automação. Hoje
-              entrego o ciclo completo: a integração que roda por trás, a API que sustenta a regra de negócio e a
-              interface que as pessoas usam.
+              Construo sistemas sob medida com IA para empresas: CRMs, gestão interna, rotinas financeiras, integrações
+              e atendimento. Comecei pelo frontend com React e Next.js e ampliei para backend, dados e automação. Hoje
+              atuo como dono técnico dos projetos e faço a ponte com o cliente: recebo a demanda, transformo em escopo,
+              dirijo agentes de IA, testo em homologação e levo a entrega até a produção.
             </p>
 
             <div data-stagger className="flex flex-col gap-6 md:gap-7">
