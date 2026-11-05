@@ -7,6 +7,7 @@ import {
   LuCloudSun,
   LuCpu,
   LuFileText,
+  LuImage,
   LuMusic,
   LuServer,
   LuShieldCheck,
@@ -92,6 +93,7 @@ const techIcons: Record<string, { Icon: IconType; tone?: string }> = {
   "Better Auth": { Icon: SiBetterauth, tone: TITLE_TONE },
   Caddy: { Icon: SiCaddy, tone: "text-sky-500" },
   OpenWeather: { Icon: LuCloudSun },
+  Sharp: { Icon: LuImage },
   Vercel: { Icon: SiVercel, tone: TITLE_TONE }
 };
 

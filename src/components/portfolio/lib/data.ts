@@ -247,17 +247,20 @@ export const projects: Project[] = [
   {
     slug: "guardians-of-wynn",
     hue: 292,
-    title: "Guardians of Wynn",
-    description: "Ecossistema completo da comunidade: bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico da guilda.",
-    summary: "Bot de Discord, dashboard e site para uma comunidade.",
+    title: "GsW · Guardians of Wynn",
+    description: "Portal oficial da guilda GsW, que reúne a história da comunidade e guias de Wynncraft, do começo do jogo ao endgame.",
+    summary: "Portal da guilda GsW, com guias de Wynncraft e a história da comunidade.",
     kind: "Projeto pessoal",
-    problem: "Uma comunidade precisava reunir rotinas, administração e presença pública em um só ecossistema.",
-    solution: "Bot de Discord com rotinas agendadas e geração de imagens, dashboard administrativo e site institucional com guias e histórico.",
-    result: "Site institucional no ar, ligado a um bot e a um dashboard próprios.",
+    problem: "O conhecimento da guilda precisava de um ponto central de referência, para membros novos e antigos.",
+    solution: "Site com guias de Lootrun, Raids, Leveling, Professions, World Events, Dungeons e modos especiais, além da história da guilda e da economia em Silverbull Shares.",
+    result: "No ar, com todo o conteúdo mantido no próprio repositório, sem depender de painel administrativo.",
     image: "/assets/images/gsw.webp",
-    imageAlt: "Miniatura do Guardians of Wynn",
-    tech: ["Discord.js", "Node.js", "Next.js", "TypeScript", "Docker", "Google APIs", "node-cron"],
-    links: [{ label: "Ver Projeto", href: "https://gsw-website.vercel.app/" }]
+    imageAlt: "Página inicial do portal GsW",
+    tech: ["Next.js", "React", "TypeScript", "Tailwind CSS", "Sharp"],
+    links: [
+      { label: "Ver Projeto", href: "https://gsw-website.vercel.app/" },
+      { label: "GitHub", href: "https://github.com/Francisco-Neto13/gsw-website" }
+    ]
   },
   {
     slug: "atmisuki",
