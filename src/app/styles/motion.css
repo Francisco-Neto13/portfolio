@@ -6,7 +6,8 @@
 */
 @keyframes enter {
   from {
-    opacity: 0;
+    /* 0,01 parece 0, mas o navegador já conta o texto como pintado (melhora o LCP). */
+    opacity: 0.01;
     transform: translateY(var(--motion-rise));
   }
 }
