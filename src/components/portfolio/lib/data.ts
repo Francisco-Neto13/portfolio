@@ -51,7 +51,6 @@ export type MarqueeSkill = {
     | "prisma"
     | "supabase"
     | "docker"
-    | "redis"
     | "openai"
     | "n8n"
     | "git";
@@ -237,7 +236,6 @@ export const marqueeSkills: MarqueeSkill[] = [
   { name: "PostgreSQL", iconKey: "postgresql", toneClass: "text-blue-600" },
   { name: "Prisma", iconKey: "prisma", toneClass: "text-indigo-500" },
   { name: "Supabase", iconKey: "supabase", toneClass: "text-emerald-500" },
-  { name: "Redis", iconKey: "redis", toneClass: "text-red-500" },
   { name: "Docker", iconKey: "docker", toneClass: "text-sky-500" },
   { name: "OpenAI", iconKey: "openai", toneClass: "text-[var(--text-title)]" },
   { name: "n8n", iconKey: "n8n", toneClass: "text-rose-500" },
@@ -249,7 +247,7 @@ export const marqueeSkills: MarqueeSkill[] = [
 export const skillGroups: SkillGroup[] = [
   { title: "Frontend", items: ["TypeScript", "React", "Next.js", "Vite", "Tailwind CSS"] },
   { title: "Backend", items: ["Node.js", "Fastify", "Python", "FastAPI", "Prisma"] },
-  { title: "Banco de dados", items: ["PostgreSQL", "Supabase", "Redis"] },
+  { title: "Banco de dados", items: ["PostgreSQL", "Supabase"] },
   { title: "Infraestrutura", items: ["Docker", "VPS", "Nginx", "Traefik", "Git"] },
   { title: "Automação e integrações", items: ["n8n", "API do WhatsApp", "APIs REST", "Webhooks"] },
   { title: "IA", items: ["OpenAI", "Claude", "Agentes de IA", "Leitura de documentos"] }

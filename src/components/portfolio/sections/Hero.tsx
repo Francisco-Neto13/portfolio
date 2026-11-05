@@ -16,7 +16,6 @@ import {
   SiPrisma,
   SiPython,
   SiReact,
-  SiRedis,
   SiSupabase,
   SiTailwindcss,
   SiTypescript
@@ -35,7 +34,6 @@ const skillIcons: Record<MarqueeSkill["iconKey"], IconType> = {
   prisma: SiPrisma,
   supabase: SiSupabase,
   docker: SiDocker,
-  redis: SiRedis,
   openai: SiOpenai,
   n8n: SiN8N,
   git: SiGit
