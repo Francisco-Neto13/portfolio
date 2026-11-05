@@ -58,6 +58,11 @@ export type MarqueeSkill = {
   toneClass: string;
 };
 
+export type SkillGroup = {
+  title: string;
+  items: string[];
+};
+
 export type ContactLink = {
   label: string;
   href: string;
@@ -238,6 +243,16 @@ export const marqueeSkills: MarqueeSkill[] = [
   { name: "n8n", iconKey: "n8n", toneClass: "text-rose-500" },
   { name: "JavaScript", iconKey: "javascript", toneClass: "text-yellow-500" },
   { name: "Git", iconKey: "git", toneClass: "text-orange-600" }
+];
+
+/** Competências gerais, sem ligação com um empregador ou projeto específico. */
+export const skillGroups: SkillGroup[] = [
+  { title: "Frontend", items: ["TypeScript", "React", "Next.js", "Vite", "Tailwind CSS"] },
+  { title: "Backend", items: ["Node.js", "Fastify", "Python", "FastAPI", "Prisma"] },
+  { title: "Banco de dados", items: ["PostgreSQL", "Supabase", "Redis"] },
+  { title: "Infraestrutura", items: ["Docker", "VPS", "Nginx", "Traefik", "Git"] },
+  { title: "Automação e integrações", items: ["n8n", "API do WhatsApp", "APIs REST", "Webhooks"] },
+  { title: "IA", items: ["OpenAI", "Claude", "Agentes de IA", "Leitura de documentos"] }
 ];
 
 export const contactLinks: ContactLink[] = [

@@ -7,6 +7,7 @@ import { HowIWork } from "@/components/portfolio/sections/HowIWork";
 import { ProfessionalIntro } from "@/components/portfolio/sections/ProfessionalIntro";
 import { Projects } from "@/components/portfolio/sections/Projects";
 import { Services } from "@/components/portfolio/sections/Services";
+import { Stack } from "@/components/portfolio/sections/Stack";
 
 export default function Page() {
   return (
@@ -16,6 +17,7 @@ export default function Page() {
         <ProfessionalIntro />
         <Experience />
         <HowIWork />
+        <Stack />
         <Projects />
         <Services />
         <Contact />
