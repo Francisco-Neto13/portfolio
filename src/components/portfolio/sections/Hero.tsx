@@ -81,8 +81,8 @@ export function Hero() {
             </h1>
 
             <p className="portfolio-text-soft mt-5 max-w-[var(--prose-max)] text-sm leading-relaxed sm:text-base md:text-[1.05rem]">
-              Automação, integrações e sistemas web sob medida — da rotina que roda por trás à interface que a sua
-              equipe usa todo dia.
+              Sistemas sob medida com IA, CRMs, integrações e automações: da rotina que roda por trás à interface que a
+              sua equipe usa todo dia.
             </p>
 
             <div className="mt-7 flex w-full flex-wrap justify-center gap-3 lg:justify-start">

@@ -27,7 +27,7 @@ trabalho coberto por acordo de confidencialidade vitalício.
 
 **Não pode entrar, nunca:** nomes de clientes ou de projetos internos, prints de tela,
 trechos de código, diagramas de arquitetura, metodologias proprietárias, métricas de
-negócio e nomes de colegas.
+negócio, quantidade de clientes ou de tarefas e nomes de colegas.
 
 Na dúvida, descreva a *capacidade* ("integração entre sistemas corporativos"), não a
 *entrega* ("integrei o sistema X do cliente Y").
@@ -53,7 +53,7 @@ src/
     │   ├── Reveal.tsx            # Animação de entrada via IntersectionObserver
     │   └── SmoothLink.tsx        # Âncora com rolagem suave
     ├── pages/PortfolioPage.tsx   # Casca interativa (header, tema, seção ativa)
-    └── sections/                 # Hero, Trajetória, Experiência, Projetos, Serviços, Contato
+    └── sections/                 # Hero, Trajetória, Experiência, Como trabalho, Habilidades, Projetos, Serviços, Contato
 ```
 
 **Fronteira cliente/servidor:** só `PortfolioChrome`, `Header`, `Projects`, `Reveal` e

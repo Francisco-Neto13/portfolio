@@ -66,7 +66,7 @@ export default function OpenGraphImage() {
             maxWidth: 900
           }}
         >
-          Automação · Integrações · IA aplicada · React, Next.js, Python
+          Sistemas sob medida · CRMs · Integrações · IA aplicada
         </div>
 
         <div
