@@ -1,5 +1,4 @@
 import { Reveal } from "@/components/portfolio/lib/Reveal";
-import { SectionHeading } from "@/components/portfolio/lib/SectionHeading";
 import { CopyButton } from "@/components/portfolio/lib/CopyButton";
 import { contactLinks } from "@/components/portfolio/lib/data";
 
@@ -58,74 +57,84 @@ function toCopyValue(href: string) {
 }
 
 export function Contact() {
+  const email = contactLinks.find((item) => item.href.startsWith("mailto:"));
+
   return (
-    <section id="contato" className="portfolio-section-primary relative w-full scroll-mt-[var(--header-h)]">
-      <Reveal className="relative mx-auto w-full max-w-[var(--content-max)] px-4 py-16 sm:px-6 sm:py-20 md:py-28 lg:px-10">
-        <div className="w-full">
-          <SectionHeading
-            eyebrow="Contato"
-            title="Fale comigo"
-            description="Estou disponível para conversar sobre projetos, freelas e oportunidades. Escolha o canal que preferir e entre em contato."
-          />
+    <section
+      id="contato"
+      className="portfolio-hero-bg portfolio-section-primary relative w-full scroll-mt-[var(--header-h)] overflow-hidden"
+    >
+      <Reveal
+        amount={0.1}
+        className="relative mx-auto w-full max-w-[var(--content-max)] px-4 py-24 sm:px-6 md:py-36 lg:px-10"
+      >
+        <p className="portfolio-text-live font-tech flex items-center gap-2.5 text-xs sm:text-sm">
+          <span className="status-light" data-live="true" />
+          06 / no ar
+        </p>
 
-          <ul data-stagger className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-            {contactLinks.map((item) => {
-              const isExternal = item.href.startsWith("http");
-              const handle = toDisplayHandle(item.href);
+        <h2 className="font-display portfolio-text-title mt-5 max-w-[16ch] text-[clamp(2.75rem,8.6vw,7rem)] font-bold leading-[0.95] tracking-[-0.04em]">
+          Qual processo sai do papel agora?
+        </h2>
 
-              return (
-                <li key={item.href}>
-                  {/*
-                    Link estendido: a âncora cobre o card inteiro e o botão de copiar
-                    fica acima dela. Evita aninhar <button> dentro de <a>, que é HTML
-                    inválido, e mantém as duas ações alcançáveis pelo teclado.
-                  */}
-                  <div className="portfolio-surface portfolio-interactive group relative flex min-h-[124px] flex-col items-start justify-between gap-3 overflow-hidden rounded-2xl border px-4 py-4 sm:px-5 sm:py-5">
-                    <a
-                      href={item.href}
-                      target={isExternal ? "_blank" : undefined}
-                      rel={isExternal ? "noreferrer" : undefined}
-                      className="absolute inset-0 z-0"
+        <p className="portfolio-text-soft mt-6 max-w-[56ch] text-lg leading-relaxed">
+          Me conte o que hoje depende de planilha, retrabalho ou sistema que não conversa com outro. A gente define o
+          escopo e o caminho até o ar.
+        </p>
+
+        {email ? (
+          <a
+            href={email.href}
+            className="portfolio-btn-accent mt-8 inline-flex w-full items-center justify-center gap-2 rounded-lg border px-7 py-4 text-base font-semibold transition sm:w-auto"
+          >
+            Falar sobre um projeto <span aria-hidden="true">→</span>
+          </a>
+        ) : null}
+
+        <ul data-stagger className="mt-12 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {contactLinks.map((item) => {
+            const isExternal = item.href.startsWith("http");
+            const handle = toDisplayHandle(item.href);
+
+            return (
+              <li key={item.href}>
+                {/*
+                  Link estendido: a âncora cobre o card inteiro e o botão de copiar fica
+                  acima dela, para evitar um botão dentro de um link.
+                */}
+                <div className="bento-card portfolio-surface group relative flex min-h-[116px] flex-col justify-between gap-3 overflow-hidden rounded-2xl border p-4 sm:p-5">
+                  <a
+                    href={item.href}
+                    target={isExternal ? "_blank" : undefined}
+                    rel={isExternal ? "noreferrer" : undefined}
+                    className="absolute inset-0 z-0 rounded-2xl"
+                  >
+                    <span className="sr-only">
+                      {item.label}
+                      {isExternal ? " (abre em nova aba)" : ""}
+                    </span>
+                  </a>
+
+                  <span className="pointer-events-none flex items-center gap-3">
+                    <ContactIcon label={item.label} />
+                    <span className="portfolio-text-title text-sm font-semibold">{item.label}</span>
+                  </span>
+
+                  <span className="flex w-full items-center justify-between gap-2">
+                    <span
+                      title={handle}
+                      className="portfolio-text-soft pointer-events-none min-w-0 truncate text-sm transition group-hover:text-[var(--accent-text)]"
                     >
-                      <span className="sr-only">
-                        {item.label}
-                        {isExternal ? " (abre em nova aba)" : ""}
-                      </span>
-                    </a>
-
-                    <span className="pointer-events-none flex w-full items-center justify-between gap-3">
-                      <span className="flex items-center gap-3">
-                        <ContactIcon label={item.label} />
-                        <span className="portfolio-text-title text-xs font-semibold uppercase tracking-[0.12em] sm:text-sm">
-                          {item.label}
-                        </span>
-                      </span>
-
-                      <span
-                        aria-hidden="true"
-                        className="portfolio-arrow portfolio-text-accent text-sm font-bold"
-                      >
-                        &#8599;
-                      </span>
+                      {handle}
                     </span>
-
-                    <span className="flex w-full items-center justify-between gap-2">
-                      <span
-                        title={handle}
-                        className="portfolio-text-soft pointer-events-none min-w-0 truncate text-xs transition group-hover:text-[var(--accent-text)] sm:text-sm"
-                      >
-                        {handle}
-                      </span>
-                      <CopyButton value={toCopyValue(item.href)} label={item.label} />
-                    </span>
-                  </div>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
+                    <CopyButton value={toCopyValue(item.href)} label={item.label} />
+                  </span>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
       </Reveal>
     </section>
   );
 }
-

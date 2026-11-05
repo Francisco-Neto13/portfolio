@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
-import { navItems } from "@/components/portfolio/lib/data";
+import { navItems, stages } from "@/components/portfolio/lib/data";
 import {
   getServerThemeMode,
   readStoredThemeMode,
@@ -14,7 +14,34 @@ import { HEADER_HEIGHT } from "@/components/portfolio/lib/scroll";
 import { SmoothLink } from "@/components/portfolio/lib/SmoothLink";
 import { Header } from "@/components/portfolio/sections/Header";
 
-const SECTION_IDS = ["inicio", "trajetoria", "experiencia", "projetos", "servicos", "contato"] as const;
+const SECTION_IDS = stages.map((stage) => stage.id);
+
+/**
+ * A assinatura do site: mostra em que etapa do "deploy" a leitura está e fica verde ao
+ * chegar no contato. Repete o que os títulos já dizem, então é decorativo para leitores de tela.
+ */
+function StageIndicator({ activeSection }: { activeSection: string }) {
+  const index = Math.max(
+    0,
+    stages.findIndex((stage) => stage.id === activeSection)
+  );
+  const isLive = index === stages.length - 1;
+
+  return (
+    <div
+      aria-hidden="true"
+      className={`portfolio-surface-strong portfolio-card-shadow font-tech fixed bottom-5 left-4 z-[70] flex items-center gap-2.5 rounded-full border px-3.5 py-2.5 text-xs transition-all duration-300 sm:bottom-7 sm:left-7 ${
+        index === 0 ? "pointer-events-none translate-y-3 opacity-0" : "translate-y-0 opacity-100"
+      }`}
+    >
+      <span className="status-light" data-live={isLive} />
+      <span className={isLive ? "portfolio-text-live" : "portfolio-text-title"}>{stages[index].label}</span>
+      <span className="relative hidden h-1 w-20 overflow-hidden rounded-full bg-[var(--border-soft)] md:block">
+        <span className={`stage-bar absolute inset-0 ${isLive ? "bg-[var(--live)]" : "bg-[var(--accent-text)]"}`} />
+      </span>
+    </div>
+  );
+}
 
 /**
  * Casca interativa do portfólio: header fixo, tema e detecção da seção ativa.
@@ -147,20 +174,21 @@ export function PortfolioChrome({ children }: { children: React.ReactNode }) {
 
       <main className="portfolio-shell pt-[var(--header-h)]">{children}</main>
 
+      <StageIndicator activeSection={activeSection} />
+
       {/*
         CTA persistente: some no hero (onde já existe o botão principal) e no contato
         (onde o usuário já chegou). Reaproveita o activeSection, sem estado novo.
       */}
       <SmoothLink
         href="#contato"
-        className={`portfolio-btn-accent portfolio-card-shadow fixed bottom-5 right-5 z-[70] inline-flex items-center gap-2 rounded-full border px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.09em] transition-all duration-300 sm:bottom-7 sm:right-7 ${
+        className={`portfolio-btn-accent portfolio-card-shadow fixed bottom-5 right-4 z-[70] inline-flex items-center gap-2 rounded-full border px-4 py-2.5 text-xs font-semibold transition-all duration-300 sm:bottom-7 sm:right-7 ${
           showFloatingCta
             ? "translate-y-0 opacity-100"
             : "pointer-events-none translate-y-3 opacity-0"
         }`}
       >
-        <span aria-hidden="true">&#9993;</span>
-        Vamos conversar
+        Falar comigo <span aria-hidden="true">→</span>
       </SmoothLink>
     </>
   );

@@ -1,7 +1,7 @@
 import { ImageResponse } from "next/og";
 import { SITE_NAME } from "@/components/portfolio/lib/site";
 
-export const alt = `${SITE_NAME} — Desenvolvedor Full Stack`;
+export const alt = `${SITE_NAME} | Do pedido à produção`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -15,70 +15,42 @@ export default function OpenGraphImage() {
           height: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
-          padding: "80px",
-          background: "linear-gradient(135deg, #090614 0%, #1a0f3d 55%, #2b1b58 100%)"
+          justifyContent: "space-between",
+          padding: "72px",
+          color: "#ffffff",
+          background: "radial-gradient(900px 620px at 78% 12%, #3b1a85 0%, #09080f 72%)"
         }}
       >
-        <div
-          style={{
-            display: "flex",
-            fontSize: 26,
-            letterSpacing: 6,
-            textTransform: "uppercase",
-            color: "#c4b5fd"
-          }}
-        >
-          Portfólio
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: 28, color: "#c9c5d6" }}>
+          <div style={{ display: "flex" }}>{SITE_NAME}</div>
+          <div style={{ display: "flex" }}>Desenvolvedor Full Stack</div>
         </div>
 
         <div
           style={{
             display: "flex",
-            marginTop: 28,
-            fontSize: 96,
+            flexDirection: "column",
+            fontSize: 138,
             fontWeight: 700,
-            lineHeight: 1.05,
-            color: "#ffffff"
+            lineHeight: 1,
+            letterSpacing: -5
           }}
         >
-          {SITE_NAME}
+          <div style={{ display: "flex" }}>Do pedido</div>
+          <div style={{ display: "flex" }}>
+            à<span style={{ color: "#c4b5fd", marginLeft: 34 }}>produção.</span>
+          </div>
         </div>
 
-        <div
-          style={{
-            display: "flex",
-            marginTop: 20,
-            fontSize: 44,
-            fontWeight: 600,
-            color: "#9b5cff"
-          }}
-        >
-          Desenvolvedor Full Stack
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", fontSize: 28 }}>
+          <div style={{ display: "flex", color: "#c9c5d6" }}>Sistemas sob medida · Integrações · IA aplicada</div>
+          <div style={{ display: "flex", alignItems: "center", color: "#41e0a3" }}>
+            <div
+              style={{ display: "flex", width: 18, height: 18, marginRight: 14, borderRadius: 999, background: "#41e0a3" }}
+            />
+            no ar
+          </div>
         </div>
-
-        <div
-          style={{
-            display: "flex",
-            marginTop: 36,
-            fontSize: 30,
-            color: "#d2cde3",
-            maxWidth: 900
-          }}
-        >
-          Sistemas sob medida · CRMs · Integrações · IA aplicada
-        </div>
-
-        <div
-          style={{
-            display: "flex",
-            marginTop: 48,
-            height: 8,
-            width: 220,
-            borderRadius: 999,
-            background: "#9b5cff"
-          }}
-        />
       </div>
     ),
     size

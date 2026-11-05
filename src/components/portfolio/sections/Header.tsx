@@ -244,7 +244,7 @@ export function Header({
         </SmoothLink>
 
         <nav className="hidden md:block" aria-label="Navegação principal">
-          <ul className="flex items-center gap-6 lg:gap-10">
+          <ul className="flex items-center gap-5 lg:gap-8">
             {navItems.map((item) => {
               const isActive = activeSection === item.href.slice(1);
               return (
@@ -252,7 +252,7 @@ export function Header({
                   <SmoothLink
                     href={item.href}
                     current={isActive}
-                    className={`inline-block border-b-2 pb-1 text-sm transition-colors lg:text-base ${
+                    className={`inline-block whitespace-nowrap border-b-2 pb-1 text-sm transition-colors ${
                       isActive
                         ? "border-[var(--accent-text)] portfolio-text-title"
                         : "border-transparent portfolio-text-soft hover:border-[var(--accent-text)] hover:text-[var(--text-title)]"
@@ -268,6 +268,12 @@ export function Header({
 
         <div className="hidden md:flex md:items-center md:gap-3">
           <ThemeModeToggle themeMode={themeMode} onThemeModeChange={onThemeModeChange} />
+          <SmoothLink
+            href="#contato"
+            className="portfolio-btn-accent inline-flex h-11 items-center whitespace-nowrap rounded-xl border px-4 text-sm font-semibold transition"
+          >
+            Falar comigo
+          </SmoothLink>
         </div>
 
         <button
@@ -287,7 +293,7 @@ export function Header({
       {/* Progresso de leitura. O valor vem da CSS var definida em PortfolioChrome. */}
       <div
         aria-hidden="true"
-        className="portfolio-scroll-progress absolute inset-x-0 bottom-0 h-[3px] bg-[var(--accent-text)]"
+        className="portfolio-scroll-progress absolute inset-x-0 bottom-0 h-[2px] bg-[var(--accent-text)]"
       />
 
       {mobileMenuOpen ? (
@@ -321,6 +327,14 @@ export function Header({
               );
             })}
           </ul>
+
+          <SmoothLink
+            href="#contato"
+            onNavigate={onCloseMobileMenu}
+            className="portfolio-btn-accent mt-6 inline-flex w-full items-center justify-center rounded-lg border px-6 py-3.5 text-base font-semibold"
+          >
+            Falar comigo
+          </SmoothLink>
         </nav>
       ) : null}
     </header>
