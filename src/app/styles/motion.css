@@ -1,0 +1,67 @@
+/*
+  A única linguagem de movimento do site: sobe e aparece, uma vez.
+  `.enter` é para o que já está na primeira tela e roda sem JavaScript, para não atrasar a
+  pintura. `[data-reveal]` é para o resto, disparado por lib/Reveal.tsx. Sem JavaScript,
+  `html.js` não existe e nada fica escondido.
+*/
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(var(--motion-rise));
+  }
+}
+
+.enter {
+  animation: enter var(--motion-enter) var(--motion-ease) both;
+  animation-delay: calc(var(--i, 0) * var(--motion-stagger));
+}
+
+html.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(var(--motion-rise));
+  transition:
+    opacity var(--motion-enter) var(--motion-ease),
+    transform var(--motion-enter) var(--motion-ease);
+  transition-delay: calc(var(--i, 0) * var(--motion-stagger));
+}
+
+html.js [data-reveal][data-revealed="true"] {
+  opacity: 1;
+  transform: none;
+}
+
+.card-media img {
+  transition: transform var(--motion-enter) var(--motion-ease);
+}
+
+@media (hover: hover) {
+  .card-link:hover .card-media img {
+    transform: scale(1.02);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .enter {
+    animation: none;
+  }
+
+  html.js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .card-media img {
+    transition: none;
+  }
+
+  .card-link:hover .card-media img {
+    transform: none;
+  }
+}
