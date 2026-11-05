@@ -51,7 +51,8 @@
 .text-h2 {
   font-size: var(--size-h2);
   font-weight: 700;
-  line-height: 0.98;
+  /* Abaixo disso, a vírgula de uma linha encosta no acento da linha de baixo. */
+  line-height: 1.1;
   letter-spacing: -0.04em;
 }
 

@@ -7,6 +7,10 @@
 @import "./styles/motion.css" layer(components);
 @import "./styles/scenes.css" layer(components);
 
+/* Telas baixas, como notebooks com a barra do navegador: o fechamento do hero precisa caber. */
+@custom-variant short (@media (max-height: 760px));
+@custom-variant tiny (@media (max-height: 620px));
+
 * {
   box-sizing: border-box;
 }
