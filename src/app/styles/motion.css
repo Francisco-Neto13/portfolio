@@ -297,10 +297,10 @@
   }
 
   /* Cartões empilhados: só onde a tela comporta o cartão inteiro. */
-  @media (min-width: 1024px) and (min-height: 860px) {
+  @media (min-width: 1280px) and (min-height: 880px) {
     html.js .case-item {
       position: sticky;
-      top: calc(var(--header-h) + 12px + var(--i) * 10px);
+      top: calc(var(--header-h) + 12px + var(--i) * 6px);
     }
 
     /* Tempo de leitura: o próximo cartão só cobre este depois de ele ter parado na tela. */

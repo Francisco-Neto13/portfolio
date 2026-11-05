@@ -530,3 +530,10 @@
     align-items: center;
   }
 }
+
+/* A mesma altura em todos: no empilhamento, o cartão de trás nunca sobra por baixo. */
+@media (min-width: 1280px) {
+  .case-card {
+    min-height: 736px;
+  }
+}

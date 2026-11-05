@@ -3,6 +3,9 @@
 import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
+/** Marcado ao clicar em um link para outra página: o Voltar do navegador não passa por aqui. */
+let openAtTop = false;
+
 /** Altura do cabeçalho: --header-h em tokens.css. */
 const ANCHOR_OFFSET = 72;
 
@@ -14,12 +17,16 @@ const clamp = (value: number) => Math.min(1, Math.max(0, value));
  * - escreve a posição do cursor em .spot e a inclinação em [data-tilt];
  * - dispara as entradas de [data-reveal], com um único observador;
  * - liga a rolagem suave no desktop, baixando a biblioteca só depois de a página abrir;
- * - confere o destino das âncoras, porque seções ainda não desenhadas têm altura estimada.
+ * - confere o destino das âncoras, porque seções ainda não desenhadas têm altura estimada;
+ * - abre no topo a página aberta por clique, sem atrapalhar o Voltar do navegador.
  */
 export function Effects() {
   const pathname = usePathname();
 
   useEffect(() => {
+    if (openAtTop && !window.location.hash) window.scrollTo({ top: 0, behavior: "instant" });
+    openAtTop = false;
+
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
     const revealer = new IntersectionObserver(
@@ -100,7 +107,7 @@ export function Effects() {
       document.addEventListener("pointerout", handleLeave, { passive: true });
     }
 
-    let lenis: { destroy: () => void; scrollTo: (target: number, options?: { immediate?: boolean }) => void } | undefined;
+    let lenis: { destroy: () => void; stop: () => void; scrollTo: (target: number, options?: { immediate?: boolean }) => void } | undefined;
     let settleTimer = 0;
 
     // Qualquer gesto da pessoa encerra a conferência: a página nunca disputa a rolagem com ela.
@@ -135,6 +142,11 @@ export function Effects() {
 
     const handleClick = (event: MouseEvent) => {
       const href = (event.target as Element | null)?.closest("a")?.getAttribute("href");
+      if (href?.startsWith("/") && !href.includes("#") && href !== window.location.pathname) {
+        openAtTop = true;
+        // Para o deslize em andamento, para ele não disputar a rolagem com a página nova.
+        lenis?.stop();
+      }
       const hash = href?.split("#")[1];
       // Depois do pointerdown e do clique: só começa a vigiar quando o gesto do clique terminou.
       if (hash && (href?.startsWith("#") || href?.startsWith("/#"))) settleAnchor(hash, 2);
