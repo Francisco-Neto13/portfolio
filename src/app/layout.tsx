@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono, Instrument_Serif } from "next/font/google";
 import { Effects } from "@/components/portfolio/lib/Effects";
 import { palette } from "@/components/portfolio/lib/palette";
+import { THEME_INIT_SCRIPT } from "@/components/portfolio/lib/theme";
 import { Footer } from "@/components/portfolio/sections/Footer";
 import { Header } from "@/components/portfolio/sections/Header";
 import { SITE_DESCRIPTION, SITE_NAME, SITE_TITLE, SITE_URL } from "@/components/portfolio/lib/site";
@@ -106,7 +107,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: palette.bg
+  themeColor: [
+    { media: "(prefers-color-scheme: dark)", color: palette.bg },
+    { media: "(prefers-color-scheme: light)", color: palette.bgLight }
+  ]
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
@@ -117,8 +121,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       suppressHydrationWarning
     >
       <head>
-        {/* Marca que há JavaScript. Sem ele, nada fica escondido à espera da animação. */}
-        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
+        {/* Aplica o tema antes da primeira pintura e marca que há JavaScript. */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
       </head>
       <body>
         <script

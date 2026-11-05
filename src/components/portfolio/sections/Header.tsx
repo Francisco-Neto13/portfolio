@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { ThemeBulb } from "@/components/portfolio/lib/ThemeBulb";
 import { profile } from "@/components/portfolio/lib/data";
 
 const NAV = [
@@ -32,7 +33,8 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3">
+          <ThemeBulb />
           <Link href="/#contato" prefetch={false} onClick={close} className="btn btn-small">
             Falar comigo
           </Link>

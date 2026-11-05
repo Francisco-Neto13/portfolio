@@ -3,7 +3,8 @@
   nas pontas do brilho. O verde-água existe só para o estado "no ar".
   O contraste de todas as combinações é conferido por script (WCAG AA).
 */
-:root {
+:root,
+[data-theme="dark"] {
   color-scheme: dark;
   --color-bg: #08060f;
   --color-bg-soft: #0e0a1a;
@@ -21,8 +22,45 @@
   --color-focus: #c4b5fd;
   --color-live: #5eead4;
   --color-header: rgba(8, 6, 15, 0.72);
+  --color-tint: rgba(255, 255, 255, 0.05);
+  --color-logo: #ffffff;
   --light-violet: 139, 92, 246;
   --light-magenta: 217, 70, 239;
+}
+
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg: #f8f6ff;
+  --color-bg-soft: #f1edfb;
+  --color-surface: #ffffff;
+  --color-surface-raised: #e9e3f7;
+  --color-line: rgba(40, 20, 90, 0.14);
+  --color-line-strong: rgba(40, 20, 90, 0.34);
+  --color-text: #140e24;
+  --color-text-soft: #433b58;
+  --color-text-muted: #574f6e;
+  --color-accent: #5b21b6;
+  --color-accent-strong: #6d28d9;
+  --color-accent-hover: #5b21b6;
+  --color-on-accent: #ffffff;
+  --color-focus: #5b21b6;
+  --color-live: #0b6b63;
+  --color-header: rgba(248, 246, 255, 0.78);
+  --color-tint: rgba(40, 20, 90, 0.05);
+  --color-logo: #140e24;
+}
+
+/* A janela de navegador e o que há dentro dela são sempre escuros, nos dois temas. */
+.window {
+  --color-surface: #130e22;
+  --color-line: rgba(196, 181, 253, 0.15);
+  --color-text: #f6f3ff;
+  --color-text-soft: #cbc5de;
+  --color-text-muted: #a098ba;
+  --color-accent: #c4b5fd;
+  --color-accent-strong: #7c3aed;
+  --color-live: #5eead4;
+  color: var(--color-text);
 }
 
 /* Folhas que sobem sobre o escuro. Redefinem os tokens, e todo componente dentro delas se adapta. */
@@ -38,6 +76,20 @@
   --color-focus: #6227d9;
   background: #f3effb;
   color: var(--color-text);
+}
+
+/* No tema claro, a folha de contraste é escura. */
+[data-theme="light"] .sheet-light {
+  --color-surface: #130e22;
+  --color-surface-raised: #1c1531;
+  --color-line: rgba(196, 181, 253, 0.18);
+  --color-line-strong: rgba(196, 181, 253, 0.38);
+  --color-text: #f6f3ff;
+  --color-text-soft: #cbc5de;
+  --color-text-muted: #a098ba;
+  --color-accent: #c4b5fd;
+  --color-focus: #c4b5fd;
+  background: #140e24;
 }
 
 .sheet-violet {

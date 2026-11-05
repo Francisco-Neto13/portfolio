@@ -68,6 +68,10 @@ src/
 * Todo efeito fica dentro de `prefers-reduced-motion: no-preference` e de `html.js`. Sem isso, a página aparece inteira e parada.
 * A primeira tela anima só com CSS (`.enter`), para não atrasar a pintura. O Lenis é baixado depois, e só em dispositivos com mouse.
 
+## Temas
+
+Claro, Escuro e Sistema (padrão). A escolha fica em `localStorage`, e o script em `lib/theme.ts` a aplica antes da primeira pintura. A lâmpada usa a View Transitions API para a troca; sem suporte ou com movimento reduzido, o tema só muda.
+
 ## Design system
 
 * **Cor e luz:** só tokens de `styles/palettes.css` e `tokens.css`. As folhas `.sheet-light` e `.sheet-violet` redefinem os tokens, e o conteúdo se adapta.

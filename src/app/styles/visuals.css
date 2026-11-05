@@ -6,7 +6,7 @@
 }
 
 .sheet-dark .card {
-  background: rgba(255, 255, 255, 0.035);
+  background: color-mix(in srgb, var(--color-surface) 70%, transparent);
   backdrop-filter: blur(6px);
 }
 
@@ -361,14 +361,14 @@
   justify-content: center;
   border: var(--border);
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.04);
+  background: var(--color-tint);
   transition:
     border-color var(--motion-ui) var(--motion-ease),
     box-shadow var(--motion-hover) var(--motion-ease);
 }
 
 .stack-item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--color-tint);
   transform: translateX(4px);
 }
 
