@@ -80,16 +80,16 @@ export function Effects() {
       const tilt = target?.closest<HTMLElement>("[data-tilt]");
       if (tilt) {
         const rect = tilt.getBoundingClientRect();
-        tilt.style.setProperty("--ry", `${((event.clientX - rect.left) / rect.width - 0.5) * 7}deg`);
-        tilt.style.setProperty("--rx", `${((event.clientY - rect.top) / rect.height - 0.5) * -5}deg`);
+        const rotateY = ((event.clientX - rect.left) / rect.width - 0.5) * 5;
+        const rotateX = ((event.clientY - rect.top) / rect.height - 0.5) * -4;
+        tilt.style.transform = `perspective(1400px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
       }
     };
 
     const handleLeave = (event: PointerEvent) => {
       const tilt = (event.target as Element | null)?.closest<HTMLElement>("[data-tilt]");
       if (!tilt || tilt.contains(event.relatedTarget as Node | null)) return;
-      tilt.style.setProperty("--rx", "0deg");
-      tilt.style.setProperty("--ry", "0deg");
+      tilt.style.transform = "";
     };
 
     measure();
@@ -102,6 +102,11 @@ export function Effects() {
 
     let lenis: { destroy: () => void; scrollTo: (target: number, options?: { immediate?: boolean }) => void } | undefined;
     let settleTimer = 0;
+
+    // Qualquer gesto da pessoa encerra a conferência: a página nunca disputa a rolagem com ela.
+    const cancelSettle = () => window.clearTimeout(settleTimer);
+    const USER_INPUT = ["wheel", "touchstart", "pointerdown", "keydown"] as const;
+    for (const type of USER_INPUT) window.addEventListener(type, cancelSettle, { passive: true, capture: true });
 
     const settleAnchor = (id: string, attempts: number) => {
       window.clearTimeout(settleTimer);
@@ -131,7 +136,8 @@ export function Effects() {
     const handleClick = (event: MouseEvent) => {
       const href = (event.target as Element | null)?.closest("a")?.getAttribute("href");
       const hash = href?.split("#")[1];
-      if (hash && (href?.startsWith("#") || href?.startsWith("/#"))) settleAnchor(hash, 3);
+      // Depois do pointerdown e do clique: só começa a vigiar quando o gesto do clique terminou.
+      if (hash && (href?.startsWith("#") || href?.startsWith("/#"))) settleAnchor(hash, 2);
     };
     document.addEventListener("click", handleClick);
 
@@ -146,6 +152,7 @@ export function Effects() {
     return () => {
       cancelled = true;
       window.clearTimeout(settleTimer);
+      for (const type of USER_INPUT) window.removeEventListener(type, cancelSettle, { capture: true });
       document.removeEventListener("click", handleClick);
       revealer.disconnect();
       lenis?.destroy();

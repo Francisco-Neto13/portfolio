@@ -29,7 +29,7 @@ export function BrowserFrame({ src, alt, url, sizes, hue = 262, parallax, eager,
           src={src}
           alt={alt}
           fill
-          quality={75}
+          quality={90}
           sizes={sizes}
           loading={eager ? "eager" : "lazy"}
           className="object-cover object-top"

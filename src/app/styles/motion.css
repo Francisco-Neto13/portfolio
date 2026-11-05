@@ -225,7 +225,6 @@
     transform:
       translate3d(calc(var(--move) * var(--show-x)), calc((1 - var(--show)) * 12vh + var(--move) * var(--show-y)), 0)
       scale(calc((0.8 + var(--show) * 0.2) * (1 - var(--move) * var(--show-shrink))));
-    will-change: transform, opacity;
     --show-x: 23vw;
     --show-y: 0vh;
     --show-shrink: 0.42;
@@ -312,17 +311,16 @@
 
   /* O print inclina com o cursor e desliza dentro da janela conforme a rolagem. */
   .tilt {
-    transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
     transition: transform var(--motion-hover) var(--motion-ease);
   }
 
   @supports (animation-timeline: view()) {
     @keyframes shot-parallax {
       from {
-        transform: scale(1.12) translateY(-4%);
+        transform: scale(1.04) translateY(-1.5%);
       }
       to {
-        transform: scale(1.12) translateY(4%);
+        transform: scale(1.04) translateY(1.5%);
       }
     }
 

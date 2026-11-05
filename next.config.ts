@@ -4,7 +4,7 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   output: "standalone",
   images: {
-    qualities: [72, 75],
+    qualities: [75, 90],
   },
   async headers() {
     return [
