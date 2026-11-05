@@ -275,6 +275,39 @@ export const highlights: Highlight[] = [
   }
 ];
 
+export const workPrinciples: Highlight[] = [
+  {
+    title: "Reaproveito o que já funciona",
+    description:
+      "Uso soluções que já estão no ar como referência. O que é resolvido em um projeto chega mais rápido ao próximo, sem começar do zero."
+  },
+  {
+    title: "IA no fluxo, com direção",
+    description:
+      "Agentes de IA fazem parte do meu desenvolvimento. Eu defino o objetivo, delego pesquisa e execução e cobro o motivo técnico antes de aceitar uma solução."
+  },
+  {
+    title: "Plano antes de construir",
+    description:
+      "Planejo e divido o trabalho em etapas antes de começar, e a cada fase confiro o que ainda falta para fechar."
+  },
+  {
+    title: "Interface padronizada",
+    description:
+      "Mantenho telas, componentes e identidade visual consistentes. Quando algo foge do padrão do projeto, corrijo tomando como base o que já existe."
+  },
+  {
+    title: "Da conversa ao escopo",
+    description:
+      "Transformo reuniões, transcrições e mensagens em escopo e tarefas, e mantenho a documentação junto do trabalho."
+  },
+  {
+    title: "Produto, não remendo",
+    description:
+      "Se algo exigiria ajuste manual toda hora, prefiro transformar em recurso do próprio sistema, como uma tela no lugar de uma configuração escondida."
+  }
+];
+
 export const services: ServiceItem[] = [
   {
     title: "Automação de Processos",
