@@ -11,13 +11,18 @@ services:
     restart: unless-stopped
     # No write access, no Linux capabilities and a memory ceiling: the site needs none of them
     read_only: true
+    # The server runs as node (uid 1000): a root-owned cache made every image request optimize
+    # the image again, and those optimizations together ran the container out of memory.
+    # The tmpfs counts against mem_limit, hence the size cap
     tmpfs:
-      - /app/.next/cache
+      - /app/.next/cache:uid=1000,gid=1000,mode=0755,size=128m
       - /tmp
     cap_drop: [ALL]
     security_opt:
       - no-new-privileges:true
-    mem_limit: 512m
+    # Room for image optimization (sharp) on top of the server; the VPS is shared, see
+    # /srv/REGRAS-DA-VPS.md
+    mem_limit: 768m
     networks:
       - borda
     healthcheck:
