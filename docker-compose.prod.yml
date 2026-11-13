@@ -1,5 +1,5 @@
-# Production on the VPS. The reverse proxy reaches this service as portfolio:3000 through the
-# "borda" network.
+# Production on the VPS. The reverse proxy reaches this service as portfolio-prod-portfolio-1:3000
+# through the "borda" network (site file in the vps-chiconeto repository).
 #   docker compose -f docker-compose.prod.yml up -d --build --wait
 # Never publish a port here: Docker bypasses ufw for published ports.
 name: portfolio-prod
@@ -23,14 +23,20 @@ services:
     # Room for image optimization (sharp) on top of the server; the VPS is shared, see
     # /srv/REGRAS-DA-VPS.md
     mem_limit: 768m
+    # CPU and process ceilings: a spike here does not slow the other projects down (CIS Docker 5.11, 5.28)
+    cpus: 2
+    pids_limit: 256
     networks:
       - borda
     healthcheck:
       test: ["CMD", "node", "-e", "fetch('http://127.0.0.1:3000/').then((r)=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
-      interval: 10s
+      # Every 30 s once up (each check starts a whole node process); every 5 s while starting,
+      # for up to 60 s (start_interval), so up --wait stays fast
+      interval: 30s
       timeout: 5s
-      start_period: 10s
-      retries: 6
+      start_period: 60s
+      start_interval: 5s
+      retries: 3
 
 networks:
   borda:
