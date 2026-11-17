@@ -1,6 +1,7 @@
 import type { IconType } from "react-icons";
 import {
   LuBot,
+  LuAudioLines,
   LuBraces,
   LuChartBar,
   LuClock,
@@ -8,6 +9,8 @@ import {
   LuCpu,
   LuFileText,
   LuImage,
+  LuKeyRound,
+  LuLandmark,
   LuMusic,
   LuServer,
   LuShieldCheck,
@@ -94,7 +97,10 @@ const techIcons: Record<string, { Icon: IconType; tone?: string }> = {
   Caddy: { Icon: SiCaddy, tone: "text-sky-500" },
   OpenWeather: { Icon: LuCloudSun },
   Sharp: { Icon: LuImage },
-  Vercel: { Icon: SiVercel, tone: TITLE_TONE }
+  Vercel: { Icon: SiVercel, tone: TITLE_TONE },
+  "faster-whisper": { Icon: LuAudioLines },
+  "Open Finance": { Icon: LuLandmark },
+  TOTP: { Icon: LuKeyRound }
 };
 
 export function TechIcon({ name, className = "text-[13px]" }: { name: string; className?: string }) {
