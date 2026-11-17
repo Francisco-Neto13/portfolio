@@ -82,7 +82,7 @@ export type Profile = {
 /** Só números conferíveis em fonte pública. Nada de empregador ou cliente. */
 export const stats: Stat[] = [
   { value: "2020", label: "programando desde" },
-  { value: "7", label: "projetos nesta página" },
+  { value: "9", label: "projetos nesta página" },
   { value: "3.500+", label: "contribuições no GitHub no último ano" }
 ];
 
@@ -192,6 +192,36 @@ export const projects: Project[] = [
       { label: "Ver Projeto", href: "https://internship.chiconeto.dev/" },
       { label: "GitHub", href: "https://github.com/Francisco-Neto13/internship-tracker" }
     ]
+  },
+  {
+    slug: "muda",
+    hue: 228,
+    title: "Muda",
+    description: "Site aberto ao público para transcrever áudio e vídeo e converter documentos, imagens e PDF, sem cadastro. O arquivo enviado é apagado assim que o resultado fica pronto, e todo o processamento roda no servidor próprio, sem serviço de terceiros.",
+    summary: "Transcrição de áudio e vídeo e conversão de arquivos, sem cadastro.",
+    kind: "Produto próprio · aberto ao público",
+    problem: "Transcrever uma reunião ou converter um arquivo costuma exigir cadastro, plano pago ou mandar o arquivo para um serviço que guarda tudo.",
+    solution: "Transcrição com faster-whisper no processador do próprio servidor, com o texto aparecendo ao vivo. A fila de tarefas usa o próprio PostgreSQL, sem Redis, e cada conversor roda isolado, com limite de tempo e sem rede.",
+    result: "No ar e aberto: 10 minutos de áudio viram texto em cerca de 1 minuto no modo rápido, e o histórico funciona sem login, por link único.",
+    image: "/assets/images/muda.webp",
+    imageAlt: "Página inicial do Muda",
+    tech: ["React 19", "Vite", "TypeScript", "Python", "FastAPI", "faster-whisper", "PostgreSQL", "Docker"],
+    links: [{ label: "Ver Projeto", href: "https://muda.chiconeto.dev/" }]
+  },
+  {
+    slug: "gastos-controle",
+    hue: 170,
+    title: "Gastos Controle",
+    description: "Controle financeiro conectado aos bancos por Open Finance. Contas, cartões, faturas e recorrências chegam sozinhos, e o sistema organiza os lançamentos, reconhece os estabelecimentos e projeta o mês. Projeto pessoal, em uso diário e com acesso restrito.",
+    summary: "Controle financeiro conectado aos bancos por Open Finance.",
+    kind: "Projeto pessoal · em uso diário",
+    problem: "Acompanhar contas e cartões de vários bancos exigia digitar lançamento por lançamento, e uma planilha não separa o que já aconteceu do que ainda vai acontecer.",
+    solution: "Integração Open Finance pela Pluggy, com uma sincronização que nunca duplica lançamentos e preserva as correções feitas à mão. As recorrências são detectadas pelo histórico, com nota de confiança, e o previsto aparece separado do realizado.",
+    result: "Em uso diário, com autenticação em dois fatores obrigatória e o banco de dados num cofre criptografado no servidor.",
+    image: "/assets/images/gastos.webp",
+    imageAlt: "Tela de login do Gastos Controle",
+    tech: ["Next.js", "React 19", "TypeScript", "PostgreSQL", "Prisma", "Open Finance", "TOTP", "Docker"],
+    links: [{ label: "Ver Projeto", href: "https://gastos.chiconeto.dev/" }]
   },
   {
     slug: "patinhas",

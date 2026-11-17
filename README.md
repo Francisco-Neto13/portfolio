@@ -30,7 +30,7 @@ Este repositório é um trabalho autoral. Conceito, design, conteúdo e código 
 
 - **Abertura em palco:** a luz, os prints reais e a proposta são controlados pela posição da rolagem.
 - **O que eu construo:** sete frentes em um palco fixo, cada uma com a própria luz e uma ilustração animada.
-- **Projetos:** sete casos em janelas de navegador, com problema, solução, stack e resultado.
+- **Projetos:** nove casos em janelas de navegador, com problema, solução, stack e resultado.
 - **Demonstração interativa:** as regras reais de ativação de estágio do Internship Tracker, para testar direto na página do projeto.
 - **Atividade no GitHub:** meus dados reais, percorridos por uma cobra de luz em zigue-zague.
 - **Lâmpada no topo:** claro, escuro ou sistema, com a troca nascendo da própria lâmpada.
