@@ -345,3 +345,58 @@ html.js [data-track][data-near="false"] * {
   animation-play-state: paused;
 }
 
+/*
+  Modo leve (`html.lite`, ligado por lib/Effects.tsx): navegador sem aceleração por hardware ou perdendo
+  quadros. Saem desfoques, sombras grandes e loops decorativos; o layout e os movimentos simples ficam.
+*/
+html.lite .site-header {
+  backdrop-filter: none;
+}
+
+html.lite .site-header[data-scrolled="true"] {
+  background: var(--color-bg);
+  backdrop-filter: none;
+}
+
+html.lite .sheet-dark .card {
+  background: var(--color-surface);
+  backdrop-filter: none;
+}
+
+html.lite .hero-grid {
+  display: none;
+}
+
+html.lite .hero-light {
+  transform: none;
+  will-change: opacity;
+}
+
+html.lite .hero-mark-glow {
+  filter: none;
+}
+
+html.lite .hero-mark-pulse::before {
+  animation: none;
+  opacity: 0.8;
+}
+
+html.lite .window {
+  box-shadow:
+    var(--edge-light),
+    0 24px 48px -24px rgba(0, 0, 0, 0.85);
+}
+
+html.lite .text-glow {
+  text-shadow: none;
+}
+
+html.lite .status-light,
+html.lite .viz-column .viz-lead,
+html.lite .viz-node,
+html.lite .viz-log span,
+html.lite .viz-chart i,
+html.lite .viz-typing i,
+html.lite .hero-scroll-hint {
+  animation: none;
+}
