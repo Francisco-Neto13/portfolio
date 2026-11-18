@@ -48,11 +48,16 @@ export function Effects() {
     const measure = () => {
       frame = 0;
       const height = window.innerHeight;
+      // Lê tudo antes de escrever: intercalar leitura e escrita recalculava o estilo várias vezes por quadro.
+      const rects = tracks.map((track) => track.getBoundingClientRect());
       header?.setAttribute("data-scrolled", String(window.scrollY > 24));
 
-      for (const track of tracks) {
-        const rect = track.getBoundingClientRect();
-        if (rect.bottom < -height || rect.top > height * 2) continue;
+      for (const [i, track] of tracks.entries()) {
+        const rect = rects[i];
+        // Longe da tela, as animações em loop do bloco ficam pausadas (styles/motion.css).
+        const near = String(rect.bottom > -height && rect.top < height * 2);
+        if (track.dataset.near !== near) track.dataset.near = near;
+        if (near === "false") continue;
 
         // "view" conta enquanto o bloco atravessa a tela; o padrão conta durante o palco fixo.
         const progress =

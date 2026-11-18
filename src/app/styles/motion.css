@@ -340,3 +340,8 @@
   }
 }
 
+/* Blocos longe da tela (data-near, escrito por lib/Effects.tsx): as animações em loop param de rodar. */
+html.js [data-track][data-near="false"] * {
+  animation-play-state: paused;
+}
+
