@@ -11,6 +11,30 @@ const ANCHOR_OFFSET = 72;
 
 const clamp = (value: number) => Math.min(1, Math.max(0, value));
 
+const LITE_KEY = "modo-leve";
+
+/** Sem aceleração por hardware, o navegador nega o WebGL "de verdade" ou entrega um que desenha por software. */
+function softwareRendering() {
+  try {
+    const gl = document.createElement("canvas").getContext("webgl", { failIfMajorPerformanceCaveat: true });
+    if (!gl) return true;
+    const info = gl.getExtension("WEBGL_debug_renderer_info");
+    const renderer = info ? String(gl.getParameter(info.UNMASKED_RENDERER_WEBGL)) : "";
+    gl.getExtension("WEBGL_lose_context")?.loseContext();
+    return /swiftshader|llvmpipe|softpipe|software|basic render|microsoft basic/i.test(renderer);
+  } catch {
+    return true;
+  }
+}
+
+/** Modo leve: tira os efeitos mais caros (styles/motion.css, `html.lite`) e mantém o layout. */
+function enableLite() {
+  document.documentElement.classList.add("lite");
+  try {
+    sessionStorage.setItem(LITE_KEY, "1");
+  } catch {}
+}
+
 /**
  * O motor de movimento do site, sem nada na tela:
  * - escreve `--p` (progresso da rolagem) em quem tem [data-track];
@@ -48,11 +72,16 @@ export function Effects() {
     const measure = () => {
       frame = 0;
       const height = window.innerHeight;
+      // Lê tudo antes de escrever: intercalar leitura e escrita recalculava o estilo várias vezes por quadro.
+      const rects = tracks.map((track) => track.getBoundingClientRect());
       header?.setAttribute("data-scrolled", String(window.scrollY > 24));
 
-      for (const track of tracks) {
-        const rect = track.getBoundingClientRect();
-        if (rect.bottom < -height || rect.top > height * 2) continue;
+      for (const [i, track] of tracks.entries()) {
+        const rect = rects[i];
+        // Longe da tela, as animações em loop do bloco ficam pausadas (styles/motion.css).
+        const near = String(rect.bottom > -height && rect.top < height * 2);
+        if (track.dataset.near !== near) track.dataset.near = near;
+        if (near === "false") continue;
 
         // "view" conta enquanto o bloco atravessa a tela; o padrão conta durante o palco fixo.
         const progress =
@@ -153,8 +182,41 @@ export function Effects() {
     };
     document.addEventListener("click", handleClick);
 
+    let lite = false;
+    try {
+      lite = sessionStorage.getItem(LITE_KEY) === "1";
+    } catch {}
+    lite = lite || softwareRendering();
+    if (lite) enableLite();
+
+    // Com aceleração, mas perdendo quadros: os primeiros 60 quadros de rolagem decidem.
+    let sampling = 0;
+    const sampleFrames = () => {
+      window.removeEventListener("scroll", sampleFrames);
+      const gaps: number[] = [];
+      let last = performance.now();
+      const tick = (now: number) => {
+        gaps.push(now - last);
+        last = now;
+        if (gaps.length < 60) {
+          sampling = window.requestAnimationFrame(tick);
+          return;
+        }
+        gaps.sort((a, b) => a - b);
+        // Mediana acima de 28ms: abaixo de ~35 quadros por segundo na maior parte da rolagem.
+        if (gaps[30] > 28) {
+          enableLite();
+          lenis?.destroy();
+          lenis = undefined;
+        }
+      };
+      sampling = window.requestAnimationFrame(tick);
+    };
+    if (!lite) window.addEventListener("scroll", sampleFrames, { passive: true });
+
     let cancelled = false;
-    if (canHover) {
+    // A rolagem suave roda no thread principal: no modo leve, fica a rolagem nativa.
+    if (canHover && !lite) {
       import("lenis").then(({ default: Lenis }) => {
         if (cancelled) return;
         // 0.1, o padrão, leva quase 900ms para parar depois de um clique da roda e parece pesado.
@@ -166,6 +228,8 @@ export function Effects() {
     return () => {
       cancelled = true;
       window.clearTimeout(settleTimer);
+      window.cancelAnimationFrame(sampling);
+      window.removeEventListener("scroll", sampleFrames);
       for (const type of USER_INPUT) window.removeEventListener(type, cancelSettle, { capture: true });
       document.removeEventListener("click", handleClick);
       revealer.disconnect();

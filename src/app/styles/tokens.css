@@ -38,7 +38,7 @@
   --edge-light: inset 0 1px rgba(255, 255, 255, 0.09);
 
   /* Movimento: uma só linguagem do início ao fim. */
-  --motion-enter: 900ms;
+  --motion-enter: 650ms;
   --motion-hover: 400ms;
   --motion-ui: 220ms;
   --motion-rise: 28px;

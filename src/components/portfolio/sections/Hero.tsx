@@ -42,8 +42,10 @@ export function Hero() {
         </div>
 
         <div className="hero-intro enter">
-          <span aria-hidden="true" className="hero-mark-glow">
-            <span className="logo-mark hero-mark" />
+          <span aria-hidden="true" className="hero-mark-pulse">
+            <span className="hero-mark-glow">
+              <span className="logo-mark hero-mark" />
+            </span>
           </span>
           <p className="text-label whitespace-nowrap">
             {profile.name} · {profile.subtitle}
@@ -75,17 +77,19 @@ export function Hero() {
 
         <div className="hero-showcase">
           <div className="hero-side hero-side--left" aria-hidden="true">
-            <BrowserFrame src={left.image} alt="" url={hostOf(left.links[0].href)} hue={left.hue} sizes="520px" />
+            <BrowserFrame src={left.image} alt="" url={hostOf(left.links[0].href)} hue={left.hue} sizes="520px" eager />
           </div>
           <div className="hero-side hero-side--right" aria-hidden="true">
-            <BrowserFrame src={right.image} alt="" url={hostOf(right.links[0].href)} hue={right.hue} sizes="520px" />
+            <BrowserFrame src={right.image} alt="" url={hostOf(right.links[0].href)} hue={right.hue} sizes="520px" eager />
           </div>
+          {/* As três janelas carregam com a página: decodificar no meio da rolagem travava a entrada delas. */}
           <div className="hero-main">
             <BrowserFrame
               src={main.image}
               alt={main.imageAlt}
               url={hostOf(main.links[0].href)}
               hue={main.hue}
+              eager
               sizes="(max-width: 1100px) 100vw, 1040px"
             />
           </div>

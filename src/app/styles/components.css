@@ -361,6 +361,9 @@
   z-index: 50;
   height: var(--header-h);
   border-bottom: 1px solid transparent;
+  /* Desde o início: ligar o desfoque só ao rolar criava a camada no meio da rolagem e travava um quadro.
+     No topo ele fica invisível, sobre um fundo liso. */
+  backdrop-filter: blur(16px);
   transition:
     background-color var(--motion-ui) var(--motion-ease),
     border-color var(--motion-ui) var(--motion-ease);
@@ -421,6 +424,24 @@
   height: 72px;
   width: 72px;
   margin: 0 auto 1.75rem;
+}
+
+/* A pulsação é uma luz já desenhada que só muda de opacidade: animar o desfoque redesenhava tudo a cada quadro. */
+.hero-mark-pulse {
+  position: relative;
+  display: block;
+  width: fit-content;
+  margin-inline: auto;
+}
+
+.hero-mark-pulse::before {
+  content: "";
+  position: absolute;
+  inset: -64px;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(var(--light-violet), 0.7), transparent);
+  opacity: 0;
 }
 
 .hero-mark-glow {

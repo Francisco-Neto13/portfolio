@@ -139,14 +139,17 @@
       opacity: 0;
       pointer-events: none;
       transform: translateY(var(--motion-rise));
+      /* Escondido de verdade depois de sumir: os loops do painel invisível não são mais desenhados. */
+      visibility: hidden;
       transition:
-        opacity 550ms var(--motion-ease),
-        transform 800ms var(--motion-ease);
+        opacity 420ms var(--motion-ease),
+        transform 600ms var(--motion-ease),
+        visibility 0s linear 420ms;
     }
 
     html.js .svc-visual {
       transform: scale(0.97);
-      transition: transform 900ms var(--motion-ease);
+      transition: transform 650ms var(--motion-ease);
     }
 
     html.js .svc-track[data-active="0"] .svc-panel[data-i="0"],
@@ -159,6 +162,8 @@
       opacity: 1;
       pointer-events: auto;
       transform: none;
+      visibility: visible;
+      transition-delay: 0s;
     }
 
     html.js .svc-track[data-active="0"] .svc-panel[data-i="0"] .svc-visual,

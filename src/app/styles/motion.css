@@ -22,9 +22,9 @@
   }
 }
 
-@keyframes mark-glow {
+@keyframes mark-pulse {
   50% {
-    filter: drop-shadow(0 0 34px rgba(var(--light-violet), 1)) drop-shadow(0 0 96px rgba(var(--light-violet), 0.8));
+    opacity: 1;
   }
 }
 
@@ -86,16 +86,17 @@
   }
 
   /* Hero: a luz acende com a rolagem e o sistema vai ao ar. */
+  /* Sem trechos mortos entre as etapas: cada parte da rolagem move alguma coisa. */
   html.js .hero-track {
-    height: 340svh;
+    height: 310svh;
   }
 
   html.js .hero-stage {
     --intro-out: clamp(0, calc((var(--p, 0) - 0.2) / 0.14), 1);
-    --lit: clamp(0, calc((var(--p, 0) - 0.08) / 0.34), 1);
+    --lit: clamp(0, calc((var(--p, 0) - 0.04) / 0.34), 1);
     --show: clamp(0, calc((var(--p, 0) - 0.3) / 0.2), 1);
-    --move: clamp(0, calc((var(--p, 0) - 0.62) / 0.2), 1);
-    --final: clamp(0, calc((var(--p, 0) - 0.74) / 0.14), 1);
+    --move: clamp(0, calc((var(--p, 0) - 0.55) / 0.2), 1);
+    --final: clamp(0, calc((var(--p, 0) - 0.68) / 0.14), 1);
     position: sticky;
     top: 0;
     height: 100svh;
@@ -107,8 +108,10 @@
     will-change: transform, opacity;
   }
 
+  /* Nunca 0 de fato: com 0,3% (invisível) o navegador já prepara a camada no carregamento, não no meio da rolagem. */
   html.js .hero-grid {
-    opacity: var(--lit);
+    opacity: max(var(--lit), 0.003);
+    will-change: opacity;
   }
 
   html.js .hero-hud {
@@ -188,14 +191,17 @@
     opacity: calc(1 - var(--intro-out));
     transform: translateY(calc(var(--intro-out) * -7vh)) scale(calc(1 - var(--intro-out) * 0.06));
     pointer-events: none;
+    /* Quem muda a cada quadro fica em camada própria: a placa de vídeo só move, sem redesenhar. */
+    will-change: transform, opacity;
   }
 
   html.js .hero-intro a {
     pointer-events: auto;
   }
 
-  html.js .hero-mark-glow {
-    animation: mark-glow 3.4s ease-in-out infinite;
+  html.js .hero-mark-pulse::before {
+    animation: mark-pulse 3.4s ease-in-out infinite;
+    will-change: opacity;
   }
 
   html.js .hero-scroll {
@@ -221,13 +227,14 @@
     justify-content: center;
     max-width: none;
     padding: var(--header-h) var(--gutter) 1.5rem;
-    opacity: var(--show);
+    opacity: max(var(--show), 0.003);
     transform:
       translate3d(calc(var(--move) * var(--show-x)), calc((1 - var(--show)) * 12vh + var(--move) * var(--show-y)), 0)
       scale(calc((0.8 + var(--show) * 0.2) * (1 - var(--move) * var(--show-shrink))));
     --show-x: 23vw;
     --show-y: 0vh;
     --show-shrink: 0.42;
+    will-change: transform, opacity;
   }
 
   html.js .hero-main {
@@ -241,7 +248,8 @@
     position: absolute;
     top: 50%;
     width: min(46%, 520px);
-    opacity: calc(var(--show) * 0.68 * (1 - var(--move)));
+    opacity: max(calc(var(--show) * 0.68 * (1 - var(--move))), 0.003);
+    will-change: transform, opacity;
   }
 
   html.js .hero-side--left {
@@ -261,9 +269,10 @@
     display: flex;
     align-items: center;
     padding: var(--header-h) 0 1.5rem;
-    opacity: var(--final);
+    opacity: max(var(--final), 0.003);
     transform: translateY(calc((1 - var(--final)) * 5vh));
     pointer-events: none;
+    will-change: transform, opacity;
   }
 
   html.js .hero-track[data-final="true"] .hero-final {
@@ -329,4 +338,65 @@
       animation-timeline: view();
     }
   }
+}
+
+/* Blocos longe da tela (data-near, escrito por lib/Effects.tsx): as animações em loop param de rodar. */
+html.js [data-track][data-near="false"] * {
+  animation-play-state: paused;
+}
+
+/*
+  Modo leve (`html.lite`, ligado por lib/Effects.tsx): navegador sem aceleração por hardware ou perdendo
+  quadros. Saem desfoques, sombras grandes e loops decorativos; o layout e os movimentos simples ficam.
+*/
+html.lite .site-header {
+  backdrop-filter: none;
+}
+
+html.lite .site-header[data-scrolled="true"] {
+  background: var(--color-bg);
+  backdrop-filter: none;
+}
+
+html.lite .sheet-dark .card {
+  background: var(--color-surface);
+  backdrop-filter: none;
+}
+
+html.lite .hero-grid {
+  display: none;
+}
+
+html.lite .hero-light {
+  transform: none;
+  will-change: opacity;
+}
+
+html.lite .hero-mark-glow {
+  filter: none;
+}
+
+html.lite .hero-mark-pulse::before {
+  animation: none;
+  opacity: 0.8;
+}
+
+html.lite .window {
+  box-shadow:
+    var(--edge-light),
+    0 24px 48px -24px rgba(0, 0, 0, 0.85);
+}
+
+html.lite .text-glow {
+  text-shadow: none;
+}
+
+html.lite .status-light,
+html.lite .viz-column .viz-lead,
+html.lite .viz-node,
+html.lite .viz-log span,
+html.lite .viz-chart i,
+html.lite .viz-typing i,
+html.lite .hero-scroll-hint {
+  animation: none;
 }
