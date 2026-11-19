@@ -36,15 +36,15 @@ export function Journey() {
         <div className="grid gap-[var(--space-item)] lg:grid-cols-[minmax(0,0.7fr)_minmax(0,1.3fr)]">
           <Reveal>
             <article className="card card-body spot flex h-full flex-col items-center justify-center gap-5 text-center">
-              {/* O recorte circular esconde as bordas retas da foto. */}
+              {/* A foto tem muito espaço acima da cabeça: o recorte preenche o círculo e aproxima o rosto. */}
               <div className="portrait">
                 <Image
                   src="/assets/images/eu.webp"
                   alt={`Retrato de ${profile.name}`}
                   fill
                   quality={75}
-                  sizes="240px"
-                  className="translate-y-2 object-contain object-top"
+                  sizes="280px"
+                  className="origin-[50%_22%] scale-[1.12] object-cover object-bottom"
                 />
               </div>
               <div>
