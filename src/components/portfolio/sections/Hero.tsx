@@ -28,24 +28,33 @@ const FINAL_TIMING = "clamp(0, min((var(--scene, 0) - 0.448) / 0.076, (0.752 - v
 const FINAL_VISIBILITY = "motion-safe:[html.js_&]:[opacity:var(--final)] focus-within:!opacity-100";
 
 /**
- * Com animação: a próxima seção sobe 30svh mais cedo, por cima do palco já escuro. O hero é
- * transparente (o fundo preto é só do palco) e vai para trás só depois do mergulho (HeroFrames).
+ * Com animação: a próxima seção sobe 30svh mais cedo, por cima do palco já apagado no fundo. O
+ * hero é transparente (o fundo é só do palco) e vai para trás só depois do mergulho (HeroFrames).
  * Se mudar os 30svh, ajuste BLACK_END em lib/HeroFrames.tsx: 1 - 30 / 210.
  */
 const OVERLAP = "motion-safe:[html.js_&]:-mb-[30svh] motion-safe:[html.js_&]:bg-transparent";
 
 /**
  * Palco de abertura. A cena 3D (lib/HeroFrames.tsx) entra sozinha, a rolagem leva a câmera pela
- * mesa e termina mergulhando na tela, que mostra a seção seguinte. Escuro nos dois temas.
- * As camadas de texto vivem em `styles/motion.css`.
+ * mesa e termina mergulhando na tela, que mostra a seção seguinte. Segue o tema: no escuro as
+ * luzes acendem; no claro, a persiana abre. As camadas de texto vivem em `styles/motion.css`.
  */
 export function Hero() {
   return (
-    <section id="inicio" className={`hero-track ${OVERLAP}`} data-track data-theme="dark" style={{ color: "var(--color-text)" }}>
+    <section id="inicio" className={`hero-track ${OVERLAP}`} data-track>
       <div className="hero-stage">
         <HeroFrames />
 
         <div className="hero-intro enter" style={{ "--intro-out": INTRO_TIMING } as React.CSSProperties}>
+          {/* Véu na cor do fundo atrás do título: no claro, ele fica sobre a tela escura do monitor. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+            style={{
+              background:
+                "radial-gradient(ellipse 52% 48% at 50% 52%, color-mix(in srgb, var(--color-bg) 88%, transparent), transparent 80%)"
+            }}
+          />
           <span aria-hidden="true" className="hero-mark-pulse">
             <span className="hero-mark-glow">
               <span className="logo-mark hero-mark" />
@@ -80,11 +89,14 @@ export function Hero() {
         </div>
 
         <div className={`hero-final ${FINAL_VISIBILITY}`} style={{ "--final": FINAL_TIMING } as React.CSSProperties}>
-          {/* Escurece a metade esquerda para o texto ficar legível sobre a cena. */}
+          {/* Leva a metade esquerda para a cor do fundo, para o texto ficar legível sobre a cena. */}
           <div
             aria-hidden="true"
             className="pointer-events-none absolute inset-0 -z-10"
-            style={{ background: "linear-gradient(to right, rgba(8, 6, 15, 0.88) 0%, rgba(8, 6, 15, 0.6) 42%, transparent 66%)" }}
+            style={{
+              background:
+                "linear-gradient(to right, color-mix(in srgb, var(--color-bg) 88%, transparent) 0%, color-mix(in srgb, var(--color-bg) 60%, transparent) 42%, transparent 66%)"
+            }}
           />
           <div className="container">
             <div className="lg:max-w-[50%]">

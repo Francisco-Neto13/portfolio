@@ -15,6 +15,9 @@ Modelos importados (créditos em docs/hero-3d-plan.md; as pastas ficam fora do g
   assets/keyboard/  "Mechanical keyboard" de virtualtimecapsule, CC-BY-4.0
   assets/mouse/     "Razer Mouse" de Fred Drabble, CC-BY-4.0
 
+Dois temas, mesma câmera: o escuro (padrão: à noite, as luzes acendem) e o claro (`--light`:
+o dia clareia, a persiana abre). Com `--light`, as saídas vão para as pastas com sufixo -light.
+
 Teste (frames-chave em baixa resolução, em renders/test/):
   blender -b -P scripts/blender/hero_scene.py -- --test
 Versão intermediária (todos os frames em 1280x720, WebP, em renders/preview/):
@@ -139,6 +142,8 @@ KEYBOARD_FLOOR_SLOPE = 0.1 # m de altura por m em direção ao fundo (trás)
 KEYBOARD_BAND_FULL = 0.0015
 KEYBOARD_BAND_END = 0.006
 KEYBOARD_RIM = 0.009       # m: largura da borda da carcaça, que não acende (senão vira uma faixa por fora)
+KEYCAP_MIN_HEIGHT = 0.006  # m acima do fundo: daí para cima é topo de tecla (separa uma tecla da outra)
+KEYCAP_MAX_FIX = 0.004     # m: correção máxima por tecla (a fotogrametria errou até ~3 mm)
 
 # Mouse: sem o cabo (wireless), com o anel da roda na cor do RGB.
 MOUSE_POSITION = (0.25, -0.15)
@@ -162,6 +167,61 @@ MOUSE_MODEL = os.path.join(ROOT, "scripts", "blender", "assets", "mouse", "scene
 OUT_TEST = os.path.join(ROOT, "renders", "test")
 OUT_PREVIEW = os.path.join(ROOT, "renders", "preview")
 OUT_FINAL = os.path.join(ROOT, "renders", "frames")
+
+# Tema da cena. O escuro é o padrão (os valores acima); `-- --light` aplica LIGHT por cima deles.
+THEME = "dark"
+VIEW_TRANSFORM = "AgX"     # no escuro, segura as luzes fortes; no claro, "Standard" dá branco de verdade
+WORLD = BG_AGX             # fundo e luz ambiente do mundo
+FILL_COLOR = ACCENT
+WALL_EMISSION = BG_AGX     # no escuro, a parede sem luz vira o fundo do site; no claro, não emite
+DESK_MAT = "#140f22"
+BULB_GLOW = 14             # emissão da lâmpada acesa
+RGB_SCALE = 1.0            # multiplica o RGB do PC, teclado e mouse
+LED_SCALE = 1.0            # multiplica a fita de luz atrás do monitor
+DAYLIGHT = False           # sol entrando pela persiana (só no claro)
+
+# Modo claro: "o dia clareia". Mesma câmera e mesmo tempo; a entrada é a persiana abrindo.
+SUN_DIRECTION = (0.8, 0.35, -0.5)  # de onde para onde a luz anda: da esquerda, do alto, pela frente
+SUN_COLOR = "#fff3e3"
+SUN_STRENGTH = 3.2         # no Standard, a parede clara ao sol chega perto do branco sem estourar
+SUN_ANGLE = 1.5            # graus: tamanho aparente do sol (listras da persiana nítidas)
+SKY = (0.92, 0.92, 0.96)   # céu (linear): luz ambiente quase neutra (azulada demais lavava a cena)
+SKY_STRENGTH = (0.06, 0.32)  # de manhã cedo (persiana fechada) para o dia aberto; o sol manda
+BLINDS_OPEN = (4, 26)      # frames em que as lâminas giram
+BLINDS_ANGLE = (0, 72)     # graus: fechada (bloqueia o sol) para aberta (listras de luz)
+BLINDS_DISTANCE = 2.4      # m antes da mesa, no caminho do sol (fora do quadro da câmera)
+BLINDS_COUNT = 44
+BLINDS_SPACING = 0.055
+BLINDS_SLAT = 0.065        # largura da lâmina: maior que o espaçamento, fechada não passa luz
+BLINDS_LENGTH = 3.0
+
+LIGHT = dict(
+    THEME="light",
+    BG="#f8f6ff",
+    VIEW_TRANSFORM="Standard",
+    WORLD=SKY,
+    FILL_COLOR="#ffffff",
+    WALL="#ece7f6",
+    WALL_EMISSION=None,
+    DESK="#e2dcec",
+    DESK_EDGE="#cfc8dc",
+    DESK_MAT="#2b2540",    # mousepad escuro: contraste com a mesa clara e as teclas
+    LAMP_POWER=0,          # de dia a luminária fica apagada
+    SHADE_GLOW=0,
+    BULB_GLOW=0,
+    RIM_POWER=0,
+    FILL_POWER=4,
+    RGB_SCALE=0.55,        # o RGB das peças continua, mas de dia não domina
+    LED_SCALE=0.1,         # luzes coloridas que pintam a parede: sem o AgX, mais que isso estoura
+    SCREEN_IMAGE=os.path.join(ROOT, "scripts", "blender", "assets", "screen-light.png"),
+    SCREEN_STANDBY="#14121a",
+    SCREEN_BRIGHTNESS=1.0, # no Standard, 1,0 mostra o print com as cores exatas
+    GLARE_THRESHOLD=1.4,   # de dia, só o que passa do branco brilha (lâmpadas e RGB)
+    DAYLIGHT=True,
+    OUT_TEST=os.path.join(ROOT, "renders", "test-light"),
+    OUT_PREVIEW=os.path.join(ROOT, "renders", "preview-light"),
+    OUT_FINAL=os.path.join(ROOT, "renders", "frames-light"),
+)
 
 MONITOR_CENTER = Vector((0.0, 0.2, 0.36))
 SCREEN_PLANE_Y = MONITOR_CENTER.y - 0.0135
@@ -317,7 +377,7 @@ def setup_scene(mode):
     scene.render.film_transparent = False
 
     # AgX segura as luzes fortes sem estourar para branco. O fundo usa BG_AGX para sair no hex exato.
-    scene.view_settings.view_transform = "AgX"
+    scene.view_settings.view_transform = VIEW_TRANSFORM
     scene.view_settings.look = "None"
 
     fmt = "PNG" if mode == "test" else FILE_FORMAT
@@ -330,7 +390,7 @@ def setup_scene(mode):
     scene.world = world
     world.use_nodes = True
     bg = world.node_tree.nodes["Background"]
-    bg.inputs["Color"].default_value = (*BG_AGX, 1)
+    bg.inputs["Color"].default_value = (*WORLD, 1)
     bg.inputs["Strength"].default_value = 1.0
     return scene
 
@@ -354,11 +414,50 @@ def setup_compositor(scene):
 
 
 def build_room():
-    # A parede emite o próprio fundo: onde a luz não chega, ela some no fundo do site.
-    wall_mat = material("Wall", WALL, roughness=0.9, emission=BG_AGX, strength=1.0)
+    # No escuro, a parede emite o próprio fundo: onde a luz não chega, ela some no fundo do site.
+    # No claro, ela só recebe a luz do dia.
+    wall_mat = material("Wall", WALL, roughness=0.9, emission=WALL_EMISSION, strength=1.0)
     box("Wall", (8, 0.05, 5), (0, 0.55, 1.2), wall_mat)
-    floor_mat = material("Floor", BG, roughness=0.9, emission=BG_AGX, strength=1.0)
+    floor_mat = material("Floor", BG, roughness=0.9, emission=WALL_EMISSION, strength=1.0)
     box("Floor", (8, 8, 0.05), (0, 0, -0.76), floor_mat)
+
+
+def build_daylight():
+    """
+    Modo claro: o sol entra pela esquerda passando por uma persiana fora do quadro. A persiana não
+    aparece na câmera nem em reflexos, só projeta as listras. Devolve (lâminas, mundo) para animar.
+    """
+    d = Vector(SUN_DIRECTION).normalized()
+    data = bpy.data.lights.new("Sun", "SUN")
+    data.color = linear(SUN_COLOR)[:3]
+    data.energy = SUN_STRENGTH
+    data.angle = math.radians(SUN_ANGLE)
+    sun = bpy.data.objects.new("Sun", data)
+    bpy.context.collection.objects.link(sun)
+    sun.rotation_euler = d.to_track_quat("-Z", "Y").to_euler()
+
+    # Base da persiana: x = comprimento da lâmina (horizontal), y = empilhamento, z = direção do sol.
+    u = Vector((-d.y, d.x, 0)).normalized()
+    v = d.cross(u).normalized()
+    blinds = bpy.data.objects.new("Blinds", None)
+    bpy.context.collection.objects.link(blinds)
+    basis = Matrix((u, v, d)).transposed().to_4x4()
+    basis.translation = Vector((0, 0.15, 0.35)) - d * BLINDS_DISTANCE
+    blinds.matrix_world = basis
+    slat_mat = material("Slat", "#f2eee8", roughness=0.6)
+    slats = []
+    for k in range(BLINDS_COUNT):
+        bpy.ops.mesh.primitive_cube_add(size=1)
+        slat = bpy.context.active_object
+        slat.name = f"Slat{k}"
+        slat.scale = (BLINDS_LENGTH, BLINDS_SLAT, 0.003)
+        assign(slat, slat_mat)
+        slat.parent = blinds
+        slat.location = (0, (k - BLINDS_COUNT / 2) * BLINDS_SPACING, 0)
+        for attr in ("visible_camera", "visible_glossy", "visible_diffuse", "visible_transmission"):
+            try_set(slat, attr, False)
+        slats.append(slat)
+    return slats, bpy.context.scene.world.node_tree.nodes["Background"]
 
 
 def build_desk():
@@ -413,7 +512,7 @@ def build_monitor():
 
 def build_desk_mat():
     """Mousepad: quebra o tampo liso e dá escala ao teclado e ao mouse."""
-    felt = material("DeskMat", "#140f22", roughness=0.95)
+    felt = material("DeskMat", DESK_MAT, roughness=0.95)
     box("DeskMat", (0.8, 0.32, DESK_MAT_Z), (0.08, -0.17, DESK_MAT_Z / 2), felt, bevel_width=0.0015)
 
 
@@ -488,6 +587,77 @@ def level_base(points):
     return normal.rotation_difference(Vector((0, 0, 1))).to_matrix()
 
 
+def even_keycaps(meshes, center):
+    """
+    Nivela os topos das teclas. Na fotogrametria, algumas teclas saíram ~3 mm mais altas que as
+    vizinhas. Faz um mapa de altura (1 mm), separa cada tecla pelos vãos, compara o topo dela com o
+    perfil esperado (um plano ajustado a todas) e rebaixa só a tecla, comprimindo da base ao topo:
+    os vãos e a carcaça não se mexem, então a malha não rasga.
+    """
+    cx, cy = center
+    points = mesh_points(meshes)
+    x, y, z = points.T
+    floor = DESK_MAT_Z + KEYBOARD_FLOOR + KEYBOARD_FLOOR_SLOPE * (y - cy)
+    res = 0.001
+    ix = ((x - x.min()) / res).astype(int)
+    iy = ((y - y.min()) / res).astype(int)
+    w, h = ix.max() + 1, iy.max() + 1
+    height = np.full((h, w), -1.0)
+    np.maximum.at(height, (iy, ix), z - floor)
+    keycap = height > KEYCAP_MIN_HEIGHT  # bem acima do fundo: topo de tecla, não vão
+
+    # Componentes conexas (vizinhança de 4): cada uma é uma tecla.
+    label = np.zeros((h, w), dtype=np.int32)
+    count = 0
+    for sy, sx in zip(*np.nonzero(keycap)):
+        if label[sy, sx]:
+            continue
+        count += 1
+        stack = [(sy, sx)]
+        label[sy, sx] = count
+        while stack:
+            cyy, cxx = stack.pop()
+            for ny, nx in ((cyy + 1, cxx), (cyy - 1, cxx), (cyy, cxx + 1), (cyy, cxx - 1)):
+                if 0 <= ny < h and 0 <= nx < w and keycap[ny, nx] and not label[ny, nx]:
+                    label[ny, nx] = count
+                    stack.append((ny, nx))
+
+    # Topo e centro de cada tecla (descarta respingos pequenos).
+    keys = []
+    for k in range(1, count + 1):
+        ky, kx = np.nonzero(label == k)
+        if len(ky) < 40:
+            continue
+        keys.append((k, kx.mean(), ky.mean(), np.percentile(height[ky, kx], 90)))
+    keys = np.array(keys)
+    # Perfil esperado: plano pelos topos, refeito sem as teclas que fogem dele.
+    A = np.c_[keys[:, 1], keys[:, 2], np.ones(len(keys))]
+    keep = np.ones(len(keys), dtype=bool)
+    for _ in range(3):
+        coef = np.linalg.lstsq(A[keep], keys[keep, 3], rcond=None)[0]
+        resid = keys[:, 3] - A @ coef
+        keep = np.abs(resid) < max(0.0006, 1.5 * np.std(resid[keep]))
+    offset = np.zeros(count + 1)
+    offset[keys[:, 0].astype(int)] = np.clip(resid, -KEYCAP_MAX_FIX, KEYCAP_MAX_FIX)
+
+    # Cada vértice de tecla desce (ou sobe) proporcional à altura dele acima do fundo.
+    vertex_key = label[iy, ix]
+    rel = z - floor
+    top = np.maximum(height[iy, ix], 1e-4)
+    weight = np.clip(rel / top, 0.0, 1.0) * (rel > 0.001)
+    dz = -offset[vertex_key] * weight
+    start = 0
+    for obj in meshes:
+        n = len(obj.data.vertices)
+        world = np.c_[points[start : start + n] + np.c_[np.zeros(n), np.zeros(n), dz[start : start + n]], np.ones(n)]
+        local = world @ np.array(obj.matrix_world.inverted()).T
+        obj.data.vertices.foreach_set("co", local[:, :3].ravel())
+        obj.data.update()
+        start += n
+    moved = np.abs(offset[1:]) > 0.0005
+    print(f"[hero] teclado: {len(keys)} teclas, {int(moved.sum())} niveladas (desvio máx. antes: {np.abs(resid).max() * 1000:.1f} mm)")
+
+
 def import_keyboard():
     """
     Teclado de fotogrametria: vem de cabeça para baixo e torto. A malha diz como endireitar:
@@ -518,6 +688,7 @@ def import_keyboard():
     base_z = np.median(base_minima(seated))
     root.matrix_world = Matrix.Translation((0, 0, DESK_MAT_Z - base_z)) @ root.matrix_world
     bpy.context.view_layer.update()
+    even_keycaps(meshes, KEYBOARD_POSITION)
 
     # Textura original (rosa) escurecida e dessaturada, num material que reage à luz da cena.
     image = next((n.image for m in meshes for s in m.material_slots if s.material for n in s.material.node_tree.nodes if n.type == "TEX_IMAGE" and n.image), None)
@@ -686,7 +857,7 @@ def build_back_glow():
 def build_ambient():
     """Penumbra: rim light roxa por trás (contornos) e uma luz fraca da frente (volumes)."""
     area_light("Rim", (0.0, 0.42, 1.0), (0.0, -1.0, 0.15), (2.0, 0.4), VIOLET, RIM_POWER)
-    area_light("Fill", (-0.6, -1.6, 1.2), (0.1, 0.1, 0.25), (1.5, 1.0), ACCENT, FILL_POWER)
+    area_light("Fill", (-0.6, -1.6, 1.2), (0.1, 0.1, 0.25), (1.5, 1.0), FILL_COLOR, FILL_POWER)
 
 
 def style_pc_material(mat):
@@ -853,22 +1024,30 @@ def fcurves_of(obj):
     return curves
 
 
-def animate(lamp_bulb, lamp_light, inner_light, screen, screen_light, glows, pc, desk_rgb):
+def animate(lamp_bulb, lamp_light, inner_light, screen, screen_light, glows, pc, desk_rgb, daylight=None):
     lo, hi = LAMP_ON
     # A piscada de lâmpada ligando: acende, cai, firma.
     flicker = [(1, 0), (lo, 0), (lo + 2, 0.7), (lo + 4, 0.15), (lo + 6, 0.85), (hi, 1), (FRAMES, 1)]
     keys(lamp_light.data, "energy", [(f, v * LAMP_POWER) for f, v in flicker])
-    keys(emission_socket(lamp_bulb), "default_value", [(f, v * 14) for f, v in flicker])
+    keys(emission_socket(lamp_bulb), "default_value", [(f, v * BULB_GLOW) for f, v in flicker])
     keys(inner_light.data, "energy", [(f, v * SHADE_GLOW) for f, v in flicker])
 
     # Fans, RGB do PC, do teclado e do mouse, e a fita de luz atrás do monitor.
     pc_sockets, pc_lights = pc
     for socket, peak in pc_sockets + desk_rgb:
-        ramp(socket, "default_value", RGB_ON, 0, peak)
+        ramp(socket, "default_value", RGB_ON, 0, peak * RGB_SCALE)
     for data, peak in pc_lights:
-        ramp(data, "energy", RGB_ON, 0, peak)
+        ramp(data, "energy", RGB_ON, 0, peak * LED_SCALE)
     for glow, peak in zip(glows, (9, 6)):
-        ramp(glow.data, "energy", RGB_ON, 0, peak)
+        ramp(glow.data, "energy", RGB_ON, 0, peak * LED_SCALE)
+
+    # Modo claro: a persiana abre e o céu clareia.
+    if daylight:
+        slats, sky = daylight
+        closed, opened = (math.radians(a) for a in BLINDS_ANGLE)
+        for slat in slats:
+            ramp(slat, "rotation_euler", BLINDS_OPEN, Vector((closed, 0, 0)), Vector((opened, 0, 0)))
+        ramp(sky.inputs["Strength"], "default_value", BLINDS_OPEN, *SKY_STRENGTH)
 
     # A tela sai do standby quando a câmera vira para ela.
     wake = next(s for s in screen.node_tree.nodes["Wake"].inputs if s.type == "VALUE")
@@ -895,10 +1074,13 @@ def render(scene, mode):
 def main():
     args = sys.argv[sys.argv.index("--") + 1 :] if "--" in sys.argv else []
     mode = "test" if "--test" in args else "preview" if "--preview" in args else "final"
+    if "--light" in args:
+        globals().update(LIGHT)
 
     scene = setup_scene(mode)
     setup_compositor(scene)
     build_room()
+    daylight = build_daylight() if DAYLIGHT else None
     build_desk()
     screen, screen_light = build_monitor()
     build_desk_mat()
@@ -909,7 +1091,7 @@ def main():
     pc = import_pc()
     cam, aim = build_camera(scene)
     animate_camera(cam, aim)
-    animate(bulb, lamp_light, inner_light, screen, screen_light, glows, pc, desk_rgb)
+    animate(bulb, lamp_light, inner_light, screen, screen_light, glows, pc, desk_rgb, daylight)
 
     if "--open" in args:
         return
