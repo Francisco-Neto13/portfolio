@@ -83,6 +83,16 @@ npm run dev     # servidor de desenvolvimento
 npm run check   # tipos, lint e build de produção
 ```
 
+## Créditos de modelos 3D
+
+A cena 3D da abertura é renderizada no Blender a partir de modelos de terceiros, que não fazem parte deste repositório:
+
+- This work is based on ["Mechanical keyboard"](https://sketchfab.com/3d-models/mechanical-keyboard-0161b6232216457aa8f4f3393960ec85) by [virtualtimecapsule](https://sketchfab.com/virtualtimecapsule), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). Alterações: orientação, cor da textura e retroiluminação RGB entre as teclas.
+- This work is based on ["Razer Mouse"](https://sketchfab.com/3d-models/razer-mouse-9f0a3283cbca4454bf04c8d43494247a) by [Fred Drabble](https://sketchfab.com/FredDrabble), licensed under [CC-BY-4.0](http://creativecommons.org/licenses/by/4.0/). Alterações: sem o cabo e com o anel recolorido.
+- ["PC [model]"](https://sketchfab.com/3d-models/pc-model-ef80b29ad9f94dfc9af23db81e09de2b) by [Meilov](https://sketchfab.com/meilov3D), sob a licença Sketchfab Standard. Alterações: materiais refeitos na paleta do site.
+
+A licença do código, abaixo, não vale para esses modelos: cada um segue a sua.
+
 ## Autoria e licença
 
 Criado e mantido por **[Francisco Neto](https://chiconeto.dev/)**.
