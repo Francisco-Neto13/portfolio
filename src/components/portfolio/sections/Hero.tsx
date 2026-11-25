@@ -1,5 +1,5 @@
-import { BrowserFrame } from "@/components/portfolio/lib/BrowserFrame";
-import { profile, projects, stats } from "@/components/portfolio/lib/data";
+import { profile, stats } from "@/components/portfolio/lib/data";
+import { HeroFrames } from "@/components/portfolio/lib/HeroFrames";
 
 const STEPS = [
   { label: "pedido", t: 0.02 },
@@ -8,40 +8,44 @@ const STEPS = [
   { label: "homologação", t: 0.4 }
 ];
 
-const hostOf = (href: string) => href.replace(/^https?:\/\/(www\.)?/, "").replace(/\/+$/, "");
+/**
+ * O texto acompanha a câmera, não a rolagem: `--scene` (0 a 1) é o frame que está na tela,
+ * de 30 a 240, publicado por lib/HeroFrames.tsx. Frame f ↔ scene (f - 30) / 210.
+ * Redefine `--intro-out` e `--final` de styles/motion.css só aqui, sem mexer nele.
+ *
+ * Título: some da luminária ao teclado (frames 60 → 90), com o deslocamento do motion.css.
+ * Termina antes do close do teclado (frame 100): mais tarde, ficava um fantasma por cima dele.
+ */
+const INTRO_TIMING = "clamp(0, (var(--scene, 0) - 0.143) / 0.143, 1)";
+
+/** Segundo texto: entra na chegada ao PC (124 → 140) e sai quando o monitor centraliza (172 → 188). */
+const FINAL_TIMING = "clamp(0, min((var(--scene, 0) - 0.448) / 0.076, (0.752 - var(--scene, 0)) / 0.076), 1)";
 
 /**
- * Palco de abertura. A página começa no escuro e a rolagem acende a luz, coloca os sistemas
- * reais em cena e termina com a proposta e as ações. As camadas vivem em `styles/motion.css`.
+ * Apagado de verdade (opacidade 0, sem o 0,3% do motion.css, que deixava um fantasma), mas
+ * continua no HTML para leitores de tela e reaparece se um botão dele receber foco pelo teclado.
+ */
+const FINAL_VISIBILITY = "motion-safe:[html.js_&]:[opacity:var(--final)] focus-within:!opacity-100";
+
+/**
+ * Com animação: a próxima seção sobe 30svh mais cedo, por cima do palco já escuro. O hero é
+ * transparente (o fundo preto é só do palco) e vai para trás só depois do mergulho (HeroFrames).
+ * Se mudar os 30svh, ajuste BLACK_END em lib/HeroFrames.tsx: 1 - 30 / 210.
+ */
+const OVERLAP = "motion-safe:[html.js_&]:-mb-[30svh] motion-safe:[html.js_&]:bg-transparent";
+
+/**
+ * Palco de abertura. A cena 3D (lib/HeroFrames.tsx) entra sozinha, a rolagem leva a câmera pela
+ * mesa e termina mergulhando na tela, que mostra a seção seguinte. Escuro nos dois temas.
+ * As camadas de texto vivem em `styles/motion.css`.
  */
 export function Hero() {
-  const [main, left, right] = projects;
-
   return (
-    <section id="inicio" className="hero-track" data-track>
+    <section id="inicio" className={`hero-track ${OVERLAP}`} data-track data-theme="dark" style={{ color: "var(--color-text)" }}>
       <div className="hero-stage">
-        <div aria-hidden="true" className="hero-light" />
-        <div aria-hidden="true" className="hero-grid" />
+        <HeroFrames />
 
-        <div aria-hidden="true" className="hero-hud text-label">
-          <span className="hud-corner" />
-          <span className="hud-corner" />
-          <span className="hud-corner" />
-          <span className="hud-corner" />
-          <span className="hud-label left-5 top-4">
-            <span className="status-light" />
-            disponível para novos projetos
-          </span>
-          <span className="hud-label bottom-4 left-5">
-            deploy
-            <span className="hud-bar">
-              <i />
-            </span>
-          </span>
-          <span className="hud-label bottom-4 right-5 hidden sm:flex">sistema sob medida</span>
-        </div>
-
-        <div className="hero-intro enter">
+        <div className="hero-intro enter" style={{ "--intro-out": INTRO_TIMING } as React.CSSProperties}>
           <span aria-hidden="true" className="hero-mark-pulse">
             <span className="hero-mark-glow">
               <span className="logo-mark hero-mark" />
@@ -75,34 +79,20 @@ export function Hero() {
           </p>
         </div>
 
-        <div className="hero-showcase">
-          <div className="hero-side hero-side--left" aria-hidden="true">
-            <BrowserFrame src={left.image} alt="" url={hostOf(left.links[0].href)} hue={left.hue} sizes="520px" eager />
-          </div>
-          <div className="hero-side hero-side--right" aria-hidden="true">
-            <BrowserFrame src={right.image} alt="" url={hostOf(right.links[0].href)} hue={right.hue} sizes="520px" eager />
-          </div>
-          {/* As três janelas carregam com a página: decodificar no meio da rolagem travava a entrada delas. */}
-          <div className="hero-main">
-            <BrowserFrame
-              src={main.image}
-              alt={main.imageAlt}
-              url={hostOf(main.links[0].href)}
-              hue={main.hue}
-              eager
-              sizes="(max-width: 1100px) 100vw, 1040px"
-            />
-          </div>
-        </div>
-
-        <div className="hero-final">
+        <div className={`hero-final ${FINAL_VISIBILITY}`} style={{ "--final": FINAL_TIMING } as React.CSSProperties}>
+          {/* Escurece a metade esquerda para o texto ficar legível sobre a cena. */}
+          <div
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-0 -z-10"
+            style={{ background: "linear-gradient(to right, rgba(8, 6, 15, 0.88) 0%, rgba(8, 6, 15, 0.6) 42%, transparent 66%)" }}
+          />
           <div className="container">
             <div className="lg:max-w-[50%]">
               <p className="text-label text-live flex items-center gap-2.5">
                 <span className="status-light" /> no ar
               </p>
               <p className="text-h2 mt-4 short:mt-3 short:text-[clamp(2.25rem,7.4vh,3.75rem)]">
-                Sistemas que saem do papel <span className="text-serif">e ficam no ar.</span>
+                Por trás da tela, <span className="text-serif">a máquina inteira.</span>
               </p>
               <p className="text-lead mt-5 short:mt-3">
                 Construo sistemas sob medida, integrações e automações com IA para empresas, e respondo por eles até
