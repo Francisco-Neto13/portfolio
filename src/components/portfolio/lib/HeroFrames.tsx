@@ -1,10 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { readResolvedTheme, subscribeToResolvedTheme, type ResolvedTheme } from "@/components/portfolio/lib/theme";
 
-/** Frames renderizados no Blender (scripts/blender/hero_scene.py, render final: 1600x900, WebP). */
+/**
+ * Frames renderizados no Blender (scripts/blender/hero_scene.py, render final: 1600x900, WebP).
+ * Uma sequência por tema: à noite as luzes acendem; de dia a persiana abre. Mesma câmera nas duas.
+ */
 const FRAMES = 240;
-const frameSrc = (i: number) => `/hero-frames/frame_${String(i + 1).padStart(4, "0")}.webp`;
+const frameSrc = (theme: ResolvedTheme, i: number) => `/hero-frames/${theme}/frame_${String(i + 1).padStart(4, "0")}.webp`;
 
 /** Frames 1-30: a entrada, que toca sozinha no carregamento. */
 const INTRO_FRAMES = 30;
@@ -13,8 +17,8 @@ const SCROLL_FIRST = INTRO_FRAMES - 1; // índice do frame 30: onde a rolagem co
 
 /**
  * Frames 31-240 seguem a rolagem e terminam em p = 0,8 (a tela do monitor cheia).
- * De 0,8 a BLACK_END a imagem escurece até o fundo; aí a próxima seção começa a subir por cima
- * do palco escuro (a sobreposição de 30svh está em Hero.tsx: 1 - 30 / 210 ≈ 0,857).
+ * De 0,8 a BLACK_END a imagem se apaga no fundo; aí a próxima seção começa a subir por cima
+ * do palco (a sobreposição de 30svh está em Hero.tsx: 1 - 30 / 210 ≈ 0,857).
  */
 const SCROLL_END = 0.8;
 const BLACK_END = 0.857;
@@ -32,6 +36,7 @@ const MAX_STEP = 2;
  * Não escuta a rolagem: segue o `--p` que lib/Effects.tsx já escreve no [data-track].
  * Publica `--scene` no palco (0 a 1: o frame que está na tela, de 30 a 240), e o texto do hero
  * acompanha a câmera por ele, não a rolagem.
+ * Baixa só a sequência do tema ativo; a do outro tema só se a pessoa trocar de tema.
  * Com movimento reduzido, mostra só o fim da entrada (a cena acesa), parada.
  */
 export function HeroFrames() {
@@ -46,10 +51,12 @@ export function HeroFrames() {
     const final = track.querySelector<HTMLElement>(".hero-final");
 
     const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const images: HTMLImageElement[] = [];
+    const sets: Partial<Record<ResolvedTheme, HTMLImageElement[]>> = {};
+    let theme = readResolvedTheme();
     let current = reduced ? SCROLL_FIRST : 0; // o frame que a câmera está mostrando
     let target = current; // o frame que a rolagem pede
     let drawn = -1;
+    let drawnTheme: ResolvedTheme | null = null;
     let introLoaded = 0;
     let introStart = 0;
     let introDone = reduced;
@@ -57,11 +64,13 @@ export function HeroFrames() {
     let walkRaf = 0;
 
     const show = (index: number) => {
+      const images = sets[theme] ?? [];
       // Se o frame ainda não chegou, mostra o carregado mais próximo antes dele.
       let i = index;
       while (i >= 0 && !(images[i]?.complete && images[i].naturalWidth)) i--;
-      if (i < 0 || i === drawn) return;
+      if (i < 0 || (i === drawn && drawnTheme === theme)) return;
       drawn = i;
+      drawnTheme = theme;
       const image = images[i];
       // Cobre o palco inteiro, como object-fit: cover.
       const scale = Math.max(canvas.width / image.naturalWidth, canvas.height / image.naturalHeight);
@@ -107,7 +116,7 @@ export function HeroFrames() {
         window.cancelAnimationFrame(introRaf);
       }
       startWalk();
-      // Depois do mergulho o hero vai para trás, e a próxima seção sobe por cima do palco escuro.
+      // Depois do mergulho o hero vai para trás, e a próxima seção sobe por cima do palco.
       // Antes disso fica na ordem normal: atrás do <main>, os botões do hero não receberiam clique.
       const layer = p > SCROLL_END ? "-1" : "";
       if (track.style.zIndex !== layer) track.style.zIndex = layer;
@@ -124,20 +133,42 @@ export function HeroFrames() {
       } else introRaf = window.requestAnimationFrame(playIntro);
     };
 
-    const load = (i: number) => {
-      const image = new Image();
-      image.decoding = "async";
-      image.onload = () => {
-        // Um frame que chega atrasado substitui o mais próximo que estava na tela no lugar dele.
-        if (i <= current && i > drawn) show(current);
-        // A entrada só começa com os 30 frames dela na mão: sem isso, ela pularia quadros.
-        if (i < INTRO_FRAMES && ++introLoaded === INTRO_FRAMES && !introDone) introRaf = window.requestAnimationFrame(playIntro);
+    /** Baixa a sequência de um tema, começando pelo frame que está na tela. */
+    const loadSet = (set: ResolvedTheme) => {
+      if (sets[set]) return;
+      const images: HTMLImageElement[] = [];
+      sets[set] = images;
+      const isFirst = Object.keys(sets).length === 1;
+      const load = (i: number) => {
+        const image = new Image();
+        image.decoding = "async";
+        image.onload = () => {
+          // Um frame que chega atrasado substitui o mais próximo que estava na tela no lugar dele.
+          if (set === theme && i <= current) show(current);
+          // A entrada só começa com os 30 frames dela na mão: sem isso, ela pularia quadros.
+          if (isFirst && i < INTRO_FRAMES && ++introLoaded === INTRO_FRAMES && !introDone) {
+            introRaf = window.requestAnimationFrame(playIntro);
+          }
+        };
+        image.src = frameSrc(set, i);
+        images[i] = image;
       };
-      image.src = frameSrc(i);
-      images[i] = image;
+      if (reduced) return load(SCROLL_FIRST);
+      // Na troca de tema, o frame atual e os vizinhos chegam primeiro.
+      const order = Array.from({ length: FRAMES }, (_, i) => i);
+      if (!isFirst) order.sort((a, b) => Math.abs(a - current) - Math.abs(b - current));
+      for (const i of order) load(i);
     };
-    if (reduced) load(SCROLL_FIRST);
-    else for (let i = 0; i < FRAMES; i++) load(i);
+    loadSet(theme);
+
+    // A lâmpada do topo troca o tema: a cena troca de sequência no mesmo frame.
+    const unsubscribe = subscribeToResolvedTheme(() => {
+      const next = readResolvedTheme();
+      if (next === theme) return;
+      theme = next;
+      loadSet(theme);
+      show(current);
+    });
 
     const resizer = new ResizeObserver(resize);
     resizer.observe(canvas);
@@ -148,9 +179,10 @@ export function HeroFrames() {
     return () => {
       window.cancelAnimationFrame(introRaf);
       window.cancelAnimationFrame(walkRaf);
+      unsubscribe();
       resizer.disconnect();
       observer.disconnect();
-      for (const image of images) image.onload = null;
+      for (const images of Object.values(sets)) for (const image of images ?? []) image.onload = null;
     };
   }, []);
 
@@ -158,21 +190,22 @@ export function HeroFrames() {
     <div
       aria-hidden="true"
       className="pointer-events-none absolute inset-0 -z-10"
-      // Fundo próprio: o hero é transparente, e o palco fica preto enquanto carrega e depois do mergulho.
-      style={{ background: "#08060f" }}
+      // Fundo próprio: o hero é transparente, e o palco fica na cor do fundo enquanto carrega e
+      // depois do mergulho.
+      style={{ background: "var(--color-bg)" }}
     >
       <canvas
         ref={canvasRef}
         className="block h-full w-full"
-        // Depois do mergulho, a imagem escurece até o fundo (preto), antes de a próxima seção subir.
+        // Depois do mergulho, a imagem se apaga no fundo antes de a próxima seção subir.
         style={{ opacity: `calc(1 - clamp(0, (var(--p, 0) - ${SCROLL_END}) / ${(BLACK_END - SCROLL_END).toFixed(3)}, 1))` }}
       />
-      {/* Bordas até o fundo do site (#08060f). */}
+      {/* Bordas até o fundo do site, no tema ativo. */}
       <div
         className="absolute inset-0"
         style={{
           background:
-            "linear-gradient(to right, #08060f 0%, transparent 10%, transparent 90%, #08060f 100%), linear-gradient(to bottom, #08060f 0%, transparent 14%, transparent 84%, #08060f 100%)"
+            "linear-gradient(to right, var(--color-bg) 0%, transparent 10%, transparent 90%, var(--color-bg) 100%), linear-gradient(to bottom, var(--color-bg) 0%, transparent 14%, transparent 84%, var(--color-bg) 100%)"
         }}
       />
     </div>

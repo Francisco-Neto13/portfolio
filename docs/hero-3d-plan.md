@@ -124,8 +124,24 @@ C:\Program Files\Blender Foundation\Blender 5.3\blender.exe
 - **Comandos** (com `& "C:\Program Files\Blender Foundation\Blender 5.3\blender.exe" -b -P scripts/blender/hero_scene.py -- …`):
   - `--test`: só os frames-chave, em baixa resolução, saem em `renders/test/`.
   - `--preview`: os 240 frames em 1280×720, WebP, saem em `renders/preview/`.
-  - Sem flag: o render final, que sai em `renders/frames/` (1600×900, 40 amostras, WebP 78%: 6 MB nos 240 frames, o maior com 48 KB). É ele que vai para `public/hero-frames/`, de onde o site lê.
+  - Sem flag: o render final, que sai em `renders/frames/` (1600×900, 40 amostras, WebP 78%: 6 MB nos 240 frames, o maior com 48 KB). É ele que vai para `public/hero-frames/dark/` (e o `--light`, para `public/hero-frames/light/`), de onde o site lê.
 - **Fora do git:** a pasta `renders/` e as pastas dos modelos.
+
+### Modo claro
+
+O hero segue o tema. As duas versões usam a mesma câmera e o mesmo tempo de texto.
+
+| | escuro (padrão) | claro (`-- --light`) |
+|---|---|---|
+| entrada | as luzes acendem: luminária, RGB, fita de LED | o dia clareia: a persiana abre e o sol entra em listras |
+| view transform | AgX (segura as luzes fortes) | Standard (branco de verdade, print da tela com as cores exatas) |
+| luminária | acesa | apagada |
+| RGB | forte | discreto (luzes coloridas na parede a 10%) |
+| tela | `assets/screen.png` | `assets/screen-light.png` |
+| frames no site | `public/hero-frames/dark/` | `public/hero-frames/light/` |
+
+- **A persiana:** fica fora do quadro, entre o sol e a mesa. Ela não aparece na câmera nem em reflexos, só projeta as listras.
+- **No site:** o canvas baixa só a sequência do tema ativo. Se a pessoa troca de tema pela lâmpada, ele baixa a outra (começando pelo frame que está na tela) e troca no mesmo frame.
 
 ## 7. Modelos de terceiros: créditos e licenças
 
@@ -144,6 +160,6 @@ Texto de crédito pedido pelas licenças CC-BY, para colocar onde o site for pub
 > This work is based on "Razer Mouse" (https://sketchfab.com/3d-models/razer-mouse-9f0a3283cbca4454bf04c8d43494247a) by Fred Drabble (https://sketchfab.com/FredDrabble) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/).
 
 As modificações feitas nos modelos (vale registrar, já que a CC-BY pede indicação de alterações):
-- **Teclado:** foi endireitado e nivelado pela base, teve a textura escurecida e dessaturada e ganhou retroiluminação RGB entre as teclas.
+- **Teclado:** foi endireitado e nivelado pela base, teve as teclas fora do perfil rebaixadas, a textura escurecida e dessaturada e ganhou retroiluminação RGB entre as teclas.
 - **Mouse:** perdeu o cabo e teve o anel recolorido para `#8b5cf6`.
 - **PC:** perdeu a base e o cabo e teve os materiais refeitos na paleta do site.
