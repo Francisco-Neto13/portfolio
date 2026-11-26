@@ -45,7 +45,17 @@ export function Hero() {
       <div className="hero-stage">
         <HeroFrames />
 
-        <div className="hero-intro enter" style={{ "--intro-out": INTRO_TIMING } as React.CSSProperties}>
+        <div
+          className="hero-intro enter"
+          style={
+            {
+              "--intro-out": INTRO_TIMING,
+              // O texto central fica sobre a tela do monitor (no claro, ligada com fundo claro; no
+              // escuro, apagada). Os rótulos pequenos sobem um degrau de contraste.
+              "--color-text-muted": "var(--color-text-soft)"
+            } as React.CSSProperties
+          }
+        >
           {/* Véu na cor do fundo atrás do título: no claro, ele fica sobre a tela escura do monitor. */}
           <div
             aria-hidden="true"

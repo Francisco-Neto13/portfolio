@@ -214,7 +214,9 @@ LIGHT = dict(
     RGB_SCALE=0.55,        # o RGB das peças continua, mas de dia não domina
     LED_SCALE=0.1,         # luzes coloridas que pintam a parede: sem o AgX, mais que isso estoura
     SCREEN_IMAGE=os.path.join(ROOT, "scripts", "blender", "assets", "screen-light.png"),
-    SCREEN_STANDBY="#14121a",
+    # De dia o monitor já está ligado, com um fundo claro: o título do site fica sobre ele, e texto
+    # escuro sobre a tela apagada (cinza-escura) ficava difícil de ler.
+    SCREEN_STANDBY="#ebe7f5",
     SCREEN_BRIGHTNESS=1.0, # no Standard, 1,0 mostra o print com as cores exatas
     GLARE_THRESHOLD=1.4,   # de dia, só o que passa do branco brilha (lâmpadas e RGB)
     DAYLIGHT=True,
